@@ -1,3 +1,5 @@
+<div align="center">
+
 # 🥈 Moniteur Nickel — Nouvelle-Calédonie
 
 [![GitHub license](https://img.shields.io/github/license/gunout/nickel-nc?color=blue&style=flat-square)](https://github.com/gunout/nickel-nc/blob/main/LICENSE)
@@ -16,6 +18,7 @@
 > **Moniteur interactif et expert de la filière nickel en Nouvelle-Calédonie.**
 > Analyse historique 1970–2025, prévisions, corrélations, points de rupture, saisonnalité, stress-test, risque pays, Monte Carlo et alertes automatiques.
 > Données 100 % open data : ISEE, data.gouv.nc, FRED/IMF, BGS/DIMENC, INSG.
+</div>
 
 ---
 
