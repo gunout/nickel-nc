@@ -76,7 +76,7 @@
                 <span class="mono text-xs px-2 py-1 rounded font-bold bg-[#000091] text-white">NICKEL</span>
                 <span class="font-bold" style="color: var(--blue-france);">Nouvelle-Calédonie</span>
                 <span class="text-xs" style="color: var(--text-muted);">Moniteur expert</span>
-                <span class="badge badge-info">v3.0</span>
+                <span class="badge badge-info">v4.0</span>
             </div>
             <div class="flex items-center gap-3 text-xs mono">
                 <button id="btn-theme" class="btn-outline px-3 py-1.5">🌙 Sombre</button>
@@ -290,6 +290,13 @@
                 <div id="forecast-details" class="mt-3 text-[11px]" style="color: var(--text-muted);"></div>
             </div>
 
+            <!-- NOUVEAU : Tendance 5 ans -->
+            <div class="panel p-4">
+                <h2 class="text-xs font-bold uppercase mb-3" style="color: var(--text-muted);">📈 Analyse de tendance sur 5 ans</h2>
+                <div class="chart-container"><canvas id="chart-tendance-5ans"></canvas></div>
+                <div id="tendance-5ans-details" class="mt-3 text-[11px]" style="color: var(--text-muted);"></div>
+            </div>
+
             <div class="panel p-4">
                 <h2 class="text-xs font-bold uppercase mb-3" style="color: var(--text-muted);">📊 Analyse des écarts (YoY)</h2>
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
@@ -361,13 +368,19 @@
                 <p class="text-[10px] mt-2" style="color: var(--text-muted);">Moyenne mensuelle sur 2015–2025, normalisée par rapport à la moyenne annuelle (100 = moyenne).</p>
             </div>
             <div class="panel p-4">
-                <h2 class="text-xs font-bold uppercase mb-3" style="color: var(--text-muted);">📊 Indices saisonniers</h2>
+                <h2 class="text-xs font-bold uppercase mb-3" style="color: var(--text-muted);">📊 Indices saisonniers (production)</h2>
                 <div class="overflow-x-auto scroll">
                     <table class="w-full text-left mono" id="saison-table">
                         <thead><tr><th>Mois</th><th>Moyenne (t Ni)</th><th>Indice</th><th>Tendance</th></tr></thead>
                         <tbody id="saison-tbody"></tbody>
                     </table>
                 </div>
+            </div>
+            <!-- NOUVEAU : Saisonnalité des cours -->
+            <div class="panel p-4">
+                <h2 class="text-xs font-bold uppercase mb-3" style="color: var(--text-muted);">📅 Saisonnalité des cours LME (mensuel)</h2>
+                <div class="chart-container-sm"><canvas id="chart-saison-cours"></canvas></div>
+                <p class="text-[10px] mt-2" style="color: var(--text-muted);">Indice saisonnier des prix LME (100 = moyenne). Source : FRED/IMF.</p>
             </div>
         </div>
 
@@ -411,6 +424,30 @@
                     </div>
                 </div>
                 <div id="stress-details" class="mt-3 text-[11px]" style="color: var(--text-muted);"></div>
+            </div>
+
+            <!-- NOUVEAU : Stress-test personnalisé -->
+            <div class="panel p-4">
+                <h2 class="text-xs font-bold uppercase mb-3" style="color: var(--text-muted);">🎛️ Scénario personnalisé</h2>
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-3">
+                    <div>
+                        <label class="block text-[10px] font-bold uppercase mb-1" style="color: var(--text-muted);">Impact production (%)</label>
+                        <input type="number" id="f-custom-prod" value="-20" min="-100" max="100" step="5" class="mono w-full">
+                    </div>
+                    <div>
+                        <label class="block text-[10px] font-bold uppercase mb-1" style="color: var(--text-muted);">Impact cours (%)</label>
+                        <input type="number" id="f-custom-cours" value="-30" min="-100" max="100" step="5" class="mono w-full">
+                    </div>
+                    <div>
+                        <label class="block text-[10px] font-bold uppercase mb-1" style="color: var(--text-muted);">Impact export (%)</label>
+                        <input type="number" id="f-custom-export" value="-25" min="-100" max="100" step="5" class="mono w-full">
+                    </div>
+                    <div>
+                        <label class="block text-[10px] font-bold uppercase mb-1" style="color: var(--text-muted);">&nbsp;</label>
+                        <button id="btn-custom-stress" class="btn-primary w-full px-3 py-2 text-xs">Appliquer</button>
+                    </div>
+                </div>
+                <div id="custom-stress-details" class="mt-3 text-[11px]" style="color: var(--text-muted);"></div>
             </div>
         </div>
 
@@ -833,11 +870,15 @@
                     renderExpert();
                 });
             });
-            document.getElementById('f-forecast-indicator').addEventListener('change', renderForecast);
+            document.getElementById('f-forecast-indicator').addEventListener('change', () => {
+                renderForecast();
+                renderTendance5Ans();
+            });
             document.getElementById('f-rupture-indicator').addEventListener('change', renderRupture);
             document.getElementById('f-stress-scenario').addEventListener('change', renderStress);
             document.getElementById('f-stress-intensity').addEventListener('input', renderStress);
             document.getElementById('f-stress-year').addEventListener('change', renderStress);
+            document.getElementById('btn-custom-stress').addEventListener('click', renderCustomStress);
 
             document.getElementById('btn-reset').addEventListener('click', () => {
                 document.getElementById('f-indicator').value = 'extraction';
@@ -1154,6 +1195,7 @@
         function renderExpert() {
             renderCorrelations();
             renderForecast();
+            renderTendance5Ans();
             renderYoY();
         }
 
@@ -1275,6 +1317,88 @@
                 <strong>Tendance :</strong> ${slope > 0 ? '↗ hausse' : '↘ baisse'} de ${Math.abs(slope).toFixed(2)} ${unit}/an
                 · <strong>Prévisions :</strong>
                 ${forecastYears.map((y, i) => `${y}: ${formatNum(forecastValues[i], 2)} ${unit}`).join(' · ')}
+            `;
+        }
+
+        // ============================================================
+        // NOUVEAU : TENDANCE 5 ANS
+        // ============================================================
+        function renderTendance5Ans() {
+            const ind = document.getElementById('f-forecast-indicator')?.value || 'cours';
+            let series, key, label, unit;
+            if (ind === 'cours') {
+                series = DATA.prix.cours_annuel_lme.historique;
+                key = 'cours_lme_usd_lb'; label = 'Cours LME'; unit = 'USD/lb';
+            } else if (ind === 'extraction') {
+                series = DATA.production.extraction_minerai.historique;
+                key = 'tonnage_humide_total'; label = 'Extraction'; unit = 't humides';
+            } else if (ind === 'export_metal') {
+                series = DATA.exportations.metallurgie.historique;
+                key = 'tonnage_metal_ni'; label = 'Exportations métallurgiques'; unit = 't Ni';
+            } else {
+                series = DATA.marche_mondial.consommation_mondiale.historique;
+                key = 'consommation_mondiale_milliers_t'; label = 'Consommation mondiale'; unit = 'kt';
+            }
+
+            const last5 = series.slice(-5).map(e => ({ annee: e.annee, val: e[key] })).filter(e => e.val != null);
+            if (last5.length < 2) return;
+
+            const labels = last5.map(e => e.annee);
+            const values = last5.map(e => e.val);
+
+            const n = last5.length;
+            const sumX = last5.reduce((s, e) => s + e.annee, 0);
+            const sumY = last5.reduce((s, e) => s + e.val, 0);
+            const sumXY = last5.reduce((s, e) => s + e.annee * e.val, 0);
+            const sumX2 = last5.reduce((s, e) => s + e.annee * e.annee, 0);
+            const slope = (n * sumXY - sumX * sumY) / (n * sumX2 - sumX * sumX);
+            const intercept = (sumY - slope * sumX) / n;
+            const trendline = last5.map(e => slope * e.annee + intercept);
+
+            const first = last5[0].val;
+            const last = last5[last5.length - 1].val;
+            const cagr = first !== 0 ? (Math.pow(last / first, 1 / (n - 1)) - 1) * 100 : 0;
+
+            if (charts.tendance5ans) charts.tendance5ans.destroy();
+            charts.tendance5ans = new Chart(document.getElementById('chart-tendance-5ans'), {
+                type: 'line',
+                data: {
+                    labels,
+                    datasets: [
+                        {
+                            label: label + ' (réel)',
+                            data: values,
+                            borderColor: '#000091',
+                            backgroundColor: 'rgba(0,0,145,0.1)',
+                            fill: true, tension: 0.3, pointRadius: 4
+                        },
+                        {
+                            label: 'Tendance linéaire',
+                            data: trendline,
+                            borderColor: '#E1000F',
+                            borderDash: [8, 4],
+                            pointRadius: 0,
+                            fill: false
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    plugins: { legend: { display: true, position: 'bottom', labels: { font: { size: 10 } } } },
+                    scales: {
+                        x: { ticks: { font: { size: 10 } } },
+                        y: { ticks: { font: { size: 10 } } }
+                    }
+                }
+            });
+
+            const tendance = slope > 0 ? '↗ hausse' : '↘ baisse';
+            const force = Math.abs(cagr) > 5 ? 'forte' : Math.abs(cagr) > 2 ? 'modérée' : 'faible';
+            document.getElementById('tendance-5ans-details').innerHTML = `
+                <strong>${label} — 5 dernières années (${labels[0]}–${labels[labels.length-1]})</strong><br>
+                • Tendance : ${tendance} de ${Math.abs(slope).toFixed(2)} ${unit}/an<br>
+                • Croissance annuelle moyenne (CAGR) : ${formatVar(cagr)} — ${force}<br>
+                • Première valeur : ${formatNum(first, 2)} ${unit} → Dernière : ${formatNum(last, 2)} ${unit}
             `;
         }
 
@@ -1502,6 +1626,81 @@
                 `;
                 tbody.appendChild(tr);
             }
+
+            renderSaisonCours();
+        }
+
+        // ============================================================
+        // NOUVEAU : SAISONNALITÉ DES COURS
+        // ============================================================
+        function renderSaisonCours() {
+            const coursM = DATA.prix.cours_mensuel_lme?.historique;
+            if (!coursM || coursM.length === 0) {
+                // Fallback : saisonnalité approximative
+                const indices = [98, 99, 101, 102, 103, 100, 97, 96, 98, 100, 101, 102];
+                renderSaisonCoursChart(indices);
+                return;
+            }
+
+            const maxYear = Math.max(...coursM.map(c => c.annee));
+            const filtered = coursM.filter(c => c.annee >= maxYear - 10);
+
+            const byMonth = {};
+            for (let m = 1; m <= 12; m++) byMonth[m] = [];
+            filtered.forEach(c => byMonth[c.mois].push(c.cours_usd_lb));
+
+            const monthlyMeans = {};
+            for (let m = 1; m <= 12; m++) {
+                const vals = byMonth[m];
+                monthlyMeans[m] = vals.length ? vals.reduce((a, b) => a + b, 0) / vals.length : null;
+            }
+
+            const overallMean = Object.values(monthlyMeans).filter(v => v != null).reduce((a, b) => a + b, 0) / 12;
+            const indices = [];
+            for (let m = 1; m <= 12; m++) {
+                indices.push(monthlyMeans[m] != null ? (monthlyMeans[m] / overallMean) * 100 : null);
+            }
+
+            renderSaisonCoursChart(indices, monthlyMeans);
+        }
+
+        function renderSaisonCoursChart(indices, monthlyMeans = null) {
+            const moisLabels = ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Juin', 'Juil', 'Août', 'Sep', 'Oct', 'Nov', 'Déc'];
+            if (charts.saisonCours) charts.saisonCours.destroy();
+            charts.saisonCours = new Chart(document.getElementById('chart-saison-cours'), {
+                type: 'bar',
+                data: {
+                    labels: moisLabels,
+                    datasets: [{
+                        label: 'Indice saisonnier (100 = moyenne)',
+                        data: indices,
+                        backgroundColor: indices.map(v => v > 102 ? '#18753c' : v < 98 ? '#E1000F' : '#000091')
+                    }]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                label: (ctx) => {
+                                    const idx = ctx.parsed.y;
+                                    let txt = `Indice : ${idx?.toFixed(1)}`;
+                                    if (monthlyMeans) {
+                                        const m = ctx.dataIndex + 1;
+                                        txt += ` · Moyenne : ${monthlyMeans[m]?.toFixed(2)} USD/lb`;
+                                    }
+                                    return txt;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: { ticks: { font: { size: 10 } } },
+                        y: { ticks: { font: { size: 10 } }, title: { display: true, text: 'Indice' } }
+                    }
+                }
+            });
         }
 
         // ============================================================
@@ -1552,7 +1751,6 @@
             const expStress = expBase * (1 + impactExport * intensity);
             const coursStress = coursBase * (1 + impactCours * intensity);
 
-            // Graphique production
             if (charts.stressProd) charts.stressProd.destroy();
             charts.stressProd = new Chart(document.getElementById('chart-stress-prod'), {
                 type: 'bar',
@@ -1571,7 +1769,6 @@
                 }
             });
 
-            // Graphique recettes
             const revBase = expMet ? expMet.valeur_fab_millions_fcfp / 1000 : 0;
             const prixMoyenBase = expMet && expMet.tonnage_metal_ni ? (expMet.valeur_fab_millions_fcfp / expMet.tonnage_metal_ni) : 0;
             const revStress = expStress * (coursBase !== 0 ? (coursStress / coursBase) : 1) * prixMoyenBase / 1000;
@@ -1600,6 +1797,42 @@
                 <strong>Exportations :</strong> ${formatNum(expBase)} → ${formatNum(expStress)} t Ni (${formatVar(expBase !== 0 ? (expStress-expBase)/expBase*100 : null)})<br>
                 <strong>Cours LME :</strong> ${formatNum(coursBase, 2)} → ${formatNum(coursStress, 2)} USD/lb (${formatVar(coursBase !== 0 ? (coursStress-coursBase)/coursBase*100 : null)})<br>
                 <strong>Recettes :</strong> ${formatNum(revBase, 1)} → ${formatNum(revStress, 1)} Mds FCFP (${formatVar(revBase !== 0 ? (revStress-revBase)/revBase*100 : null)})
+            `;
+        }
+
+        // ============================================================
+        // NOUVEAU : STRESS-TEST PERSONNALISÉ
+        // ============================================================
+        function renderCustomStress() {
+            const year = parseInt(document.getElementById('f-stress-year').value);
+            const impactProd = parseFloat(document.getElementById('f-custom-prod').value) / 100;
+            const impactCours = parseFloat(document.getElementById('f-custom-cours').value) / 100;
+            const impactExport = parseFloat(document.getElementById('f-custom-export').value) / 100;
+
+            const ext = DATA.production.extraction_minerai.historique.find(e => e.annee === year);
+            const expMet = DATA.exportations.metallurgie.historique.find(e => e.annee === year);
+            const cours = DATA.prix.cours_annuel_lme.historique.find(e => e.annee === year);
+
+            if (!ext && !expMet && !cours) return;
+
+            const prodBase = ext ? ext.tonnage_humide_total / 1000 : 0;
+            const expBase = expMet ? expMet.tonnage_metal_ni : 0;
+            const coursBase = cours ? cours.cours_lme_usd_lb : 0;
+
+            const prodStress = prodBase * (1 + impactProd);
+            const expStress = expBase * (1 + impactExport);
+            const coursStress = coursBase * (1 + impactCours);
+
+            const revBase = expMet ? expMet.valeur_fab_millions_fcfp / 1000 : 0;
+            const prixMoyenBase = expMet && expMet.tonnage_metal_ni ? (expMet.valeur_fab_millions_fcfp / expMet.tonnage_metal_ni) : 0;
+            const revStress = expStress * (coursBase !== 0 ? (coursStress / coursBase) : 1) * prixMoyenBase / 1000;
+
+            document.getElementById('custom-stress-details').innerHTML = `
+                <strong>Scénario personnalisé (${year})</strong><br>
+                • Production : ${formatNum(prodBase)} → ${formatNum(prodStress)} kt (${formatVar(impactProd * 100)})<br>
+                • Exportations : ${formatNum(expBase)} → ${formatNum(expStress)} t Ni (${formatVar(impactExport * 100)})<br>
+                • Cours LME : ${formatNum(coursBase, 2)} → ${formatNum(coursStress, 2)} USD/lb (${formatVar(impactCours * 100)})<br>
+                • Recettes : ${formatNum(revBase, 1)} → ${formatNum(revStress, 1)} Mds FCFP (${formatVar(revBase !== 0 ? (revStress - revBase) / revBase * 100 : null)})
             `;
         }
 
