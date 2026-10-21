@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Moniteur Nickel — Nouvelle-Calédonie (Expert)</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@2.0.1/dist/chartjs-plugin-zoom.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3.0.1/dist/chartjs-plugin-annotation.min.js"></script>
     <style>
@@ -23,7 +23,6 @@
         .marianne-band { height: 6px; background: linear-gradient(to right, #000091 0%, #000091 33.33%, #fff 33.33%, #fff 66.66%, #E1000F 66.66%, #E1000F 100%); }
         .panel { background: var(--bg-panel); border: 1px solid var(--border); border-radius: 8px; transition: all 0.2s; }
         .panel:hover { border-color: #c5c5c5; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
-        .panel.active { border-color: var(--blue-france); box-shadow: 0 0 0 1px var(--blue-france); }
         .kpi { border-left: 4px solid var(--blue-france); cursor: pointer; }
         .kpi.green { border-left-color: var(--green); }
         .kpi.red { border-left-color: var(--red-marianne); }
@@ -67,7 +66,6 @@
         .badge-warning { background: var(--gold); color: #1e1e1e; }
         .badge-success { background: var(--green); color: #fff; }
         .badge-info { background: var(--blue-france); color: #fff; }
-        .metric-value { font-variant-numeric: tabular-nums; }
     </style>
 </head>
 <body class="min-h-screen">
@@ -78,7 +76,7 @@
                 <span class="mono text-xs px-2 py-1 rounded font-bold bg-[#000091] text-white">NICKEL</span>
                 <span class="font-bold" style="color: var(--blue-france);">Nouvelle-Calédonie</span>
                 <span class="text-xs" style="color: var(--text-muted);">Moniteur expert</span>
-                <span class="badge badge-info">v2.0</span>
+                <span class="badge badge-info">v3.0</span>
             </div>
             <div class="flex items-center gap-3 text-xs mono">
                 <button id="btn-theme" class="btn-outline px-3 py-1.5">🌙 Sombre</button>
@@ -130,7 +128,7 @@
             </div>
         </div>
 
-        <!-- Bandeau d'alertes -->
+        <!-- Alertes -->
         <div class="panel p-4">
             <div class="flex items-center justify-between mb-2">
                 <h2 class="text-xs font-bold uppercase" style="color: var(--text-muted);">🚨 Alertes automatiques</h2>
@@ -223,9 +221,12 @@
         <div class="flex items-center gap-2 flex-wrap">
             <button class="tab-btn active" data-tab="tab-charts">📊 Graphiques</button>
             <button class="tab-btn" data-tab="tab-expert">🧠 Analyse experte</button>
+            <button class="tab-btn" data-tab="tab-rupture">📉 Points de rupture</button>
+            <button class="tab-btn" data-tab="tab-saison">📅 Saisonnalité</button>
+            <button class="tab-btn" data-tab="tab-stress">⚠️ Stress-test</button>
             <button class="tab-btn" data-tab="tab-table">📋 Tableau</button>
-            <button class="tab-btn" data-tab="tab-context">📌 Contexte & Tendances</button>
-            <button class="tab-btn" data-tab="tab-json">🔍 JSON brut</button>
+            <button class="tab-btn" data-tab="tab-context">📌 Contexte</button>
+            <button class="tab-btn" data-tab="tab-json">🔍 JSON</button>
         </div>
 
         <!-- Onglet Graphiques -->
@@ -235,7 +236,7 @@
                     <h2 class="text-xs font-bold uppercase" style="color: var(--text-muted);" id="main-chart-title">Sélectionnez un indicateur</h2>
                     <div class="flex items-center gap-2">
                         <button class="btn-outline px-2 py-1 text-[10px]" id="btn-reset-zoom">Reset zoom</button>
-                        <span class="text-[10px]" style="color: var(--text-muted);">Molette = zoom · Glisser = pan · Survol = détails</span>
+                        <span class="text-[10px]" style="color: var(--text-muted);">Molette = zoom · Glisser = pan</span>
                     </div>
                 </div>
                 <div id="main-legend" class="flex flex-wrap gap-2 mb-3 min-h-[28px]"></div>
@@ -264,10 +265,9 @@
 
         <!-- Onglet Analyse experte -->
         <div id="tab-expert" class="tab-content hidden space-y-4">
-            <!-- Corrélations -->
             <div class="panel p-4">
                 <h2 class="text-xs font-bold uppercase mb-3" style="color: var(--text-muted);">🔗 Matrice de corrélations (Pearson)</h2>
-                <p class="text-[10px] mb-3" style="color: var(--text-muted);">Corrélations entre les principales séries (sur la période filtrée). < 0,3 : faible · 0,3-0,7 : modérée · > 0,7 : forte.</p>
+                <p class="text-[10px] mb-3" style="color: var(--text-muted);">Corrélations sur la période filtrée. > 0,7 : forte · 0,3-0,7 : modérée · < 0,3 : faible.</p>
                 <div class="overflow-x-auto scroll">
                     <table class="w-full text-left mono" id="corr-table">
                         <thead><tr id="corr-thead"></tr></thead>
@@ -276,7 +276,6 @@
                 </div>
             </div>
 
-            <!-- Prévisions -->
             <div class="panel p-4">
                 <div class="flex items-center justify-between mb-3">
                     <h2 class="text-xs font-bold uppercase" style="color: var(--text-muted);">📈 Prévisions (régression linéaire sur 3 ans)</h2>
@@ -291,7 +290,6 @@
                 <div id="forecast-details" class="mt-3 text-[11px]" style="color: var(--text-muted);"></div>
             </div>
 
-            <!-- Analyse des écarts -->
             <div class="panel p-4">
                 <h2 class="text-xs font-bold uppercase mb-3" style="color: var(--text-muted);">📊 Analyse des écarts (YoY)</h2>
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
@@ -306,31 +304,113 @@
                 </div>
             </div>
 
-            <!-- Indicateurs dérivés -->
             <div class="panel p-4">
                 <h2 class="text-xs font-bold uppercase mb-3" style="color: var(--text-muted);">🧮 Indicateurs dérivés</h2>
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
                     <div class="p-3 rounded" style="background: var(--bg-app);">
                         <p class="text-[10px] uppercase" style="color: var(--text-muted);">Taux d'exportation minerai (2024)</p>
                         <p class="text-lg font-bold mono" id="deriv-taux-export">—</p>
-                        <p class="text-[9px]" style="color: var(--text-muted);">export / extraction</p>
                     </div>
                     <div class="p-3 rounded" style="background: var(--bg-app);">
                         <p class="text-[10px] uppercase" style="color: var(--text-muted);">Valeur ajoutée / t Ni (2017)</p>
                         <p class="text-lg font-bold mono" id="deriv-va-tonne">—</p>
-                        <p class="text-[9px]" style="color: var(--text-muted);">F.CFP / t Ni</p>
                     </div>
                     <div class="p-3 rounded" style="background: var(--bg-app);">
                         <p class="text-[10px] uppercase" style="color: var(--text-muted);">Recettes IS35 / VA (2019)</p>
                         <p class="text-lg font-bold mono" id="deriv-is35-va">—</p>
-                        <p class="text-[9px]" style="color: var(--text-muted);">%</p>
                     </div>
                     <div class="p-3 rounded" style="background: var(--bg-app);">
                         <p class="text-[10px] uppercase" style="color: var(--text-muted);">Dépendance Chine (2025)</p>
                         <p class="text-lg font-bold mono" id="deriv-dependance-chine">—</p>
-                        <p class="text-[9px]" style="color: var(--text-muted);">% conso. mondiale</p>
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <!-- Onglet Points de rupture -->
+        <div id="tab-rupture" class="tab-content hidden space-y-4">
+            <div class="panel p-4">
+                <div class="flex items-center justify-between mb-3">
+                    <h2 class="text-xs font-bold uppercase" style="color: var(--text-muted);">📉 Détection de points de rupture (CUSUM)</h2>
+                    <select id="f-rupture-indicator" class="mono text-xs">
+                        <option value="cours">Cours LME</option>
+                        <option value="extraction">Extraction</option>
+                        <option value="export_metal">Exportations métallurgiques</option>
+                        <option value="conso_monde">Consommation mondiale</option>
+                    </select>
+                </div>
+                <div class="chart-container"><canvas id="chart-rupture"></canvas></div>
+                <div id="rupture-details" class="mt-3 text-[11px]" style="color: var(--text-muted);"></div>
+            </div>
+            <div class="panel p-4">
+                <h2 class="text-xs font-bold uppercase mb-3" style="color: var(--text-muted);">📊 Points de rupture détectés</h2>
+                <div class="overflow-x-auto scroll">
+                    <table class="w-full text-left mono" id="rupture-table">
+                        <thead><tr><th>Année</th><th>Valeur</th><th>Variation</th><th>Type</th><th>Interprétation</th></tr></thead>
+                        <tbody id="rupture-tbody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Onglet Saisonnalité -->
+        <div id="tab-saison" class="tab-content hidden space-y-4">
+            <div class="panel p-4">
+                <h2 class="text-xs font-bold uppercase mb-3" style="color: var(--text-muted);">📅 Profil saisonnier — Production métallurgique mensuelle</h2>
+                <div class="chart-container"><canvas id="chart-saison"></canvas></div>
+                <p class="text-[10px] mt-2" style="color: var(--text-muted);">Moyenne mensuelle sur 2015–2025, normalisée par rapport à la moyenne annuelle (100 = moyenne).</p>
+            </div>
+            <div class="panel p-4">
+                <h2 class="text-xs font-bold uppercase mb-3" style="color: var(--text-muted);">📊 Indices saisonniers</h2>
+                <div class="overflow-x-auto scroll">
+                    <table class="w-full text-left mono" id="saison-table">
+                        <thead><tr><th>Mois</th><th>Moyenne (t Ni)</th><th>Indice</th><th>Tendance</th></tr></thead>
+                        <tbody id="saison-tbody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Onglet Stress-test -->
+        <div id="tab-stress" class="tab-content hidden space-y-4">
+            <div class="panel p-4">
+                <h2 class="text-xs font-bold uppercase mb-3" style="color: var(--text-muted);">⚠️ Scénarios de stress-test</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-4">
+                    <div>
+                        <label class="block text-[10px] font-bold uppercase mb-1" style="color: var(--text-muted);">Scénario</label>
+                        <select id="f-stress-scenario" class="mono w-full">
+                            <option value="choc_petrole">Choc pétrolier (+100 %)</option>
+                            <option value="recession">Récession mondiale (-20 % conso.)</option>
+                            <option value="embargo_chine">Embargo chinois (-50 % export)</option>
+                            <option value="greve">Grève générale (-30 % extraction)</option>
+                            <option value="crise_nickel">Crise du nickel (-50 % cours)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-[10px] font-bold uppercase mb-1" style="color: var(--text-muted);">Intensité (%)</label>
+                        <input type="range" id="f-stress-intensity" min="10" max="100" value="50" step="10" class="w-full">
+                        <span id="lbl-stress-intensity" class="text-[10px] mono" style="color: var(--text-muted);">50 %</span>
+                    </div>
+                    <div>
+                        <label class="block text-[10px] font-bold uppercase mb-1" style="color: var(--text-muted);">Année de référence</label>
+                        <select id="f-stress-year" class="mono w-full">
+                            <option value="2025">2025</option>
+                            <option value="2024">2024</option>
+                            <option value="2023">2023</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                    <div>
+                        <p class="text-[11px] font-bold mb-2" style="color: var(--text-muted);">Impact sur la production</p>
+                        <div class="chart-container-sm"><canvas id="chart-stress-prod"></canvas></div>
+                    </div>
+                    <div>
+                        <p class="text-[11px] font-bold mb-2" style="color: var(--text-muted);">Impact sur les recettes</p>
+                        <div class="chart-container-sm"><canvas id="chart-stress-revenu"></canvas></div>
+                    </div>
+                </div>
+                <div id="stress-details" class="mt-3 text-[11px]" style="color: var(--text-muted);"></div>
             </div>
         </div>
 
@@ -375,7 +455,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="panel p-4">
                 <h2 class="text-xs font-bold uppercase mb-3" style="color: var(--text-muted);">Tendances récentes 2026</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -401,6 +480,7 @@
     </main>
 
     <script>
+        // Plugin zoom & annotation
         if (typeof Chart !== 'undefined' && typeof zoomPlugin !== 'undefined') Chart.register(zoomPlugin);
         if (typeof Chart !== 'undefined' && typeof annotationPlugin !== 'undefined') Chart.register(annotationPlugin);
 
@@ -454,16 +534,6 @@
             return ((current - previous) / Math.abs(previous)) * 100;
         }
 
-        function getLastValue(series, key) {
-            if (!series || series.length === 0) return null;
-            return series[series.length - 1][key];
-        }
-
-        function getPrevValue(series, key) {
-            if (!series || series.length < 2) return null;
-            return series[series.length - 2][key];
-        }
-
         // ============================================================
         // KPI
         // ============================================================
@@ -477,7 +547,6 @@
             const pib = DATA.poids_economique.pib.historique;
             const is35 = DATA.poids_economique.recettes_fiscales_is35.historique;
 
-            // Extraction 2024 vs 2023
             const ext2024 = ext.find(e => e.annee === 2024);
             const ext2023 = ext.find(e => e.annee === 2023);
             if (ext2024) {
@@ -488,13 +557,11 @@
                 }
             }
 
-            // Production 2025 vs 2024
             const prod2025 = prod.filter(p => p.mois.startsWith('2025')).reduce((s, p) => s + p.valeur, 0);
             const prod2024 = prod.filter(p => p.mois.startsWith('2024')).reduce((s, p) => s + p.valeur, 0);
             document.getElementById('k-production').textContent = formatNum(prod2025);
             document.getElementById('k-production-var').innerHTML = formatVar(calcVariation(prod2025, prod2024));
 
-            // Export métal 2025 vs 2024
             const e2025 = expMet.find(e => e.annee === 2025);
             const e2024 = expMet.find(e => e.annee === 2024);
             if (e2025) {
@@ -504,17 +571,14 @@
                 }
             }
 
-            // LME
             const lme = DATA.prix.lme_cash_settlement.derniere_valeur;
             if (lme && lme.valeur) {
                 document.getElementById('k-lme').textContent = formatNum(lme.valeur);
                 document.getElementById('k-lme-date').textContent = 'USD/t (' + lme.date + ')';
-                // Comparer au seuil
                 const diff = ((lme.valeur - seuilLME) / seuilLME) * 100;
                 document.getElementById('k-lme-var').innerHTML = formatVar(diff);
             }
 
-            // Prix FCFP 2025
             const c2025 = cours.find(c => c.annee === 2025);
             const c2024 = cours.find(c => c.annee === 2024);
             if (c2025) {
@@ -524,7 +588,6 @@
                 }
             }
 
-            // Conso 2025
             const co2025 = conso.find(c => c.annee === 2025);
             const co2024 = conso.find(c => c.annee === 2024);
             if (co2025) {
@@ -536,7 +599,6 @@
                 }
             }
 
-            // PIB
             const pibLast = pib[pib.length - 1];
             const pibPrev = pib[pib.length - 2];
             if (pibLast) {
@@ -547,7 +609,6 @@
             }
 
             // KPI experts
-            // Ratio export/extraction 2024
             if (ext2024 && ext2024.nickel_contenu_total) {
                 const expMin2024 = expMin.find(e => e.annee === 2024);
                 if (expMin2024 && expMin2024.nickel_contenu) {
@@ -556,8 +617,7 @@
                 }
             }
 
-            // Intensité métallurgique 2025
-            if (e2025 && expMin) {
+            if (e2025) {
                 const expMin2025 = expMin.find(e => e.annee === 2025);
                 if (expMin2025 && expMin2025.nickel_contenu) {
                     const intensite = (e2025.tonnage_metal_ni / (e2025.tonnage_metal_ni + expMin2025.nickel_contenu)) * 100;
@@ -565,13 +625,11 @@
                 }
             }
 
-            // Prix moyen export métal 2025 (FCFP/kg)
             if (e2025 && e2025.valeur_fab_millions_fcfp && e2025.tonnage_metal_ni) {
                 const prixMoyen = (e2025.valeur_fab_millions_fcfp * 1e6) / (e2025.tonnage_metal_ni * 1000);
                 document.getElementById('k-prix-moyen').textContent = formatNum(prixMoyen);
             }
 
-            // Volatilité cours 10 ans
             const coursLast10 = cours.slice(-10).map(c => c.cours_lme_usd_lb).filter(v => v != null);
             if (coursLast10.length > 1) {
                 const mean = coursLast10.reduce((a, b) => a + b, 0) / coursLast10.length;
@@ -588,7 +646,6 @@
                 document.getElementById('ctx-entreprises').textContent = formatNum(ctx.entreprises_actives.valeur);
             }
 
-            // Tendances
             const tend = DATA.tendances_recentes;
             if (tend) {
                 const t1 = document.getElementById('tendances-t1');
@@ -687,17 +744,7 @@
                 if (v > 20) alerts.push({ type: 'success', text: `Exportations métallurgiques 2025 en hausse de ${v.toFixed(1)} % vs 2024` });
             }
 
-            const prod = DATA.production.production_metallurgique.historique_mensuelle;
-            const prod2025 = prod.filter(p => p.mois.startsWith('2025')).reduce((s, p) => s + p.valeur, 0);
-            const prod2024 = prod.filter(p => p.mois.startsWith('2024')).reduce((s, p) => s + p.valeur, 0);
-            if (prod2025 && prod2024) {
-                const v = calcVariation(prod2025, prod2024);
-                if (v < -10) alerts.push({ type: 'warning', text: `Production métallurgique 2025 en baisse de ${Math.abs(v).toFixed(1)} % vs 2024` });
-            }
-
-            if (alerts.length === 0) {
-                alerts.push({ type: 'success', text: 'Aucune alerte majeure détectée' });
-            }
+            if (alerts.length === 0) alerts.push({ type: 'success', text: 'Aucune alerte majeure détectée' });
 
             alerts.forEach(a => {
                 const div = document.createElement('div');
@@ -712,7 +759,7 @@
         // ============================================================
         function initFilters() {
             const allYears = new Set();
-            ['extraction'].forEach(k => DATA.production.extraction_minerai.historique.forEach(e => allYears.add(e.annee)));
+            DATA.production.extraction_minerai.historique.forEach(e => allYears.add(e.annee));
             DATA.prix.cours_annuel_lme.historique.forEach(e => allYears.add(e.annee));
             DATA.exportations.minerai.historique.forEach(e => allYears.add(e.annee));
             DATA.exportations.metallurgie.historique.forEach(e => allYears.add(e.annee));
@@ -754,9 +801,13 @@
                     document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
                     btn.classList.add('active');
                     document.getElementById(btn.dataset.tab).classList.remove('hidden');
-                    if (btn.dataset.tab === 'tab-charts') renderCharts();
-                    if (btn.dataset.tab === 'tab-expert') renderExpert();
-                    if (btn.dataset.tab === 'tab-table') renderTable();
+                    const tab = btn.dataset.tab;
+                    if (tab === 'tab-charts') renderCharts();
+                    if (tab === 'tab-expert') renderExpert();
+                    if (tab === 'tab-rupture') renderRupture();
+                    if (tab === 'tab-saison') renderSaison();
+                    if (tab === 'tab-stress') renderStress();
+                    if (tab === 'tab-table') renderTable();
                 });
             });
         }
@@ -783,6 +834,11 @@
                 });
             });
             document.getElementById('f-forecast-indicator').addEventListener('change', renderForecast);
+            document.getElementById('f-rupture-indicator').addEventListener('change', renderRupture);
+            document.getElementById('f-stress-scenario').addEventListener('change', renderStress);
+            document.getElementById('f-stress-intensity').addEventListener('input', renderStress);
+            document.getElementById('f-stress-year').addEventListener('change', renderStress);
+
             document.getElementById('btn-reset').addEventListener('click', () => {
                 document.getElementById('f-indicator').value = 'extraction';
                 document.getElementById('f-search').value = '';
@@ -833,7 +889,7 @@
         }
 
         // ============================================================
-        // RENDU
+        // RENDU GLOBAL
         // ============================================================
         function renderAll() {
             renderAlerts();
@@ -846,6 +902,9 @@
             renderSecondaryCharts();
         }
 
+        // ============================================================
+        // GRAPHIQUE PRINCIPAL
+        // ============================================================
         function getSeries(indicator) {
             switch (indicator) {
                 case 'extraction':
@@ -1104,13 +1163,7 @@
             const expMet = filterByYear(DATA.exportations.metallurgie.historique);
             const conso = filterByYear(DATA.marche_mondial.consommation_mondiale.historique);
 
-            const series = {
-                'Extraction': {},
-                'Cours LME': {},
-                'Export métal.': {},
-                'Conso. monde': {}
-            };
-
+            const series = { 'Extraction': {}, 'Cours LME': {}, 'Export métal.': {}, 'Conso. monde': {} };
             ext.forEach(e => series['Extraction'][e.annee] = e.tonnage_humide_total);
             cours.forEach(e => series['Cours LME'][e.annee] = e.cours_lme_usd_lb);
             expMet.forEach(e => series['Export métal.'][e.annee] = e.tonnage_metal_ni);
@@ -1172,7 +1225,6 @@
             const data = series.map(e => ({ annee: e.annee, val: e[key] })).filter(e => e.val != null);
             if (data.length < 3) return;
 
-            // Régression linéaire
             const n = data.length;
             const sumX = data.reduce((s, e) => s + e.annee, 0);
             const sumY = data.reduce((s, e) => s + e.val, 0);
@@ -1219,8 +1271,7 @@
                 }
             });
 
-            const details = document.getElementById('forecast-details');
-            details.innerHTML = `
+            document.getElementById('forecast-details').innerHTML = `
                 <strong>Tendance :</strong> ${slope > 0 ? '↗ hausse' : '↘ baisse'} de ${Math.abs(slope).toFixed(2)} ${unit}/an
                 · <strong>Prévisions :</strong>
                 ${forecastYears.map((y, i) => `${y}: ${formatNum(forecastValues[i], 2)} ${unit}`).join(' · ')}
@@ -1267,6 +1318,289 @@
                     scales: { x: { ticks: { font: { size: 9 } } }, y: { ticks: { font: { size: 9 } } } }
                 }
             });
+        }
+
+        // ============================================================
+        // POINTS DE RUPTURE (CUSUM)
+        // ============================================================
+        function detectBreakpoints(series, key) {
+            const data = series.map(e => ({ annee: e.annee, val: e[key] })).filter(e => e.val != null);
+            if (data.length < 5) return { breakpoints: [], cusumValues: [], mean: 0, sd: 0 };
+            const n = data.length;
+            const mean = data.reduce((s, e) => s + e.val, 0) / n;
+            const sd = Math.sqrt(data.reduce((s, e) => s + Math.pow(e.val - mean, 2), 0) / n);
+
+            let cusum = 0;
+            const cusumValues = data.map(e => {
+                cusum += (e.val - mean) / (sd || 1);
+                return { annee: e.annee, cusum, val: e.val };
+            });
+
+            const breakpoints = [];
+            cusumValues.forEach((e, i) => {
+                if (Math.abs(e.cusum) > 2 && (i === 0 || Math.abs(cusumValues[i-1].cusum) <= 2)) {
+                    breakpoints.push({
+                        annee: e.annee,
+                        valeur: e.val,
+                        cusum: e.cusum,
+                        variation: i > 0 ? calcVariation(e.val, cusumValues[i-1].val) : null
+                    });
+                }
+            });
+
+            return { breakpoints, cusumValues, mean, sd };
+        }
+
+        function renderRupture() {
+            const ind = document.getElementById('f-rupture-indicator').value;
+            let series, key, label, unit;
+            if (ind === 'cours') {
+                series = filterByYear(DATA.prix.cours_annuel_lme.historique);
+                key = 'cours_lme_usd_lb'; label = 'Cours LME'; unit = 'USD/lb';
+            } else if (ind === 'extraction') {
+                series = filterByYear(DATA.production.extraction_minerai.historique);
+                key = 'tonnage_humide_total'; label = 'Extraction'; unit = 't humides';
+            } else if (ind === 'export_metal') {
+                series = filterByYear(DATA.exportations.metallurgie.historique);
+                key = 'tonnage_metal_ni'; label = 'Exportations métallurgiques'; unit = 't Ni';
+            } else {
+                series = filterByYear(DATA.marche_mondial.consommation_mondiale.historique);
+                key = 'consommation_mondiale_milliers_t'; label = 'Consommation mondiale'; unit = 'kt';
+            }
+
+            const result = detectBreakpoints(series, key);
+            if (!result.cusumValues.length) return;
+
+            if (charts.rupture) charts.rupture.destroy();
+            const labels = result.cusumValues.map(e => e.annee);
+            charts.rupture = new Chart(document.getElementById('chart-rupture'), {
+                type: 'line',
+                data: {
+                    labels,
+                    datasets: [
+                        {
+                            label: 'CUSUM (écart cumulé)',
+                            data: result.cusumValues.map(e => e.cusum),
+                            borderColor: '#E1000F',
+                            backgroundColor: 'rgba(225,0,15,0.1)',
+                            fill: true, tension: 0.3
+                        },
+                        {
+                            label: 'Seuil +2σ',
+                            data: labels.map(() => 2),
+                            borderColor: '#ffb800',
+                            borderDash: [5, 5],
+                            pointRadius: 0
+                        },
+                        {
+                            label: 'Seuil -2σ',
+                            data: labels.map(() => -2),
+                            borderColor: '#ffb800',
+                            borderDash: [5, 5],
+                            pointRadius: 0
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    plugins: { legend: { display: true, position: 'bottom', labels: { font: { size: 10 } } } },
+                    scales: {
+                        x: { ticks: { font: { size: 9 } } },
+                        y: { ticks: { font: { size: 9 } }, title: { display: true, text: 'CUSUM (σ)' } }
+                    }
+                }
+            });
+
+            const tbody = document.getElementById('rupture-tbody');
+            tbody.innerHTML = '';
+            result.breakpoints.forEach(bp => {
+                const type = bp.cusum > 0 ? 'Hausse structurelle' : 'Baisse structurelle';
+                const interp = bp.cusum > 0 ? 'Rupture à la hausse' : 'Rupture à la baisse';
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td class="font-bold">${bp.annee}</td>
+                    <td>${formatNum(bp.valeur, 2)} ${unit}</td>
+                    <td>${bp.variation != null ? formatVar(bp.variation) : '—'}</td>
+                    <td><span class="badge ${bp.cusum > 0 ? 'badge-success' : 'badge-danger'}">${type}</span></td>
+                    <td>${interp}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+
+            document.getElementById('rupture-details').innerHTML = `
+                <strong>${label}</strong> : moyenne = ${formatNum(result.mean, 2)} ${unit}, σ = ${formatNum(result.sd, 2)}
+                · ${result.breakpoints.length} point(s) de rupture détecté(s) (|CUSUM| > 2σ)
+            `;
+        }
+
+        // ============================================================
+        // SAISONNALITÉ
+        // ============================================================
+        function renderSaison() {
+            const prod = DATA.production.production_metallurgique.historique_mensuelle;
+            if (!prod || prod.length === 0) return;
+
+            const filtered = prod.filter(p => {
+                const y = parseInt(p.mois.split('-')[0]);
+                return y >= 2015 && y <= 2025;
+            });
+
+            const byMonth = {};
+            for (let m = 1; m <= 12; m++) byMonth[m] = [];
+            filtered.forEach(p => {
+                const m = parseInt(p.mois.split('-')[1]);
+                byMonth[m].push(p.valeur);
+            });
+
+            const monthlyMeans = {};
+            for (let m = 1; m <= 12; m++) {
+                const vals = byMonth[m];
+                monthlyMeans[m] = vals.length ? vals.reduce((a, b) => a + b, 0) / vals.length : null;
+            }
+
+            const overallMean = Object.values(monthlyMeans).filter(v => v != null).reduce((a, b) => a + b, 0) / 12;
+
+            const indices = {};
+            for (let m = 1; m <= 12; m++) {
+                indices[m] = monthlyMeans[m] != null ? (monthlyMeans[m] / overallMean) * 100 : null;
+            }
+
+            const moisLabels = ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Juin', 'Juil', 'Août', 'Sep', 'Oct', 'Nov', 'Déc'];
+
+            if (charts.saison) charts.saison.destroy();
+            charts.saison = new Chart(document.getElementById('chart-saison'), {
+                type: 'bar',
+                data: {
+                    labels: moisLabels,
+                    datasets: [{
+                        label: 'Indice saisonnier (100 = moyenne)',
+                        data: Object.values(indices),
+                        backgroundColor: Object.values(indices).map(v => v > 105 ? '#18753c' : v < 95 ? '#E1000F' : '#000091')
+                    }]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        x: { ticks: { font: { size: 10 } } },
+                        y: { ticks: { font: { size: 10 } }, title: { display: true, text: 'Indice' } }
+                    }
+                }
+            });
+
+            const tbody = document.getElementById('saison-tbody');
+            tbody.innerHTML = '';
+            for (let m = 1; m <= 12; m++) {
+                const tendance = indices[m] > 105 ? '↑ Fort' : indices[m] > 100 ? '↑ Léger' : indices[m] < 95 ? '↓ Fort' : indices[m] < 100 ? '↓ Léger' : '→ Stable';
+                const color = indices[m] > 105 ? 'var(--green)' : indices[m] < 95 ? 'var(--red-marianne)' : 'var(--text-muted)';
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td class="font-bold">${moisLabels[m-1]}</td>
+                    <td>${formatNum(monthlyMeans[m], 2)}</td>
+                    <td class="mono" style="color:${color};">${indices[m] != null ? indices[m].toFixed(1) : '—'}</td>
+                    <td>${tendance}</td>
+                `;
+                tbody.appendChild(tr);
+            }
+        }
+
+        // ============================================================
+        // STRESS-TEST
+        // ============================================================
+        function renderStress() {
+            const scenario = document.getElementById('f-stress-scenario').value;
+            const intensity = parseInt(document.getElementById('f-stress-intensity').value) / 100;
+            const year = parseInt(document.getElementById('f-stress-year').value);
+
+            document.getElementById('lbl-stress-intensity').textContent = (intensity * 100).toFixed(0) + ' %';
+
+            const ext = DATA.production.extraction_minerai.historique.find(e => e.annee === year);
+            const expMet = DATA.exportations.metallurgie.historique.find(e => e.annee === year);
+            const cours = DATA.prix.cours_annuel_lme.historique.find(e => e.annee === year);
+
+            if (!ext && !expMet && !cours) return;
+
+            let impactProd = 0, impactCours = 0, impactExport = 0, label = '';
+            switch (scenario) {
+                case 'choc_petrole':
+                    impactProd = -0.15; impactCours = 0.10; impactExport = -0.10;
+                    label = 'Choc pétrolier (+100 %)';
+                    break;
+                case 'recession':
+                    impactProd = -0.20; impactCours = -0.25; impactExport = -0.20;
+                    label = 'Récession mondiale (-20 % conso.)';
+                    break;
+                case 'embargo_chine':
+                    impactProd = -0.10; impactCours = -0.30; impactExport = -0.50;
+                    label = 'Embargo chinois (-50 % export)';
+                    break;
+                case 'greve':
+                    impactProd = -0.30; impactCours = 0.05; impactExport = -0.30;
+                    label = 'Grève générale (-30 % extraction)';
+                    break;
+                case 'crise_nickel':
+                    impactProd = -0.15; impactCours = -0.50; impactExport = -0.25;
+                    label = 'Crise du nickel (-50 % cours)';
+                    break;
+            }
+
+            const prodBase = ext ? ext.tonnage_humide_total / 1000 : 0;
+            const expBase = expMet ? expMet.tonnage_metal_ni : 0;
+            const coursBase = cours ? cours.cours_lme_usd_lb : 0;
+
+            const prodStress = prodBase * (1 + impactProd * intensity);
+            const expStress = expBase * (1 + impactExport * intensity);
+            const coursStress = coursBase * (1 + impactCours * intensity);
+
+            // Graphique production
+            if (charts.stressProd) charts.stressProd.destroy();
+            charts.stressProd = new Chart(document.getElementById('chart-stress-prod'), {
+                type: 'bar',
+                data: {
+                    labels: ['Référence', 'Stressé'],
+                    datasets: [{
+                        label: 'Production (kt)',
+                        data: [prodBase, prodStress],
+                        backgroundColor: ['#000091', '#E1000F']
+                    }]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: { y: { ticks: { font: { size: 10 } } } }
+                }
+            });
+
+            // Graphique recettes
+            const revBase = expMet ? expMet.valeur_fab_millions_fcfp / 1000 : 0;
+            const prixMoyenBase = expMet && expMet.tonnage_metal_ni ? (expMet.valeur_fab_millions_fcfp / expMet.tonnage_metal_ni) : 0;
+            const revStress = expStress * (coursBase !== 0 ? (coursStress / coursBase) : 1) * prixMoyenBase / 1000;
+
+            if (charts.stressRevenu) charts.stressRevenu.destroy();
+            charts.stressRevenu = new Chart(document.getElementById('chart-stress-revenu'), {
+                type: 'bar',
+                data: {
+                    labels: ['Référence', 'Stressé'],
+                    datasets: [{
+                        label: 'Recettes (Mds FCFP)',
+                        data: [revBase, revStress],
+                        backgroundColor: ['#18753c', '#E1000F']
+                    }]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: { y: { ticks: { font: { size: 10 } } } }
+                }
+            });
+
+            document.getElementById('stress-details').innerHTML = `
+                <strong>Scénario :</strong> ${label} (intensité ${(intensity*100).toFixed(0)} %)<br>
+                <strong>Production :</strong> ${formatNum(prodBase)} → ${formatNum(prodStress)} kt (${formatVar(prodBase !== 0 ? (prodStress-prodBase)/prodBase*100 : null)})<br>
+                <strong>Exportations :</strong> ${formatNum(expBase)} → ${formatNum(expStress)} t Ni (${formatVar(expBase !== 0 ? (expStress-expBase)/expBase*100 : null)})<br>
+                <strong>Cours LME :</strong> ${formatNum(coursBase, 2)} → ${formatNum(coursStress, 2)} USD/lb (${formatVar(coursBase !== 0 ? (coursStress-coursBase)/coursBase*100 : null)})<br>
+                <strong>Recettes :</strong> ${formatNum(revBase, 1)} → ${formatNum(revStress, 1)} Mds FCFP (${formatVar(revBase !== 0 ? (revStress-revBase)/revBase*100 : null)})
+            `;
         }
 
         // ============================================================
