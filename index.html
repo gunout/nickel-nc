@@ -1,0 +1,1396 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moniteur Nickel — Nouvelle-Calédonie (Expert)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@2.0.1/dist/chartjs-plugin-zoom.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3.0.1/dist/chartjs-plugin-annotation.min.js"></script>
+    <style>
+        :root {
+            --blue-france: #000091; --red-marianne: #E1000F; --green: #18753c;
+            --gold: #ffb800; --purple: #a855f7; --cyan: #06b6d4;
+            --bg-app: #f6f6f6; --bg-panel: #fff; --border: #e5e5e5;
+            --text: #1e1e1e; --text-muted: #929292;
+        }
+        body.dark {
+            --bg-app: #0f172a; --bg-panel: #1e293b; --border: #334155;
+            --text: #e2e8f0; --text-muted: #94a3b8;
+        }
+        body { font-family: system-ui, -apple-system, sans-serif; background: var(--bg-app); color: var(--text); font-size: 13px; transition: background 0.3s, color 0.3s; }
+        .marianne-band { height: 6px; background: linear-gradient(to right, #000091 0%, #000091 33.33%, #fff 33.33%, #fff 66.66%, #E1000F 66.66%, #E1000F 100%); }
+        .panel { background: var(--bg-panel); border: 1px solid var(--border); border-radius: 8px; transition: all 0.2s; }
+        .panel:hover { border-color: #c5c5c5; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+        .panel.active { border-color: var(--blue-france); box-shadow: 0 0 0 1px var(--blue-france); }
+        .kpi { border-left: 4px solid var(--blue-france); cursor: pointer; }
+        .kpi.green { border-left-color: var(--green); }
+        .kpi.red { border-left-color: var(--red-marianne); }
+        .kpi.gold { border-left-color: var(--gold); }
+        .kpi.purple { border-left-color: var(--purple); }
+        .kpi.cyan { border-left-color: var(--cyan); }
+        .kpi:hover { background: rgba(0,0,145,0.04); }
+        .mono { font-family: 'SF Mono', Menlo, monospace; }
+        .led { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+        .chart-container { position: relative; height: 320px; }
+        .chart-container-sm { position: relative; height: 220px; }
+        .tab-btn { padding: 8px 16px; font-weight: 600; font-size: 12px; border-radius: 6px; cursor: pointer; border: 1px solid transparent; transition: all 0.15s; }
+        .tab-btn.active { background: var(--blue-france); color: #fff; }
+        .tab-btn:not(.active) { color: var(--text-muted); }
+        .tab-btn:not(.active):hover { color: var(--blue-france); background: rgba(0,0,145,0.08); }
+        .legend-pill { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 999px; border: 1px solid var(--border); font-size: 11px; font-family: 'SF Mono', Menlo, monospace; cursor: pointer; transition: all 0.2s; background: var(--bg-panel); color: var(--text); }
+        .legend-pill:hover { border-color: var(--blue-france); }
+        .legend-pill.inactive { opacity: 0.4; text-decoration: line-through; border-style: dashed; }
+        .legend-dot { width: 8px; height: 8px; border-radius: 50%; }
+        table th { cursor: pointer; user-select: none; color: var(--text-muted); text-transform: uppercase; font-weight: 700; font-size: 10px; letter-spacing: 0.5px; }
+        table th:hover { color: var(--blue-france); }
+        table td, table th { padding: 6px 8px; border-bottom: 1px solid var(--border); white-space: nowrap; font-size: 11px; }
+        tbody tr:hover { background: rgba(0,0,145,0.04); cursor: pointer; }
+        tbody tr.selected { background: rgba(0,0,145,0.1); }
+        .btn-primary { background: var(--blue-france); color: #fff; border: 1px solid var(--blue-france); font-weight: 700; border-radius: 6px; transition: all .15s; font-family: system-ui; cursor: pointer; }
+        .btn-primary:hover { background: #1212ff; }
+        .btn-outline { background: transparent; color: var(--text); border: 1px solid var(--border); font-weight: 600; border-radius: 6px; transition: all .15s; cursor: pointer; }
+        .btn-outline:hover { border-color: var(--blue-france); color: var(--blue-france); background: rgba(0,0,145,0.08); }
+        input[type="text"], select, input[type="number"] { background: var(--bg-panel); border: 1px solid var(--border); color: var(--text); border-radius: 6px; padding: 6px 10px; font-family: system-ui; font-size: 12px; }
+        input:focus, select:focus { outline: none; border-color: var(--blue-france); box-shadow: 0 0 0 2px rgba(0,0,145,0.15); }
+        input[type="range"] { accent-color: var(--blue-france); }
+        .scroll::-webkit-scrollbar { height: 8px; width: 8px; }
+        .scroll::-webkit-scrollbar-thumb { background: var(--border); border-radius: 8px; }
+        .alert-item { padding: 8px 12px; border-radius: 6px; border-left: 3px solid; font-size: 11px; margin-bottom: 6px; }
+        .alert-danger { background: rgba(225,0,15,0.08); border-color: var(--red-marianne); }
+        .alert-warning { background: rgba(255,184,0,0.12); border-color: var(--gold); }
+        .alert-success { background: rgba(24,117,60,0.08); border-color: var(--green); }
+        .alert-info { background: rgba(0,0,145,0.06); border-color: var(--blue-france); }
+        .badge { display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: 9px; font-weight: 700; text-transform: uppercase; }
+        .badge-danger { background: var(--red-marianne); color: #fff; }
+        .badge-warning { background: var(--gold); color: #1e1e1e; }
+        .badge-success { background: var(--green); color: #fff; }
+        .badge-info { background: var(--blue-france); color: #fff; }
+        .metric-value { font-variant-numeric: tabular-nums; }
+    </style>
+</head>
+<body class="min-h-screen">
+    <div class="marianne-band"></div>
+    <header class="border-b sticky top-0 z-20 shadow-sm" style="background: var(--bg-panel); border-color: var(--border);">
+        <div class="max-w-[1600px] mx-auto px-6 h-16 flex items-center justify-between gap-4">
+            <div class="flex items-center gap-4">
+                <span class="mono text-xs px-2 py-1 rounded font-bold bg-[#000091] text-white">NICKEL</span>
+                <span class="font-bold" style="color: var(--blue-france);">Nouvelle-Calédonie</span>
+                <span class="text-xs" style="color: var(--text-muted);">Moniteur expert</span>
+                <span class="badge badge-info">v2.0</span>
+            </div>
+            <div class="flex items-center gap-3 text-xs mono">
+                <button id="btn-theme" class="btn-outline px-3 py-1.5">🌙 Sombre</button>
+                <button id="btn-reset" class="btn-outline px-3 py-1.5">Réinitialiser</button>
+                <button id="btn-export" class="btn-primary px-3 py-1.5">📥 Exporter</button>
+                <span class="flex items-center gap-2 px-3 py-1.5 rounded" style="background: var(--bg-app); border: 1px solid var(--border);">
+                    <span class="led bg-yellow-500" id="status-led"></span>
+                    <span id="status-text" style="color: var(--text-muted);">Chargement...</span>
+                </span>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-[1600px] mx-auto px-6 py-6 space-y-5">
+        <!-- Filtres globaux -->
+        <div class="panel p-4 flex flex-wrap items-center justify-between gap-4">
+            <div class="flex flex-wrap items-center gap-4">
+                <div>
+                    <label class="block text-[10px] font-bold uppercase mb-1" style="color: var(--text-muted);">Indicateur</label>
+                    <select id="f-indicator" class="mono">
+                        <option value="extraction">Extraction minerai</option>
+                        <option value="cours">Cours LME</option>
+                        <option value="export_minerai">Exportations minerai</option>
+                        <option value="export_metal">Exportations métallurgiques</option>
+                        <option value="production_monde">Production mondiale</option>
+                        <option value="conso_monde">Consommation mondiale</option>
+                        <option value="pib">Poids économique</option>
+                        <option value="ratio">Ratio export/extraction</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-[10px] font-bold uppercase mb-1" style="color: var(--text-muted);">Recherche</label>
+                    <input type="text" id="f-search" placeholder="Filtrer..." class="mono w-40">
+                </div>
+                <div>
+                    <label class="block text-[10px] font-bold uppercase mb-1" style="color: var(--text-muted);">Seuil alerte LME (USD/t)</label>
+                    <input type="number" id="f-seuil-lme" value="14000" step="500" class="mono w-28">
+                </div>
+            </div>
+            <div class="flex flex-col items-end">
+                <label class="block text-[10px] font-bold uppercase mb-1" style="color: var(--text-muted);">Période</label>
+                <div class="flex items-center gap-2 text-xs mono">
+                    <span id="lbl-min">—</span>
+                    <input type="range" id="f-year-min" min="1970" max="2026" step="1" class="w-32">
+                    <span style="color: var(--text-muted);">-</span>
+                    <input type="range" id="f-year-max" min="1970" max="2026" step="1" class="w-32">
+                    <span id="lbl-max">—</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bandeau d'alertes -->
+        <div class="panel p-4">
+            <div class="flex items-center justify-between mb-2">
+                <h2 class="text-xs font-bold uppercase" style="color: var(--text-muted);">🚨 Alertes automatiques</h2>
+                <span class="text-[10px]" style="color: var(--text-muted);">Basées sur les seuils et variations</span>
+            </div>
+            <div id="alerts-container" class="space-y-2"></div>
+        </div>
+
+        <!-- KPI principaux -->
+        <section class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div class="panel kpi p-4" data-metric="extraction">
+                <p class="text-[11px] font-bold uppercase" style="color: var(--text-muted);">Extraction (2024)</p>
+                <p class="text-2xl font-extrabold mono" style="color: var(--blue-france);" id="k-extraction">—</p>
+                <p class="text-[10px]" style="color: var(--text-muted);">milliers t humides</p>
+                <p class="text-[10px] mono mt-1" id="k-extraction-var"></p>
+            </div>
+            <div class="panel kpi green p-4" data-metric="production">
+                <p class="text-[11px] font-bold uppercase" style="color: var(--text-muted);">Production métallurgique (2025)</p>
+                <p class="text-2xl font-extrabold mono" style="color: var(--green);" id="k-production">—</p>
+                <p class="text-[10px]" style="color: var(--text-muted);">tonnes Ni contenu</p>
+                <p class="text-[10px] mono mt-1" id="k-production-var"></p>
+            </div>
+            <div class="panel kpi green p-4" data-metric="export_metal">
+                <p class="text-[11px] font-bold uppercase" style="color: var(--text-muted);">Export. métallurgiques (2025)</p>
+                <p class="text-2xl font-extrabold mono" style="color: var(--green);" id="k-export-met">—</p>
+                <p class="text-[10px]" style="color: var(--text-muted);">tonnes Ni contenu</p>
+                <p class="text-[10px] mono mt-1" id="k-export-met-var"></p>
+            </div>
+            <div class="panel kpi red p-4" data-metric="lme">
+                <p class="text-[11px] font-bold uppercase" style="color: var(--text-muted);">Prix LME (dernier)</p>
+                <p class="text-2xl font-extrabold mono" style="color: var(--red-marianne);" id="k-lme">—</p>
+                <p class="text-[10px]" style="color: var(--text-muted);" id="k-lme-date">USD/t</p>
+                <p class="text-[10px] mono mt-1" id="k-lme-var"></p>
+            </div>
+        </section>
+
+        <!-- KPI secondaires -->
+        <section class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div class="panel kpi gold p-4" data-metric="prix">
+                <p class="text-[11px] font-bold uppercase" style="color: var(--text-muted);">Prix nickel (2025)</p>
+                <p class="text-2xl font-extrabold mono" style="color: #8a5e00;" id="k-prix-2025">—</p>
+                <p class="text-[10px]" style="color: var(--text-muted);">F.CFP/kg</p>
+                <p class="text-[10px] mono mt-1" id="k-prix-2025-var"></p>
+            </div>
+            <div class="panel kpi cyan p-4" data-metric="conso">
+                <p class="text-[11px] font-bold uppercase" style="color: var(--text-muted);">Conso. mondiale (2025)</p>
+                <p class="text-2xl font-extrabold mono" style="color: var(--cyan);" id="k-conso-mondiale">—</p>
+                <p class="text-[10px]" style="color: var(--text-muted);">milliers de tonnes</p>
+                <p class="text-[10px] mono mt-1" id="k-conso-var"></p>
+            </div>
+            <div class="panel kpi purple p-4" data-metric="chine">
+                <p class="text-[11px] font-bold uppercase" style="color: var(--text-muted);">Part Chine (2025)</p>
+                <p class="text-2xl font-extrabold mono" style="color: var(--purple);" id="k-part-chine">—</p>
+                <p class="text-[10px]" style="color: var(--text-muted);">% conso. mondiale</p>
+                <p class="text-[10px] mono mt-1" id="k-part-chine-var"></p>
+            </div>
+            <div class="panel kpi red p-4" data-metric="pib">
+                <p class="text-[11px] font-bold uppercase" style="color: var(--text-muted);">Part dans le PIB (2017)</p>
+                <p class="text-2xl font-extrabold mono" style="color: var(--red-marianne);" id="k-part-pib">—</p>
+                <p class="text-[10px]" style="color: var(--text-muted);">% du PIB NC</p>
+                <p class="text-[10px] mono mt-1" id="k-part-pib-var"></p>
+            </div>
+        </section>
+
+        <!-- KPI experts -->
+        <section class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div class="panel kpi p-4" data-metric="ratio_export">
+                <p class="text-[11px] font-bold uppercase" style="color: var(--text-muted);">Ratio export/extraction (2024)</p>
+                <p class="text-2xl font-extrabold mono" style="color: var(--blue-france);" id="k-ratio-export">—</p>
+                <p class="text-[10px]" style="color: var(--text-muted);">% du minerai extrait exporté</p>
+            </div>
+            <div class="panel kpi green p-4" data-metric="intensite">
+                <p class="text-[11px] font-bold uppercase" style="color: var(--text-muted);">Intensité métallurgique (2025)</p>
+                <p class="text-2xl font-extrabold mono" style="color: var(--green);" id="k-intensite">—</p>
+                <p class="text-[10px]" style="color: var(--text-muted);">% production/export</p>
+            </div>
+            <div class="panel kpi gold p-4" data-metric="prix_moyen">
+                <p class="text-[11px] font-bold uppercase" style="color: var(--text-muted);">Prix moyen export métal. (2025)</p>
+                <p class="text-2xl font-extrabold mono" style="color: #8a5e00;" id="k-prix-moyen">—</p>
+                <p class="text-[10px]" style="color: var(--text-muted);">F.CFP/kg Ni</p>
+            </div>
+            <div class="panel kpi red p-4" data-metric="volatilite">
+                <p class="text-[11px] font-bold uppercase" style="color: var(--text-muted);">Volatilité cours (10 ans)</p>
+                <p class="text-2xl font-extrabold mono" style="color: var(--red-marianne);" id="k-volatilite">—</p>
+                <p class="text-[10px]" style="color: var(--text-muted);">écart-type USD/lb</p>
+            </div>
+        </section>
+
+        <!-- Onglets -->
+        <div class="flex items-center gap-2 flex-wrap">
+            <button class="tab-btn active" data-tab="tab-charts">📊 Graphiques</button>
+            <button class="tab-btn" data-tab="tab-expert">🧠 Analyse experte</button>
+            <button class="tab-btn" data-tab="tab-table">📋 Tableau</button>
+            <button class="tab-btn" data-tab="tab-context">📌 Contexte & Tendances</button>
+            <button class="tab-btn" data-tab="tab-json">🔍 JSON brut</button>
+        </div>
+
+        <!-- Onglet Graphiques -->
+        <div id="tab-charts" class="tab-content space-y-4">
+            <div class="panel p-4">
+                <div class="flex items-center justify-between mb-2">
+                    <h2 class="text-xs font-bold uppercase" style="color: var(--text-muted);" id="main-chart-title">Sélectionnez un indicateur</h2>
+                    <div class="flex items-center gap-2">
+                        <button class="btn-outline px-2 py-1 text-[10px]" id="btn-reset-zoom">Reset zoom</button>
+                        <span class="text-[10px]" style="color: var(--text-muted);">Molette = zoom · Glisser = pan · Survol = détails</span>
+                    </div>
+                </div>
+                <div id="main-legend" class="flex flex-wrap gap-2 mb-3 min-h-[28px]"></div>
+                <div class="chart-container" style="height: 420px;"><canvas id="c-main"></canvas></div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                <div class="panel p-4">
+                    <h2 class="text-xs font-bold uppercase mb-3" style="color: var(--text-muted);">Extraction de minerai</h2>
+                    <div class="chart-container-sm"><canvas id="chart-extraction"></canvas></div>
+                </div>
+                <div class="panel p-4">
+                    <h2 class="text-xs font-bold uppercase mb-3" style="color: var(--text-muted);">Cours du nickel au LME</h2>
+                    <div class="chart-container-sm"><canvas id="chart-cours"></canvas></div>
+                </div>
+                <div class="panel p-4">
+                    <h2 class="text-xs font-bold uppercase mb-3" style="color: var(--text-muted);">Exportations métallurgiques</h2>
+                    <div class="chart-container-sm"><canvas id="chart-export-metal"></canvas></div>
+                </div>
+                <div class="panel p-4">
+                    <h2 class="text-xs font-bold uppercase mb-3" style="color: var(--text-muted);">Consommation mondiale</h2>
+                    <div class="chart-container-sm"><canvas id="chart-conso-monde"></canvas></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Onglet Analyse experte -->
+        <div id="tab-expert" class="tab-content hidden space-y-4">
+            <!-- Corrélations -->
+            <div class="panel p-4">
+                <h2 class="text-xs font-bold uppercase mb-3" style="color: var(--text-muted);">🔗 Matrice de corrélations (Pearson)</h2>
+                <p class="text-[10px] mb-3" style="color: var(--text-muted);">Corrélations entre les principales séries (sur la période filtrée). < 0,3 : faible · 0,3-0,7 : modérée · > 0,7 : forte.</p>
+                <div class="overflow-x-auto scroll">
+                    <table class="w-full text-left mono" id="corr-table">
+                        <thead><tr id="corr-thead"></tr></thead>
+                        <tbody id="corr-tbody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Prévisions -->
+            <div class="panel p-4">
+                <div class="flex items-center justify-between mb-3">
+                    <h2 class="text-xs font-bold uppercase" style="color: var(--text-muted);">📈 Prévisions (régression linéaire sur 3 ans)</h2>
+                    <select id="f-forecast-indicator" class="mono text-xs">
+                        <option value="cours">Cours LME</option>
+                        <option value="extraction">Extraction</option>
+                        <option value="export_metal">Exportations métallurgiques</option>
+                        <option value="conso_monde">Consommation mondiale</option>
+                    </select>
+                </div>
+                <div class="chart-container"><canvas id="chart-forecast"></canvas></div>
+                <div id="forecast-details" class="mt-3 text-[11px]" style="color: var(--text-muted);"></div>
+            </div>
+
+            <!-- Analyse des écarts -->
+            <div class="panel p-4">
+                <h2 class="text-xs font-bold uppercase mb-3" style="color: var(--text-muted);">📊 Analyse des écarts (YoY)</h2>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                    <div>
+                        <p class="text-[11px] font-bold mb-2" style="color: var(--text-muted);">Variations annuelles — Extraction</p>
+                        <div class="chart-container-sm"><canvas id="chart-yoy-extraction"></canvas></div>
+                    </div>
+                    <div>
+                        <p class="text-[11px] font-bold mb-2" style="color: var(--text-muted);">Variations annuelles — Exportations métallurgiques</p>
+                        <div class="chart-container-sm"><canvas id="chart-yoy-export"></canvas></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Indicateurs dérivés -->
+            <div class="panel p-4">
+                <h2 class="text-xs font-bold uppercase mb-3" style="color: var(--text-muted);">🧮 Indicateurs dérivés</h2>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                    <div class="p-3 rounded" style="background: var(--bg-app);">
+                        <p class="text-[10px] uppercase" style="color: var(--text-muted);">Taux d'exportation minerai (2024)</p>
+                        <p class="text-lg font-bold mono" id="deriv-taux-export">—</p>
+                        <p class="text-[9px]" style="color: var(--text-muted);">export / extraction</p>
+                    </div>
+                    <div class="p-3 rounded" style="background: var(--bg-app);">
+                        <p class="text-[10px] uppercase" style="color: var(--text-muted);">Valeur ajoutée / t Ni (2017)</p>
+                        <p class="text-lg font-bold mono" id="deriv-va-tonne">—</p>
+                        <p class="text-[9px]" style="color: var(--text-muted);">F.CFP / t Ni</p>
+                    </div>
+                    <div class="p-3 rounded" style="background: var(--bg-app);">
+                        <p class="text-[10px] uppercase" style="color: var(--text-muted);">Recettes IS35 / VA (2019)</p>
+                        <p class="text-lg font-bold mono" id="deriv-is35-va">—</p>
+                        <p class="text-[9px]" style="color: var(--text-muted);">%</p>
+                    </div>
+                    <div class="p-3 rounded" style="background: var(--bg-app);">
+                        <p class="text-[10px] uppercase" style="color: var(--text-muted);">Dépendance Chine (2025)</p>
+                        <p class="text-lg font-bold mono" id="deriv-dependance-chine">—</p>
+                        <p class="text-[9px]" style="color: var(--text-muted);">% conso. mondiale</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Onglet Tableau -->
+        <div id="tab-table" class="tab-content hidden">
+            <div class="panel overflow-hidden">
+                <div class="px-4 py-3 flex items-center justify-between border-b flex-wrap gap-2" style="background: var(--bg-app); border-color: var(--border);">
+                    <h2 class="text-xs font-bold uppercase" style="color: var(--text-muted);">Données — <span id="t-count">0</span> lignes</h2>
+                    <span class="text-[10px]" style="color: var(--text-muted);">Cliquez sur une ligne pour la sélectionner</span>
+                </div>
+                <div class="overflow-x-auto scroll max-h-[600px]">
+                    <table class="w-full text-left mono" id="main-table">
+                        <thead class="sticky top-0 z-10" style="background: var(--bg-panel);">
+                            <tr id="thead-row"></tr>
+                        </thead>
+                        <tbody id="tbody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Onglet Contexte -->
+        <div id="tab-context" class="tab-content hidden space-y-4">
+            <div class="panel p-4">
+                <h2 class="text-xs font-bold uppercase mb-3" style="color: var(--text-muted);">Contexte économique — Nouvelle-Calédonie</h2>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                    <div class="p-3 rounded" style="background: var(--bg-app);">
+                        <p class="text-[10px] uppercase" style="color: var(--text-muted);">PIB/habitant (2024)</p>
+                        <p class="text-lg font-bold mono" id="ctx-pib-hab">—</p>
+                    </div>
+                    <div class="p-3 rounded" style="background: var(--bg-app);">
+                        <p class="text-[10px] uppercase" style="color: var(--text-muted);">Taux de chômage (2023)</p>
+                        <p class="text-lg font-bold mono" id="ctx-chomage">—</p>
+                    </div>
+                    <div class="p-3 rounded" style="background: var(--bg-app);">
+                        <p class="text-[10px] uppercase" style="color: var(--text-muted);">SMG mensuel (2026)</p>
+                        <p class="text-lg font-bold mono" id="ctx-smg">—</p>
+                    </div>
+                    <div class="p-3 rounded" style="background: var(--bg-app);">
+                        <p class="text-[10px] uppercase" style="color: var(--text-muted);">Entreprises actives (2025)</p>
+                        <p class="text-lg font-bold mono" id="ctx-entreprises">—</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel p-4">
+                <h2 class="text-xs font-bold uppercase mb-3" style="color: var(--text-muted);">Tendances récentes 2026</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <div class="p-3 rounded" style="background: var(--bg-app);">
+                        <p class="text-[11px] font-bold mb-1" style="color: var(--blue-france);">T1 2026</p>
+                        <ul class="text-[11px] space-y-1" style="color: var(--text-muted);" id="tendances-t1"></ul>
+                    </div>
+                    <div class="p-3 rounded" style="background: var(--bg-app);">
+                        <p class="text-[11px] font-bold mb-1" style="color: var(--blue-france);">T2 2026</p>
+                        <ul class="text-[11px] space-y-1" style="color: var(--text-muted);" id="tendances-t2"></ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Onglet JSON -->
+        <div id="tab-json" class="tab-content hidden">
+            <div class="panel p-4">
+                <h2 class="text-xs font-bold uppercase mb-3" style="color: var(--text-muted);">Données brutes (JSON)</h2>
+                <pre id="json-viewer" class="text-[10px] mono p-3 rounded overflow-auto max-h-[600px]" style="background: var(--bg-app); color: var(--text-muted);"></pre>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        if (typeof Chart !== 'undefined' && typeof zoomPlugin !== 'undefined') Chart.register(zoomPlugin);
+        if (typeof Chart !== 'undefined' && typeof annotationPlugin !== 'undefined') Chart.register(annotationPlugin);
+
+        let DATA = null;
+        let charts = {};
+        let currentIndicator = 'extraction';
+        let selectedRow = null;
+        let sortConfig = { key: 'annee', direction: 'desc' };
+        let hiddenSeries = new Set();
+        let seuilLME = 14000;
+
+        // ============================================================
+        // CHARGEMENT
+        // ============================================================
+        async function loadData() {
+            try {
+                const resp = await fetch('data/moniteur_nickel_nc.json');
+                DATA = await resp.json();
+                document.getElementById('json-viewer').textContent = JSON.stringify(DATA, null, 2);
+                initKPI();
+                initFilters();
+                initTabs();
+                initEventListeners();
+                renderAll();
+                document.getElementById('status-led').className = 'led bg-green-500';
+                document.getElementById('status-text').textContent = 'Données chargées';
+            } catch (e) {
+                console.error(e);
+                document.getElementById('status-text').textContent = 'Erreur';
+                document.getElementById('status-led').className = 'led bg-red-500';
+            }
+        }
+
+        // ============================================================
+        // UTILITAIRES
+        // ============================================================
+        function formatNum(v, dec = 0) {
+            if (v == null || isNaN(v)) return '—';
+            return Number(v).toLocaleString('fr-FR', { maximumFractionDigits: dec });
+        }
+
+        function formatVar(v, unit = '%') {
+            if (v == null || isNaN(v)) return '';
+            const sign = v > 0 ? '+' : '';
+            const color = v > 0 ? 'var(--green)' : v < 0 ? 'var(--red-marianne)' : 'var(--text-muted)';
+            return `<span style="color: ${color};">${sign}${v.toFixed(1)}${unit}</span>`;
+        }
+
+        function calcVariation(current, previous) {
+            if (current == null || previous == null || previous === 0) return null;
+            return ((current - previous) / Math.abs(previous)) * 100;
+        }
+
+        function getLastValue(series, key) {
+            if (!series || series.length === 0) return null;
+            return series[series.length - 1][key];
+        }
+
+        function getPrevValue(series, key) {
+            if (!series || series.length < 2) return null;
+            return series[series.length - 2][key];
+        }
+
+        // ============================================================
+        // KPI
+        // ============================================================
+        function initKPI() {
+            const ext = DATA.production.extraction_minerai.historique;
+            const prod = DATA.production.production_metallurgique.historique_mensuelle;
+            const expMet = DATA.exportations.metallurgie.historique;
+            const expMin = DATA.exportations.minerai.historique;
+            const cours = DATA.prix.cours_annuel_lme.historique;
+            const conso = DATA.marche_mondial.consommation_mondiale.historique;
+            const pib = DATA.poids_economique.pib.historique;
+            const is35 = DATA.poids_economique.recettes_fiscales_is35.historique;
+
+            // Extraction 2024 vs 2023
+            const ext2024 = ext.find(e => e.annee === 2024);
+            const ext2023 = ext.find(e => e.annee === 2023);
+            if (ext2024) {
+                document.getElementById('k-extraction').textContent = formatNum(ext2024.tonnage_humide_total / 1000);
+                if (ext2023) {
+                    const v = calcVariation(ext2024.tonnage_humide_total, ext2023.tonnage_humide_total);
+                    document.getElementById('k-extraction-var').innerHTML = formatVar(v);
+                }
+            }
+
+            // Production 2025 vs 2024
+            const prod2025 = prod.filter(p => p.mois.startsWith('2025')).reduce((s, p) => s + p.valeur, 0);
+            const prod2024 = prod.filter(p => p.mois.startsWith('2024')).reduce((s, p) => s + p.valeur, 0);
+            document.getElementById('k-production').textContent = formatNum(prod2025);
+            document.getElementById('k-production-var').innerHTML = formatVar(calcVariation(prod2025, prod2024));
+
+            // Export métal 2025 vs 2024
+            const e2025 = expMet.find(e => e.annee === 2025);
+            const e2024 = expMet.find(e => e.annee === 2024);
+            if (e2025) {
+                document.getElementById('k-export-met').textContent = formatNum(e2025.tonnage_metal_ni);
+                if (e2024) {
+                    document.getElementById('k-export-met-var').innerHTML = formatVar(calcVariation(e2025.tonnage_metal_ni, e2024.tonnage_metal_ni));
+                }
+            }
+
+            // LME
+            const lme = DATA.prix.lme_cash_settlement.derniere_valeur;
+            if (lme && lme.valeur) {
+                document.getElementById('k-lme').textContent = formatNum(lme.valeur);
+                document.getElementById('k-lme-date').textContent = 'USD/t (' + lme.date + ')';
+                // Comparer au seuil
+                const diff = ((lme.valeur - seuilLME) / seuilLME) * 100;
+                document.getElementById('k-lme-var').innerHTML = formatVar(diff);
+            }
+
+            // Prix FCFP 2025
+            const c2025 = cours.find(c => c.annee === 2025);
+            const c2024 = cours.find(c => c.annee === 2024);
+            if (c2025) {
+                document.getElementById('k-prix-2025').textContent = formatNum(c2025.prix_nickel_fcfp_kg);
+                if (c2024) {
+                    document.getElementById('k-prix-2025-var').innerHTML = formatVar(calcVariation(c2025.prix_nickel_fcfp_kg, c2024.prix_nickel_fcfp_kg));
+                }
+            }
+
+            // Conso 2025
+            const co2025 = conso.find(c => c.annee === 2025);
+            const co2024 = conso.find(c => c.annee === 2024);
+            if (co2025) {
+                document.getElementById('k-conso-mondiale').textContent = formatNum(co2025.consommation_mondiale_milliers_t, 1);
+                document.getElementById('k-part-chine').textContent = co2025.part_chine_pct.toFixed(1) + ' %';
+                if (co2024) {
+                    document.getElementById('k-conso-var').innerHTML = formatVar(calcVariation(co2025.consommation_mondiale_milliers_t, co2024.consommation_mondiale_milliers_t));
+                    document.getElementById('k-part-chine-var').innerHTML = formatVar(co2025.part_chine_pct - co2024.part_chine_pct, ' pts');
+                }
+            }
+
+            // PIB
+            const pibLast = pib[pib.length - 1];
+            const pibPrev = pib[pib.length - 2];
+            if (pibLast) {
+                document.getElementById('k-part-pib').textContent = pibLast.part_dans_pib_pct.toFixed(2) + ' %';
+                if (pibPrev) {
+                    document.getElementById('k-part-pib-var').innerHTML = formatVar(pibLast.part_dans_pib_pct - pibPrev.part_dans_pib_pct, ' pts');
+                }
+            }
+
+            // KPI experts
+            // Ratio export/extraction 2024
+            if (ext2024 && ext2024.nickel_contenu_total) {
+                const expMin2024 = expMin.find(e => e.annee === 2024);
+                if (expMin2024 && expMin2024.nickel_contenu) {
+                    const ratio = (expMin2024.nickel_contenu / ext2024.nickel_contenu_total) * 100;
+                    document.getElementById('k-ratio-export').textContent = ratio.toFixed(1) + ' %';
+                }
+            }
+
+            // Intensité métallurgique 2025
+            if (e2025 && expMin) {
+                const expMin2025 = expMin.find(e => e.annee === 2025);
+                if (expMin2025 && expMin2025.nickel_contenu) {
+                    const intensite = (e2025.tonnage_metal_ni / (e2025.tonnage_metal_ni + expMin2025.nickel_contenu)) * 100;
+                    document.getElementById('k-intensite').textContent = intensite.toFixed(1) + ' %';
+                }
+            }
+
+            // Prix moyen export métal 2025 (FCFP/kg)
+            if (e2025 && e2025.valeur_fab_millions_fcfp && e2025.tonnage_metal_ni) {
+                const prixMoyen = (e2025.valeur_fab_millions_fcfp * 1e6) / (e2025.tonnage_metal_ni * 1000);
+                document.getElementById('k-prix-moyen').textContent = formatNum(prixMoyen);
+            }
+
+            // Volatilité cours 10 ans
+            const coursLast10 = cours.slice(-10).map(c => c.cours_lme_usd_lb).filter(v => v != null);
+            if (coursLast10.length > 1) {
+                const mean = coursLast10.reduce((a, b) => a + b, 0) / coursLast10.length;
+                const variance = coursLast10.reduce((a, b) => a + Math.pow(b - mean, 2), 0) / coursLast10.length;
+                document.getElementById('k-volatilite').textContent = Math.sqrt(variance).toFixed(2);
+            }
+
+            // Contexte
+            const ctx = DATA.contexte_economique;
+            if (ctx) {
+                document.getElementById('ctx-pib-hab').textContent = formatNum(ctx.pib_par_habitant.valeur) + ' k FCFP';
+                document.getElementById('ctx-chomage').textContent = ctx.taux_chomage.valeur.toFixed(1) + ' %';
+                document.getElementById('ctx-smg').textContent = formatNum(ctx.smg_mensuel.valeur) + ' FCFP';
+                document.getElementById('ctx-entreprises').textContent = formatNum(ctx.entreprises_actives.valeur);
+            }
+
+            // Tendances
+            const tend = DATA.tendances_recentes;
+            if (tend) {
+                const t1 = document.getElementById('tendances-t1');
+                Object.entries(tend.t1_2026).forEach(([k, v]) => {
+                    if (k === 'source') return;
+                    const li = document.createElement('li');
+                    li.textContent = '• ' + v;
+                    t1.appendChild(li);
+                });
+                const t2 = document.getElementById('tendances-t2');
+                if (tend.t2_2026.production_metallurgique) {
+                    const li = document.createElement('li');
+                    li.textContent = `• Production métallurgique : ${formatNum(tend.t2_2026.production_metallurgique.valeur)} t Ni (${tend.t2_2026.production_metallurgique.variation_pct}%)`;
+                    t2.appendChild(li);
+                }
+                if (tend.t2_2026.emploi_secteur) {
+                    const li = document.createElement('li');
+                    li.textContent = `• Emploi secteur : ${formatNum(tend.t2_2026.emploi_secteur.valeur)} salariés (${tend.t2_2026.emploi_secteur.variation_pct}%)`;
+                    t2.appendChild(li);
+                }
+            }
+
+            // Indicateurs dérivés
+            if (ext2024 && expMin) {
+                const expMin2024 = expMin.find(e => e.annee === 2024);
+                if (expMin2024 && expMin2024.nickel_contenu && ext2024.nickel_contenu_total) {
+                    document.getElementById('deriv-taux-export').textContent =
+                        ((expMin2024.nickel_contenu / ext2024.nickel_contenu_total) * 100).toFixed(1) + ' %';
+                }
+            }
+
+            if (pibLast && ext2024) {
+                const va = pibLast.valeur_ajoutee_millions_fcfp;
+                const tonnage = ext2024.nickel_contenu_total;
+                if (va && tonnage) {
+                    document.getElementById('deriv-va-tonne').textContent = formatNum((va * 1e6) / tonnage) + ' F';
+                }
+            }
+
+            if (is35.length && pibLast) {
+                const is35Last = is35[is35.length - 1];
+                const va = pibLast.valeur_ajoutee_millions_fcfp;
+                if (is35Last && va) {
+                    document.getElementById('deriv-is35-va').textContent = ((is35Last.valeur_millions_fcfp / va) * 100).toFixed(1) + ' %';
+                }
+            }
+
+            if (co2025) {
+                document.getElementById('deriv-dependance-chine').textContent = co2025.part_chine_pct.toFixed(1) + ' %';
+            }
+        }
+
+        // ============================================================
+        // ALERTES
+        // ============================================================
+        function renderAlerts() {
+            const container = document.getElementById('alerts-container');
+            container.innerHTML = '';
+            const alerts = [];
+
+            const ext = DATA.production.extraction_minerai.historique;
+            const ext2024 = ext.find(e => e.annee === 2024);
+            const ext2023 = ext.find(e => e.annee === 2023);
+            if (ext2024 && ext2023) {
+                const v = calcVariation(ext2024.tonnage_humide_total, ext2023.tonnage_humide_total);
+                if (v < -30) alerts.push({ type: 'danger', text: `Extraction 2024 en chute de ${Math.abs(v).toFixed(1)} % vs 2023 (crise du nickel)` });
+                else if (v < -10) alerts.push({ type: 'warning', text: `Extraction 2024 en baisse de ${Math.abs(v).toFixed(1)} % vs 2023` });
+            }
+
+            const lme = DATA.prix.lme_cash_settlement.derniere_valeur;
+            if (lme && lme.valeur < seuilLME) {
+                alerts.push({ type: 'danger', text: `Prix LME (${formatNum(lme.valeur)} USD/t) sous le seuil de ${formatNum(seuilLME)} USD/t` });
+            } else if (lme && lme.valeur < seuilLME * 1.1) {
+                alerts.push({ type: 'warning', text: `Prix LME (${formatNum(lme.valeur)} USD/t) proche du seuil de ${formatNum(seuilLME)} USD/t` });
+            }
+
+            const cours = DATA.prix.cours_annuel_lme.historique;
+            const c2025 = cours.find(c => c.annee === 2025);
+            const c2024 = cours.find(c => c.annee === 2024);
+            if (c2025 && c2024) {
+                const v = calcVariation(c2025.cours_lme_usd_lb, c2024.cours_lme_usd_lb);
+                if (v < -10) alerts.push({ type: 'warning', text: `Cours LME 2025 en baisse de ${Math.abs(v).toFixed(1)} % vs 2024` });
+            }
+
+            const conso = DATA.marche_mondial.consommation_mondiale.historique;
+            const co2025 = conso.find(c => c.annee === 2025);
+            if (co2025 && co2025.part_chine_pct > 65) {
+                alerts.push({ type: 'info', text: `Dépendance à la Chine : ${co2025.part_chine_pct.toFixed(1)} % de la consommation mondiale` });
+            }
+
+            const expMet = DATA.exportations.metallurgie.historique;
+            const e2025 = expMet.find(e => e.annee === 2025);
+            const e2024 = expMet.find(e => e.annee === 2024);
+            if (e2025 && e2024) {
+                const v = calcVariation(e2025.tonnage_metal_ni, e2024.tonnage_metal_ni);
+                if (v > 20) alerts.push({ type: 'success', text: `Exportations métallurgiques 2025 en hausse de ${v.toFixed(1)} % vs 2024` });
+            }
+
+            const prod = DATA.production.production_metallurgique.historique_mensuelle;
+            const prod2025 = prod.filter(p => p.mois.startsWith('2025')).reduce((s, p) => s + p.valeur, 0);
+            const prod2024 = prod.filter(p => p.mois.startsWith('2024')).reduce((s, p) => s + p.valeur, 0);
+            if (prod2025 && prod2024) {
+                const v = calcVariation(prod2025, prod2024);
+                if (v < -10) alerts.push({ type: 'warning', text: `Production métallurgique 2025 en baisse de ${Math.abs(v).toFixed(1)} % vs 2024` });
+            }
+
+            if (alerts.length === 0) {
+                alerts.push({ type: 'success', text: 'Aucune alerte majeure détectée' });
+            }
+
+            alerts.forEach(a => {
+                const div = document.createElement('div');
+                div.className = `alert-item alert-${a.type}`;
+                div.textContent = a.text;
+                container.appendChild(div);
+            });
+        }
+
+        // ============================================================
+        // FILTRES
+        // ============================================================
+        function initFilters() {
+            const allYears = new Set();
+            ['extraction'].forEach(k => DATA.production.extraction_minerai.historique.forEach(e => allYears.add(e.annee)));
+            DATA.prix.cours_annuel_lme.historique.forEach(e => allYears.add(e.annee));
+            DATA.exportations.minerai.historique.forEach(e => allYears.add(e.annee));
+            DATA.exportations.metallurgie.historique.forEach(e => allYears.add(e.annee));
+            DATA.marche_mondial.production_mondiale.historique.forEach(e => allYears.add(e.annee));
+            DATA.marche_mondial.consommation_mondiale.historique.forEach(e => allYears.add(e.annee));
+            const years = [...allYears].sort((a, b) => a - b);
+            const minY = years[0], maxY = years[years.length - 1];
+            const yMin = document.getElementById('f-year-min');
+            const yMax = document.getElementById('f-year-max');
+            yMin.min = yMax.min = minY; yMin.max = yMax.max = maxY;
+            yMin.value = minY; yMax.value = maxY;
+            updateYearLabels();
+        }
+
+        function updateYearLabels() {
+            document.getElementById('lbl-min').textContent = document.getElementById('f-year-min').value;
+            document.getElementById('lbl-max').textContent = document.getElementById('f-year-max').value;
+        }
+
+        function getYearRange() {
+            return {
+                min: parseInt(document.getElementById('f-year-min').value),
+                max: parseInt(document.getElementById('f-year-max').value)
+            };
+        }
+
+        function filterByYear(series) {
+            const { min, max } = getYearRange();
+            return series.filter(e => e.annee >= min && e.annee <= max);
+        }
+
+        // ============================================================
+        // ONGLETS
+        // ============================================================
+        function initTabs() {
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                    document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
+                    btn.classList.add('active');
+                    document.getElementById(btn.dataset.tab).classList.remove('hidden');
+                    if (btn.dataset.tab === 'tab-charts') renderCharts();
+                    if (btn.dataset.tab === 'tab-expert') renderExpert();
+                    if (btn.dataset.tab === 'tab-table') renderTable();
+                });
+            });
+        }
+
+        // ============================================================
+        // ÉVÉNEMENTS
+        // ============================================================
+        function initEventListeners() {
+            document.getElementById('f-indicator').addEventListener('change', (e) => {
+                currentIndicator = e.target.value;
+                renderMainChart();
+            });
+            document.getElementById('f-search').addEventListener('input', renderTable);
+            document.getElementById('f-seuil-lme').addEventListener('input', (e) => {
+                seuilLME = parseFloat(e.target.value) || 14000;
+                renderAlerts();
+                initKPI();
+            });
+            ['f-year-min', 'f-year-max'].forEach(id => {
+                document.getElementById(id).addEventListener('input', () => {
+                    updateYearLabels();
+                    renderCharts();
+                    renderExpert();
+                });
+            });
+            document.getElementById('f-forecast-indicator').addEventListener('change', renderForecast);
+            document.getElementById('btn-reset').addEventListener('click', () => {
+                document.getElementById('f-indicator').value = 'extraction';
+                document.getElementById('f-search').value = '';
+                document.getElementById('f-seuil-lme').value = 14000;
+                seuilLME = 14000;
+                const years = DATA.prix.cours_annuel_lme.historique.map(e => e.annee);
+                document.getElementById('f-year-min').value = Math.min(...years);
+                document.getElementById('f-year-max').value = Math.max(...years);
+                updateYearLabels();
+                currentIndicator = 'extraction';
+                hiddenSeries.clear();
+                selectedRow = null;
+                renderAll();
+            });
+            document.getElementById('btn-export').addEventListener('click', exportCSV);
+            document.getElementById('btn-reset-zoom').addEventListener('click', () => {
+                if (charts.main) charts.main.resetZoom();
+            });
+            document.getElementById('btn-theme').addEventListener('click', () => {
+                document.body.classList.toggle('dark');
+                const isDark = document.body.classList.contains('dark');
+                document.getElementById('btn-theme').textContent = isDark ? '☀️ Clair' : '🌙 Sombre';
+                Chart.defaults.color = isDark ? '#e2e8f0' : '#1e1e1e';
+                Chart.defaults.borderColor = isDark ? '#334155' : '#e5e5e5';
+                renderAll();
+            });
+            document.querySelectorAll('.kpi[data-metric]').forEach(card => {
+                card.addEventListener('click', () => {
+                    const metric = card.dataset.metric;
+                    const map = {
+                        'extraction': 'extraction', 'production': 'production',
+                        'export_metal': 'export_metal', 'lme': 'cours',
+                        'prix': 'cours', 'conso': 'conso_monde', 'chine': 'conso_monde',
+                        'pib': 'pib', 'ratio_export': 'ratio', 'intensite': 'export_metal',
+                        'prix_moyen': 'export_metal', 'volatilite': 'cours'
+                    };
+                    const ind = map[metric];
+                    if (ind) {
+                        const sel = document.getElementById('f-indicator');
+                        if ([...sel.options].some(o => o.value === ind)) {
+                            sel.value = ind;
+                            currentIndicator = ind;
+                            renderMainChart();
+                        }
+                    }
+                });
+            });
+        }
+
+        // ============================================================
+        // RENDU
+        // ============================================================
+        function renderAll() {
+            renderAlerts();
+            renderCharts();
+            renderTable();
+        }
+
+        function renderCharts() {
+            renderMainChart();
+            renderSecondaryCharts();
+        }
+
+        function getSeries(indicator) {
+            switch (indicator) {
+                case 'extraction':
+                    return {
+                        data: filterByYear(DATA.production.extraction_minerai.historique),
+                        label: 'Extraction de minerai',
+                        datasets: [
+                            { label: 'Tonnage humide (M t)', key: 'tonnage_humide_total', div: 1e6, color: '#000091', axis: 'y' },
+                            { label: 'Ni contenu (kt)', key: 'nickel_contenu_total', div: 1000, color: '#18753c', axis: 'y1' }
+                        ]
+                    };
+                case 'cours':
+                    return {
+                        data: filterByYear(DATA.prix.cours_annuel_lme.historique),
+                        label: 'Cours du nickel au LME',
+                        datasets: [
+                            { label: 'Cours LME (USD/lb)', key: 'cours_lme_usd_lb', color: '#E1000F', axis: 'y' },
+                            { label: 'Prix (F.CFP/kg)', key: 'prix_nickel_fcfp_kg', color: '#ffb800', axis: 'y1' }
+                        ]
+                    };
+                case 'export_minerai':
+                    return {
+                        data: filterByYear(DATA.exportations.minerai.historique),
+                        label: 'Exportations de minerai',
+                        datasets: [
+                            { label: 'Tonnage humide (M t)', key: 'tonnage_humide', div: 1e6, color: '#000091', axis: 'y' },
+                            { label: 'Ni contenu (kt)', key: 'nickel_contenu', div: 1000, color: '#18753c', axis: 'y1' }
+                        ]
+                    };
+                case 'export_metal':
+                    return {
+                        data: filterByYear(DATA.exportations.metallurgie.historique),
+                        label: 'Exportations métallurgiques',
+                        datasets: [
+                            { label: 'Ni contenu (kt)', key: 'tonnage_metal_ni', div: 1000, color: '#18753c', axis: 'y' },
+                            { label: 'Valeur FAB (Mds FCFP)', key: 'valeur_fab_millions_fcfp', div: 1000, color: '#ffb800', axis: 'y1' }
+                        ]
+                    };
+                case 'production_monde':
+                    return {
+                        data: filterByYear(DATA.marche_mondial.production_mondiale.historique),
+                        label: 'Production mondiale',
+                        datasets: [{ label: 'Production (M t Ni)', key: 'valeur', div: 1e6, color: '#000091', axis: 'y' }]
+                    };
+                case 'conso_monde':
+                    return {
+                        data: filterByYear(DATA.marche_mondial.consommation_mondiale.historique),
+                        label: 'Consommation mondiale',
+                        datasets: [
+                            { label: 'Consommation (kt)', key: 'consommation_mondiale_milliers_t', color: '#18753c', axis: 'y' },
+                            { label: 'Part Chine (%)', key: 'part_chine_pct', color: '#E1000F', axis: 'y1', dash: true },
+                            { label: 'Part Europe 27 (%)', key: 'part_europe27_pct', color: '#ffb800', axis: 'y1', dash: true }
+                        ]
+                    };
+                case 'pib':
+                    return {
+                        data: filterByYear(DATA.poids_economique.pib.historique),
+                        label: 'Poids économique',
+                        datasets: [
+                            { label: 'Part dans le PIB (%)', key: 'part_dans_pib_pct', color: '#E1000F', axis: 'y' },
+                            { label: 'Valeur ajoutée (Mds FCFP)', key: 'valeur_ajoutee_millions_fcfp', div: 1000, color: '#000091', axis: 'y1', dash: true }
+                        ]
+                    };
+                case 'ratio':
+                    const ext = filterByYear(DATA.production.extraction_minerai.historique);
+                    const expMin = filterByYear(DATA.exportations.minerai.historique);
+                    const ratioData = ext.map(e => {
+                        const exp = expMin.find(x => x.annee === e.annee);
+                        if (!exp || !exp.nickel_contenu || !e.nickel_contenu_total) return null;
+                        return { annee: e.annee, ratio: (exp.nickel_contenu / e.nickel_contenu_total) * 100 };
+                    }).filter(x => x);
+                    return {
+                        data: ratioData,
+                        label: 'Ratio export/extraction',
+                        datasets: [{ label: 'Ratio (%)', key: 'ratio', color: '#a855f7', axis: 'y' }]
+                    };
+                default:
+                    return null;
+            }
+        }
+
+        function renderLegend(series) {
+            const container = document.getElementById('main-legend');
+            container.innerHTML = '';
+            series.datasets.forEach(ds => {
+                const isHidden = hiddenSeries.has(ds.label);
+                const pill = document.createElement('div');
+                pill.className = `legend-pill ${isHidden ? 'inactive' : ''}`;
+                pill.innerHTML = `<span class="legend-dot" style="background:${ds.color}"></span> ${ds.label}`;
+                pill.addEventListener('click', () => {
+                    if (hiddenSeries.has(ds.label)) hiddenSeries.delete(ds.label);
+                    else hiddenSeries.add(ds.label);
+                    renderMainChart();
+                });
+                container.appendChild(pill);
+            });
+        }
+
+        function renderMainChart() {
+            const series = getSeries(currentIndicator);
+            if (!series) return;
+            document.getElementById('main-chart-title').textContent = series.label + ' (' + series.data.length + ' points)';
+            renderLegend(series);
+            if (charts.main) charts.main.destroy();
+
+            const labels = series.data.map(e => e.annee);
+            const visibleDatasets = series.datasets
+                .filter(ds => !hiddenSeries.has(ds.label))
+                .map(ds => ({
+                    label: ds.label,
+                    data: series.data.map(e => {
+                        const v = e[ds.key];
+                        return v != null ? (ds.div ? v / ds.div : v) : null;
+                    }),
+                    borderColor: ds.color,
+                    backgroundColor: ds.color + '22',
+                    fill: false,
+                    tension: 0.3,
+                    pointRadius: 2,
+                    pointHoverRadius: 6,
+                    borderDash: ds.dash ? [5, 5] : [],
+                    yAxisID: ds.axis,
+                    borderWidth: 2
+                }));
+
+            charts.main = new Chart(document.getElementById('c-main'), {
+                type: 'line',
+                data: { labels, datasets: visibleDatasets },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    interaction: { mode: 'index', intersect: false },
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            backgroundColor: '#1e1e1e',
+                            titleFont: { family: 'monospace', size: 11 },
+                            bodyFont: { family: 'monospace', size: 11 },
+                            padding: 10,
+                            callbacks: {
+                                label: (ctx) => `${ctx.dataset.label}: ${formatNum(ctx.parsed.y, 2)}`
+                            }
+                        },
+                        zoom: { pan: { enabled: true, mode: 'x' }, zoom: { wheel: { enabled: true }, mode: 'x' } }
+                    },
+                    scales: {
+                        x: { ticks: { font: { size: 10 } }, grid: { color: 'rgba(0,0,0,0.05)' } },
+                        y: { position: 'left', ticks: { font: { size: 10 } }, grid: { color: 'rgba(0,0,0,0.05)' } },
+                        y1: { position: 'right', ticks: { font: { size: 10 } }, grid: { drawOnChartArea: false } }
+                    }
+                }
+            });
+        }
+
+        function renderSecondaryCharts() {
+            const ext = filterByYear(DATA.production.extraction_minerai.historique);
+            if (charts.extraction) charts.extraction.destroy();
+            charts.extraction = new Chart(document.getElementById('chart-extraction'), {
+                type: 'bar',
+                data: {
+                    labels: ext.map(e => e.annee),
+                    datasets: [
+                        { label: 'Tonnage humide (M t)', data: ext.map(e => e.tonnage_humide_total / 1e6), backgroundColor: '#000091' },
+                        { label: 'Ni contenu (kt)', data: ext.map(e => e.nickel_contenu_total / 1000), backgroundColor: '#18753c', yAxisID: 'y1' }
+                    ]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    plugins: { legend: { display: true, position: 'bottom', labels: { font: { size: 9 } } } },
+                    scales: {
+                        x: { ticks: { font: { size: 9 } } },
+                        y: { position: 'left', ticks: { font: { size: 9 } } },
+                        y1: { position: 'right', ticks: { font: { size: 9 } }, grid: { drawOnChartArea: false } }
+                    }
+                }
+            });
+
+            const cours = filterByYear(DATA.prix.cours_annuel_lme.historique);
+            if (charts.cours) charts.cours.destroy();
+            charts.cours = new Chart(document.getElementById('chart-cours'), {
+                type: 'line',
+                data: {
+                    labels: cours.map(e => e.annee),
+                    datasets: [{
+                        label: 'Cours LME (USD/lb)',
+                        data: cours.map(e => e.cours_lme_usd_lb),
+                        borderColor: '#E1000F',
+                        backgroundColor: 'rgba(225, 0, 15, 0.1)',
+                        fill: true, tension: 0.3, pointRadius: 1
+                    }]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: { x: { ticks: { font: { size: 9 } } }, y: { ticks: { font: { size: 9 } } } }
+                }
+            });
+
+            const expMet = filterByYear(DATA.exportations.metallurgie.historique);
+            if (charts.exportMetal) charts.exportMetal.destroy();
+            charts.exportMetal = new Chart(document.getElementById('chart-export-metal'), {
+                type: 'bar',
+                data: {
+                    labels: expMet.map(e => e.annee),
+                    datasets: [
+                        { label: 'Ni contenu (kt)', data: expMet.map(e => e.tonnage_metal_ni / 1000), backgroundColor: '#18753c' },
+                        { label: 'Valeur FAB (Mds FCFP)', data: expMet.map(e => e.valeur_fab_millions_fcfp / 1000), backgroundColor: '#ffb800', yAxisID: 'y1' }
+                    ]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    plugins: { legend: { display: true, position: 'bottom', labels: { font: { size: 9 } } } },
+                    scales: {
+                        x: { ticks: { font: { size: 9 } } },
+                        y: { position: 'left', ticks: { font: { size: 9 } } },
+                        y1: { position: 'right', ticks: { font: { size: 9 } }, grid: { drawOnChartArea: false } }
+                    }
+                }
+            });
+
+            const conso = filterByYear(DATA.marche_mondial.consommation_mondiale.historique);
+            if (charts.consoMonde) charts.consoMonde.destroy();
+            charts.consoMonde = new Chart(document.getElementById('chart-conso-monde'), {
+                type: 'line',
+                data: {
+                    labels: conso.map(e => e.annee),
+                    datasets: [
+                        { label: 'Consommation (kt)', data: conso.map(e => e.consommation_mondiale_milliers_t), borderColor: '#18753c', backgroundColor: 'rgba(24,117,60,0.1)', fill: true, tension: 0.3 },
+                        { label: 'Part Chine (%)', data: conso.map(e => e.part_chine_pct), borderColor: '#E1000F', borderDash: [5,5], tension: 0.3, yAxisID: 'y1' },
+                        { label: 'Part Europe 27 (%)', data: conso.map(e => e.part_europe27_pct), borderColor: '#ffb800', borderDash: [5,5], tension: 0.3, yAxisID: 'y1' }
+                    ]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    plugins: { legend: { display: true, position: 'bottom', labels: { font: { size: 9 } } } },
+                    scales: {
+                        x: { ticks: { font: { size: 9 } } },
+                        y: { position: 'left', ticks: { font: { size: 9 } } },
+                        y1: { position: 'right', ticks: { font: { size: 9 } }, grid: { drawOnChartArea: false } }
+                    }
+                }
+            });
+        }
+
+        // ============================================================
+        // ANALYSE EXPERTE
+        // ============================================================
+        function renderExpert() {
+            renderCorrelations();
+            renderForecast();
+            renderYoY();
+        }
+
+        function renderCorrelations() {
+            const ext = filterByYear(DATA.production.extraction_minerai.historique);
+            const cours = filterByYear(DATA.prix.cours_annuel_lme.historique);
+            const expMet = filterByYear(DATA.exportations.metallurgie.historique);
+            const conso = filterByYear(DATA.marche_mondial.consommation_mondiale.historique);
+
+            const series = {
+                'Extraction': {},
+                'Cours LME': {},
+                'Export métal.': {},
+                'Conso. monde': {}
+            };
+
+            ext.forEach(e => series['Extraction'][e.annee] = e.tonnage_humide_total);
+            cours.forEach(e => series['Cours LME'][e.annee] = e.cours_lme_usd_lb);
+            expMet.forEach(e => series['Export métal.'][e.annee] = e.tonnage_metal_ni);
+            conso.forEach(e => series['Conso. monde'][e.annee] = e.consommation_mondiale_milliers_t);
+
+            const keys = Object.keys(series);
+            const thead = document.getElementById('corr-thead');
+            const tbody = document.getElementById('corr-tbody');
+            thead.innerHTML = '<th></th>' + keys.map(k => `<th>${k}</th>`).join('');
+            tbody.innerHTML = '';
+
+            keys.forEach(k1 => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `<td class="font-bold">${k1}</td>`;
+                keys.forEach(k2 => {
+                    const years = Object.keys(series[k1]).filter(y => series[k2][y] != null);
+                    const x = years.map(y => series[k1][y]);
+                    const y = years.map(y => series[k2][y]);
+                    const corr = pearson(x, y);
+                    const color = corr > 0.7 ? 'var(--green)' : corr < -0.7 ? 'var(--red-marianne)' : corr > 0.3 ? 'var(--gold)' : corr < -0.3 ? 'var(--gold)' : 'var(--text-muted)';
+                    tr.innerHTML += `<td class="mono" style="color:${color};">${corr.toFixed(2)}</td>`;
+                });
+                tbody.appendChild(tr);
+            });
+        }
+
+        function pearson(x, y) {
+            const n = x.length;
+            if (n < 2) return 0;
+            const mx = x.reduce((a, b) => a + b, 0) / n;
+            const my = y.reduce((a, b) => a + b, 0) / n;
+            let num = 0, dx = 0, dy = 0;
+            for (let i = 0; i < n; i++) {
+                num += (x[i] - mx) * (y[i] - my);
+                dx += Math.pow(x[i] - mx, 2);
+                dy += Math.pow(y[i] - my, 2);
+            }
+            if (dx === 0 || dy === 0) return 0;
+            return num / Math.sqrt(dx * dy);
+        }
+
+        function renderForecast() {
+            const ind = document.getElementById('f-forecast-indicator').value;
+            let series, key, label, unit;
+            if (ind === 'cours') {
+                series = filterByYear(DATA.prix.cours_annuel_lme.historique);
+                key = 'cours_lme_usd_lb'; label = 'Cours LME'; unit = 'USD/lb';
+            } else if (ind === 'extraction') {
+                series = filterByYear(DATA.production.extraction_minerai.historique);
+                key = 'tonnage_humide_total'; label = 'Extraction'; unit = 't humides';
+            } else if (ind === 'export_metal') {
+                series = filterByYear(DATA.exportations.metallurgie.historique);
+                key = 'tonnage_metal_ni'; label = 'Exportations métallurgiques'; unit = 't Ni';
+            } else {
+                series = filterByYear(DATA.marche_mondial.consommation_mondiale.historique);
+                key = 'consommation_mondiale_milliers_t'; label = 'Consommation mondiale'; unit = 'kt';
+            }
+
+            const data = series.map(e => ({ annee: e.annee, val: e[key] })).filter(e => e.val != null);
+            if (data.length < 3) return;
+
+            // Régression linéaire
+            const n = data.length;
+            const sumX = data.reduce((s, e) => s + e.annee, 0);
+            const sumY = data.reduce((s, e) => s + e.val, 0);
+            const sumXY = data.reduce((s, e) => s + e.annee * e.val, 0);
+            const sumX2 = data.reduce((s, e) => s + e.annee * e.annee, 0);
+            const slope = (n * sumXY - sumX * sumY) / (n * sumX2 - sumX * sumX);
+            const intercept = (sumY - slope * sumX) / n;
+
+            const lastYear = data[data.length - 1].annee;
+            const forecastYears = [lastYear + 1, lastYear + 2, lastYear + 3];
+            const forecastValues = forecastYears.map(y => slope * y + intercept);
+
+            if (charts.forecast) charts.forecast.destroy();
+            charts.forecast = new Chart(document.getElementById('chart-forecast'), {
+                type: 'line',
+                data: {
+                    labels: [...data.map(e => e.annee), ...forecastYears],
+                    datasets: [
+                        {
+                            label: label + ' (historique)',
+                            data: [...data.map(e => e.val), ...forecastYears.map(() => null)],
+                            borderColor: '#000091',
+                            backgroundColor: 'rgba(0,0,145,0.1)',
+                            fill: true, tension: 0.3
+                        },
+                        {
+                            label: label + ' (prévision)',
+                            data: [...data.map(() => null), ...forecastValues],
+                            borderColor: '#E1000F',
+                            borderDash: [8, 4],
+                            backgroundColor: 'rgba(225,0,15,0.1)',
+                            fill: true, tension: 0.3,
+                            pointRadius: 5, pointStyle: 'triangle'
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    plugins: { legend: { display: true, position: 'bottom', labels: { font: { size: 10 } } } },
+                    scales: {
+                        x: { ticks: { font: { size: 9 } } },
+                        y: { ticks: { font: { size: 9 } } }
+                    }
+                }
+            });
+
+            const details = document.getElementById('forecast-details');
+            details.innerHTML = `
+                <strong>Tendance :</strong> ${slope > 0 ? '↗ hausse' : '↘ baisse'} de ${Math.abs(slope).toFixed(2)} ${unit}/an
+                · <strong>Prévisions :</strong>
+                ${forecastYears.map((y, i) => `${y}: ${formatNum(forecastValues[i], 2)} ${unit}`).join(' · ')}
+            `;
+        }
+
+        function renderYoY() {
+            const ext = filterByYear(DATA.production.extraction_minerai.historique);
+            const yoyExt = [];
+            for (let i = 1; i < ext.length; i++) {
+                const v = calcVariation(ext[i].tonnage_humide_total, ext[i-1].tonnage_humide_total);
+                if (v != null) yoyExt.push({ annee: ext[i].annee, var: v });
+            }
+            if (charts.yoyExt) charts.yoyExt.destroy();
+            charts.yoyExt = new Chart(document.getElementById('chart-yoy-extraction'), {
+                type: 'bar',
+                data: {
+                    labels: yoyExt.map(e => e.annee),
+                    datasets: [{ label: 'Variation YoY (%)', data: yoyExt.map(e => e.var), backgroundColor: yoyExt.map(e => e.var > 0 ? '#18753c' : '#E1000F') }]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: { x: { ticks: { font: { size: 9 } } }, y: { ticks: { font: { size: 9 } } } }
+                }
+            });
+
+            const expMet = filterByYear(DATA.exportations.metallurgie.historique);
+            const yoyExp = [];
+            for (let i = 1; i < expMet.length; i++) {
+                const v = calcVariation(expMet[i].tonnage_metal_ni, expMet[i-1].tonnage_metal_ni);
+                if (v != null) yoyExp.push({ annee: expMet[i].annee, var: v });
+            }
+            if (charts.yoyExp) charts.yoyExp.destroy();
+            charts.yoyExp = new Chart(document.getElementById('chart-yoy-export'), {
+                type: 'bar',
+                data: {
+                    labels: yoyExp.map(e => e.annee),
+                    datasets: [{ label: 'Variation YoY (%)', data: yoyExp.map(e => e.var), backgroundColor: yoyExp.map(e => e.var > 0 ? '#18753c' : '#E1000F') }]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: { x: { ticks: { font: { size: 9 } } }, y: { ticks: { font: { size: 9 } } } }
+                }
+            });
+        }
+
+        // ============================================================
+        // TABLEAU
+        // ============================================================
+        function getTableData() {
+            const years = new Set();
+            DATA.production.extraction_minerai.historique.forEach(e => years.add(e.annee));
+            DATA.prix.cours_annuel_lme.historique.forEach(e => years.add(e.annee));
+            DATA.exportations.minerai.historique.forEach(e => years.add(e.annee));
+            DATA.exportations.metallurgie.historique.forEach(e => years.add(e.annee));
+
+            const rows = [...years].sort((a,b) => b - a).map(year => {
+                const ext = DATA.production.extraction_minerai.historique.find(e => e.annee === year);
+                const cours = DATA.prix.cours_annuel_lme.historique.find(e => e.annee === year);
+                const expMin = DATA.exportations.minerai.historique.find(e => e.annee === year);
+                const expMet = DATA.exportations.metallurgie.historique.find(e => e.annee === year);
+                return {
+                    annee: year,
+                    extraction_mt: ext?.tonnage_humide_total ? ext.tonnage_humide_total / 1e6 : null,
+                    extraction_kt: ext?.nickel_contenu_total ? ext.nickel_contenu_total / 1000 : null,
+                    cours_usd_lb: cours?.cours_lme_usd_lb ?? null,
+                    prix_fcfp_kg: cours?.prix_nickel_fcfp_kg ?? null,
+                    exp_min_mt: expMin?.tonnage_humide ? expMin.tonnage_humide / 1e6 : null,
+                    exp_min_kt: expMin?.nickel_contenu ? expMin.nickel_contenu / 1000 : null,
+                    exp_met_kt: expMet?.tonnage_metal_ni ? expMet.tonnage_metal_ni / 1000 : null,
+                    exp_met_mds: expMet?.valeur_fab_millions_fcfp ? expMet.valeur_fab_millions_fcfp / 1000 : null
+                };
+            });
+
+            const search = document.getElementById('f-search').value.toLowerCase();
+            let filtered = rows;
+            if (search) filtered = rows.filter(r => r.annee.toString().includes(search));
+
+            filtered.sort((a, b) => {
+                const va = a[sortConfig.key], vb = b[sortConfig.key];
+                if (va == null) return 1;
+                if (vb == null) return -1;
+                return sortConfig.direction === 'asc' ? va - vb : vb - va;
+            });
+
+            return filtered;
+        }
+
+        function renderTable() {
+            const rows = getTableData();
+            document.getElementById('t-count').textContent = rows.length;
+
+            const columns = [
+                { key: 'annee', label: 'Année' },
+                { key: 'extraction_mt', label: 'Extraction (M t)' },
+                { key: 'extraction_kt', label: 'Ni contenu (kt)' },
+                { key: 'cours_usd_lb', label: 'Cours LME (USD/lb)' },
+                { key: 'prix_fcfp_kg', label: 'Prix (F.CFP/kg)' },
+                { key: 'exp_min_mt', label: 'Export minerai (M t)' },
+                { key: 'exp_min_kt', label: 'Export minerai (kt Ni)' },
+                { key: 'exp_met_kt', label: 'Export métal. (kt Ni)' },
+                { key: 'exp_met_mds', label: 'Valeur FAB (Mds FCFP)' }
+            ];
+
+            const thead = document.getElementById('thead-row');
+            thead.innerHTML = columns.map(c => {
+                const arrow = sortConfig.key === c.key ? (sortConfig.direction === 'asc' ? ' ↑' : ' ↓') : ' ↕';
+                return `<th data-sort="${c.key}">${c.label}${arrow}</th>`;
+            }).join('');
+
+            thead.querySelectorAll('th[data-sort]').forEach(th => {
+                th.addEventListener('click', () => {
+                    const key = th.dataset.sort;
+                    if (sortConfig.key === key) sortConfig.direction = sortConfig.direction === 'asc' ? 'desc' : 'asc';
+                    else { sortConfig.key = key; sortConfig.direction = 'desc'; }
+                    renderTable();
+                });
+            });
+
+            const tbody = document.getElementById('tbody');
+            tbody.innerHTML = rows.map(r => {
+                const isSelected = selectedRow === r.annee;
+                return `<tr data-annee="${r.annee}" class="${isSelected ? 'selected' : ''}">
+                    <td class="font-bold">${r.annee}</td>
+                    <td>${r.extraction_mt != null ? r.extraction_mt.toFixed(2) : '—'}</td>
+                    <td>${r.extraction_kt != null ? r.extraction_kt.toFixed(0) : '—'}</td>
+                    <td>${r.cours_usd_lb != null ? r.cours_usd_lb.toFixed(2) : '—'}</td>
+                    <td>${r.prix_fcfp_kg != null ? r.prix_fcfp_kg.toFixed(0) : '—'}</td>
+                    <td>${r.exp_min_mt != null ? r.exp_min_mt.toFixed(2) : '—'}</td>
+                    <td>${r.exp_min_kt != null ? r.exp_min_kt.toFixed(0) : '—'}</td>
+                    <td>${r.exp_met_kt != null ? r.exp_met_kt.toFixed(0) : '—'}</td>
+                    <td>${r.exp_met_mds != null ? r.exp_met_mds.toFixed(1) : '—'}</td>
+                </tr>`;
+            }).join('');
+
+            tbody.querySelectorAll('tr').forEach(tr => {
+                tr.addEventListener('click', () => {
+                    const annee = parseInt(tr.dataset.annee);
+                    selectedRow = (selectedRow === annee) ? null : annee;
+                    renderTable();
+                });
+            });
+        }
+
+        // ============================================================
+        // EXPORT
+        // ============================================================
+        function exportCSV() {
+            const rows = getTableData();
+            if (rows.length === 0) return alert("Aucune donnée à exporter.");
+            const headers = ['Annee', 'Extraction_Mt', 'Ni_contenu_kt', 'Cours_USD_lb', 'Prix_FCFP_kg',
+                             'Exp_minerai_Mt', 'Exp_minerai_kt_Ni', 'Exp_metal_kt_Ni', 'Valeur_FAB_Mds_FCFP'];
+            const csvRows = [headers.join(',')];
+            rows.forEach(r => {
+                csvRows.push([r.annee, r.extraction_mt ?? '', r.extraction_kt ?? '', r.cours_usd_lb ?? '',
+                    r.prix_fcfp_kg ?? '', r.exp_min_mt ?? '', r.exp_min_kt ?? '', r.exp_met_kt ?? '', r.exp_met_mds ?? ''].join(','));
+            });
+            const blob = new Blob(["\uFEFF" + csvRows.join("\n")], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement("a");
+            link.href = URL.createObjectURL(blob);
+            link.download = "moniteur_nickel_nc_" + new Date().toISOString().slice(0,10) + ".csv";
+            link.click();
+        }
+
+        // ============================================================
+        // DÉMARRAGE
+        // ============================================================
+        loadData();
+    </script>
+</body>
+</html>

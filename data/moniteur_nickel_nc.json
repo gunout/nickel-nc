@@ -1,0 +1,3388 @@
+{
+  "meta": {
+    "project": "Moniteur Nickel Nouvelle-Calédonie",
+    "version": "1.0",
+    "last_updated": "2026-10-21",
+    "frequency": "mensuelle",
+    "sources": [
+      "ISEE-NC (extraction, cours, exportations, poids économique)",
+      "data.gouv.nc (production métallurgique mensuelle)",
+      "FRED/IMF (prix nickel PNICKUSDM)",
+      "BGS/DIMENC (production mondiale)",
+      "INSG/DIMENC (consommation mondiale)"
+    ]
+  },
+  "production": {
+    "extraction_minerai": {
+      "label": "Extraction de minerai de nickel",
+      "unite": "tonnes humides / tonnes Ni contenu",
+      "source": "ISEE/DIMENC — extraction-nickel.xls",
+      "frequence": "annuelle",
+      "historique": [
+        {
+          "annee": 2008,
+          "tonnage_humide_total": 6658659.1899999995,
+          "nickel_contenu_total": 105882.860394353,
+          "saprolites_tonnage_humide": 5017574.7700000005,
+          "saprolites_nickel_contenu": 87985.40067160351,
+          "laterites_tonnage_humide": 1641084.42,
+          "laterites_nickel_contenu": 17897.459722749492
+        },
+        {
+          "annee": 2009,
+          "tonnage_humide_total": 6359173.38,
+          "nickel_contenu_total": 97920.95866622962,
+          "saprolites_tonnage_humide": 4421212.1899999995,
+          "saprolites_nickel_contenu": 79124.74827174272,
+          "laterites_tonnage_humide": 1937961.19,
+          "laterites_nickel_contenu": 18796.210394486912
+        },
+        {
+          "annee": 2010,
+          "tonnage_humide_total": 8914794.190000001,
+          "nickel_contenu_total": 132115.53636203066,
+          "saprolites_tonnage_humide": 6277514.569999999,
+          "saprolites_nickel_contenu": 106595.8412969326,
+          "laterites_tonnage_humide": 2637279.6200000006,
+          "laterites_nickel_contenu": 25519.69506509805
+        },
+        {
+          "annee": 2011,
+          "tonnage_humide_total": 9231026.209999999,
+          "nickel_contenu_total": 128113.41849256554,
+          "saprolites_tonnage_humide": 5838216.799999999,
+          "saprolites_nickel_contenu": 96939.46230296805,
+          "laterites_tonnage_humide": 3392809.4100000006,
+          "laterites_nickel_contenu": 31173.956189597495
+        },
+        {
+          "annee": 2012,
+          "tonnage_humide_total": 9658732.349837247,
+          "nickel_contenu_total": 131692.69854919513,
+          "saprolites_tonnage_humide": 6394620.769837247,
+          "saprolites_nickel_contenu": 102389.17217579705,
+          "laterites_tonnage_humide": 3264111.58,
+          "laterites_nickel_contenu": 29303.52637339806
+        },
+        {
+          "annee": 2013,
+          "tonnage_humide_total": 12003566.46943181,
+          "nickel_contenu_total": 164405.84410302067,
+          "saprolites_tonnage_humide": 7787882.846704539,
+          "saprolites_nickel_contenu": 127451.40704993917,
+          "laterites_tonnage_humide": 4215683.622727272,
+          "laterites_nickel_contenu": 36954.43705308153
+        },
+        {
+          "annee": 2014,
+          "tonnage_humide_total": 12925872.25674812,
+          "nickel_contenu_total": 175174.16450701543,
+          "saprolites_tonnage_humide": 8594428.295839028,
+          "saprolites_nickel_contenu": 138328.3899552393,
+          "laterites_tonnage_humide": 4331443.960909091,
+          "laterites_nickel_contenu": 36845.774551776136
+        },
+        {
+          "annee": 2015,
+          "tonnage_humide_total": 14785861.187221179,
+          "nickel_contenu_total": 193199.21677425245,
+          "saprolites_tonnage_humide": 9862393.705402996,
+          "saprolites_nickel_contenu": 151381.6512046078,
+          "laterites_tonnage_humide": 4923467.481818181,
+          "laterites_nickel_contenu": 41817.565569644656
+        },
+        {
+          "annee": 2016,
+          "tonnage_humide_total": 15429213.219674973,
+          "nickel_contenu_total": 204210.02917178068,
+          "saprolites_tonnage_humide": 11086886.374674972,
+          "saprolites_nickel_contenu": 169678.55214297463,
+          "laterites_tonnage_humide": 4342326.845,
+          "laterites_nickel_contenu": 34531.47702880606
+        },
+        {
+          "annee": 2017,
+          "tonnage_humide_total": 16552491.679305153,
+          "nickel_contenu_total": 215381.59460913786,
+          "saprolites_tonnage_humide": 11215115.503850605,
+          "saprolites_nickel_contenu": 171192.02528355873,
+          "laterites_tonnage_humide": 5337376.175454546,
+          "laterites_nickel_contenu": 44189.56932557908
+        },
+        {
+          "annee": 2018,
+          "tonnage_humide_total": 16634053.112402733,
+          "nickel_contenu_total": 216224.61548589403,
+          "saprolites_tonnage_humide": 12087877.112402733,
+          "saprolites_nickel_contenu": 179400.85815883402,
+          "laterites_tonnage_humide": 4546176.0,
+          "laterites_nickel_contenu": 36823.757327060004
+        },
+        {
+          "annee": 2019,
+          "tonnage_humide_total": 15335952.93367122,
+          "nickel_contenu_total": 208184.61525354226,
+          "saprolites_tonnage_humide": 12790402.93367122,
+          "saprolites_nickel_contenu": 184590.12149688564,
+          "laterites_tonnage_humide": 2545550.0,
+          "laterites_nickel_contenu": 23594.493756656644
+        },
+        {
+          "annee": 2020,
+          "tonnage_humide_total": 15585831.512626497,
+          "nickel_contenu_total": 199697.34599146404,
+          "saprolites_tonnage_humide": 12099674.512626497,
+          "saprolites_nickel_contenu": 172361.55961070408,
+          "laterites_tonnage_humide": 3486157.0,
+          "laterites_nickel_contenu": 27335.786380759968
+        },
+        {
+          "annee": 2021,
+          "tonnage_humide_total": 14854798.875993833,
+          "nickel_contenu_total": 186283.50403954208,
+          "saprolites_tonnage_humide": 11642262.875993833,
+          "saprolites_nickel_contenu": 158390.09871711212,
+          "laterites_tonnage_humide": 3212536.0,
+          "laterites_nickel_contenu": 27893.40532242998
+        },
+        {
+          "annee": 2022,
+          "tonnage_humide_total": 16711493.0,
+          "nickel_contenu_total": 199951.11035056988,
+          "saprolites_tonnage_humide": 13226412.0,
+          "saprolites_nickel_contenu": 170928.90803293991,
+          "laterites_tonnage_humide": 3485081.0,
+          "laterites_nickel_contenu": 29022.20231763
+        },
+        {
+          "annee": 2023,
+          "tonnage_humide_total": 19050751.062000003,
+          "nickel_contenu_total": 233375.38909699998,
+          "saprolites_tonnage_humide": 13763632.061999999,
+          "saprolites_nickel_contenu": 189383.89577000003,
+          "laterites_tonnage_humide": 5287119.0,
+          "laterites_nickel_contenu": 43991.493327000004
+        },
+        {
+          "annee": 2024,
+          "tonnage_humide_total": 9392609.2281,
+          "nickel_contenu_total": 116758.256031,
+          "saprolites_tonnage_humide": 7333492.228100001,
+          "saprolites_nickel_contenu": 99228.276961,
+          "laterites_tonnage_humide": 2059117.0,
+          "laterites_nickel_contenu": 17529.97907
+        }
+      ]
+    },
+    "production_metallurgique": {
+      "label": "Production métallurgique",
+      "unite": "tonnes Ni contenu",
+      "source": "data.gouv.nc — production-metallurgique-depuis-1985",
+      "frequence": "mensuelle",
+      "historique_mensuelle": [
+        {
+          "mois": "1985-01",
+          "valeur": 3646.0
+        },
+        {
+          "mois": "1985-02",
+          "valeur": 3421.0
+        },
+        {
+          "mois": "1985-03",
+          "valeur": 3708.0
+        },
+        {
+          "mois": "1985-04",
+          "valeur": 3468.0
+        },
+        {
+          "mois": "1985-05",
+          "valeur": 4066.0
+        },
+        {
+          "mois": "1985-06",
+          "valeur": 3644.0
+        },
+        {
+          "mois": "1985-07",
+          "valeur": 3836.0
+        },
+        {
+          "mois": "1985-08",
+          "valeur": 3895.0
+        },
+        {
+          "mois": "1985-09",
+          "valeur": 3893.0
+        },
+        {
+          "mois": "1985-10",
+          "valeur": 3713.0
+        },
+        {
+          "mois": "1985-11",
+          "valeur": 3825.0
+        },
+        {
+          "mois": "1985-12",
+          "valeur": 3893.0
+        },
+        {
+          "mois": "1986-01",
+          "valeur": 3779.0
+        },
+        {
+          "mois": "1986-02",
+          "valeur": 3475.0
+        },
+        {
+          "mois": "1986-03",
+          "valeur": 3732.0
+        },
+        {
+          "mois": "1986-04",
+          "valeur": 3467.0
+        },
+        {
+          "mois": "1986-05",
+          "valeur": 3836.0
+        },
+        {
+          "mois": "1986-06",
+          "valeur": 3884.0
+        },
+        {
+          "mois": "1986-07",
+          "valeur": 2592.0
+        },
+        {
+          "mois": "1986-08",
+          "valeur": 3213.0
+        },
+        {
+          "mois": "1986-09",
+          "valeur": 3637.0
+        },
+        {
+          "mois": "1986-10",
+          "valeur": 3508.0
+        },
+        {
+          "mois": "1986-11",
+          "valeur": 3679.0
+        },
+        {
+          "mois": "1986-12",
+          "valeur": 3359.0
+        },
+        {
+          "mois": "1987-01",
+          "valeur": 3718.0
+        },
+        {
+          "mois": "1987-02",
+          "valeur": 3611.0
+        },
+        {
+          "mois": "1987-03",
+          "valeur": 3343.0
+        },
+        {
+          "mois": "1987-04",
+          "valeur": 2253.0
+        },
+        {
+          "mois": "1987-05",
+          "valeur": 2679.0
+        },
+        {
+          "mois": "1987-06",
+          "valeur": 2256.0
+        },
+        {
+          "mois": "1987-07",
+          "valeur": 2101.0
+        },
+        {
+          "mois": "1987-08",
+          "valeur": 2714.0
+        },
+        {
+          "mois": "1987-09",
+          "valeur": 3184.0
+        },
+        {
+          "mois": "1987-10",
+          "valeur": 4032.0
+        },
+        {
+          "mois": "1987-11",
+          "valeur": 3811.0
+        },
+        {
+          "mois": "1987-12",
+          "valeur": 4112.0
+        },
+        {
+          "mois": "1988-01",
+          "valeur": 3457.0
+        },
+        {
+          "mois": "1988-02",
+          "valeur": 3998.0
+        },
+        {
+          "mois": "1988-03",
+          "valeur": 4154.0
+        },
+        {
+          "mois": "1988-04",
+          "valeur": 4140.0
+        },
+        {
+          "mois": "1988-05",
+          "valeur": 3890.0
+        },
+        {
+          "mois": "1988-06",
+          "valeur": 4147.0
+        },
+        {
+          "mois": "1988-07",
+          "valeur": 3958.0
+        },
+        {
+          "mois": "1988-08",
+          "valeur": 4255.0
+        },
+        {
+          "mois": "1988-09",
+          "valeur": 3805.0
+        },
+        {
+          "mois": "1988-10",
+          "valeur": 4324.0
+        },
+        {
+          "mois": "1988-11",
+          "valeur": 3630.0
+        },
+        {
+          "mois": "1988-12",
+          "valeur": 4063.0
+        },
+        {
+          "mois": "1989-01",
+          "valeur": 3978.0
+        },
+        {
+          "mois": "1989-02",
+          "valeur": 3471.0
+        },
+        {
+          "mois": "1989-03",
+          "valeur": 4094.0
+        },
+        {
+          "mois": "1989-04",
+          "valeur": 3723.0
+        },
+        {
+          "mois": "1989-05",
+          "valeur": 3730.0
+        },
+        {
+          "mois": "1989-06",
+          "valeur": 4178.0
+        },
+        {
+          "mois": "1989-07",
+          "valeur": 3805.0
+        },
+        {
+          "mois": "1989-08",
+          "valeur": 3949.0
+        },
+        {
+          "mois": "1989-09",
+          "valeur": 3825.0
+        },
+        {
+          "mois": "1989-10",
+          "valeur": 4199.0
+        },
+        {
+          "mois": "1989-11",
+          "valeur": 3931.0
+        },
+        {
+          "mois": "1989-12",
+          "valeur": 4052.0
+        },
+        {
+          "mois": "1990-01",
+          "valeur": 3615.0
+        },
+        {
+          "mois": "1990-02",
+          "valeur": 3501.0
+        },
+        {
+          "mois": "1990-03",
+          "valeur": 3800.0
+        },
+        {
+          "mois": "1990-04",
+          "valeur": 3154.0
+        },
+        {
+          "mois": "1990-05",
+          "valeur": 3899.0
+        },
+        {
+          "mois": "1990-06",
+          "valeur": 2289.0
+        },
+        {
+          "mois": "1990-07",
+          "valeur": 551.0
+        },
+        {
+          "mois": "1990-08",
+          "valeur": 4442.0
+        },
+        {
+          "mois": "1990-09",
+          "valeur": 4409.0
+        },
+        {
+          "mois": "1990-10",
+          "valeur": 4482.0
+        },
+        {
+          "mois": "1990-11",
+          "valeur": 4309.0
+        },
+        {
+          "mois": "1990-12",
+          "valeur": 3510.0
+        },
+        {
+          "mois": "1991-01",
+          "valeur": 3461.0
+        },
+        {
+          "mois": "1991-02",
+          "valeur": 3495.0
+        },
+        {
+          "mois": "1991-03",
+          "valeur": 3450.0
+        },
+        {
+          "mois": "1991-04",
+          "valeur": 3564.0
+        },
+        {
+          "mois": "1991-05",
+          "valeur": 3533.0
+        },
+        {
+          "mois": "1991-06",
+          "valeur": 3700.0
+        },
+        {
+          "mois": "1991-07",
+          "valeur": 3529.0
+        },
+        {
+          "mois": "1991-08",
+          "valeur": 3906.0
+        },
+        {
+          "mois": "1991-09",
+          "valeur": 3593.0
+        },
+        {
+          "mois": "1991-10",
+          "valeur": 3862.0
+        },
+        {
+          "mois": "1991-11",
+          "valeur": 3658.0
+        },
+        {
+          "mois": "1991-12",
+          "valeur": 3701.0
+        },
+        {
+          "mois": "1992-01",
+          "valeur": 3778.0
+        },
+        {
+          "mois": "1992-02",
+          "valeur": 3823.0
+        },
+        {
+          "mois": "1992-03",
+          "valeur": 3089.0
+        },
+        {
+          "mois": "1992-04",
+          "valeur": 2407.0
+        },
+        {
+          "mois": "1992-05",
+          "valeur": 2475.0
+        },
+        {
+          "mois": "1992-06",
+          "valeur": 3201.0
+        },
+        {
+          "mois": "1992-07",
+          "valeur": 2586.0
+        },
+        {
+          "mois": "1992-08",
+          "valeur": 1720.0
+        },
+        {
+          "mois": "1992-09",
+          "valeur": 3450.0
+        },
+        {
+          "mois": "1992-10",
+          "valeur": 4208.0
+        },
+        {
+          "mois": "1992-11",
+          "valeur": 4374.0
+        },
+        {
+          "mois": "1992-12",
+          "valeur": 4260.0
+        },
+        {
+          "mois": "1993-01",
+          "valeur": 4300.0
+        },
+        {
+          "mois": "1993-02",
+          "valeur": 3686.0
+        },
+        {
+          "mois": "1993-03",
+          "valeur": 4092.0
+        },
+        {
+          "mois": "1993-04",
+          "valeur": 3776.0
+        },
+        {
+          "mois": "1993-05",
+          "valeur": 4395.0
+        },
+        {
+          "mois": "1993-06",
+          "valeur": 4502.0
+        },
+        {
+          "mois": "1993-07",
+          "valeur": 3502.0
+        },
+        {
+          "mois": "1993-08",
+          "valeur": 3903.0
+        },
+        {
+          "mois": "1993-09",
+          "valeur": 4013.0
+        },
+        {
+          "mois": "1993-10",
+          "valeur": 4209.0
+        },
+        {
+          "mois": "1993-11",
+          "valeur": 3740.0
+        },
+        {
+          "mois": "1993-12",
+          "valeur": 3615.0
+        },
+        {
+          "mois": "1994-01",
+          "valeur": 3983.0
+        },
+        {
+          "mois": "1994-02",
+          "valeur": 3832.0
+        },
+        {
+          "mois": "1994-03",
+          "valeur": 4270.0
+        },
+        {
+          "mois": "1994-04",
+          "valeur": 3916.0
+        },
+        {
+          "mois": "1994-05",
+          "valeur": 4255.0
+        },
+        {
+          "mois": "1994-06",
+          "valeur": 4480.0
+        },
+        {
+          "mois": "1994-07",
+          "valeur": 3966.0
+        },
+        {
+          "mois": "1994-08",
+          "valeur": 4400.0
+        },
+        {
+          "mois": "1994-09",
+          "valeur": 3917.0
+        },
+        {
+          "mois": "1994-10",
+          "valeur": 4460.0
+        },
+        {
+          "mois": "1994-11",
+          "valeur": 4042.0
+        },
+        {
+          "mois": "1994-12",
+          "valeur": 4609.0
+        },
+        {
+          "mois": "1995-01",
+          "valeur": 4683.0
+        },
+        {
+          "mois": "1995-02",
+          "valeur": 4077.0
+        },
+        {
+          "mois": "1995-03",
+          "valeur": 4508.0
+        },
+        {
+          "mois": "1995-04",
+          "valeur": 4067.0
+        },
+        {
+          "mois": "1995-05",
+          "valeur": 4382.0
+        },
+        {
+          "mois": "1995-06",
+          "valeur": 3765.0
+        },
+        {
+          "mois": "1995-07",
+          "valeur": 4451.0
+        },
+        {
+          "mois": "1995-08",
+          "valeur": 4184.0
+        },
+        {
+          "mois": "1995-09",
+          "valeur": 4329.0
+        },
+        {
+          "mois": "1995-10",
+          "valeur": 4806.0
+        },
+        {
+          "mois": "1995-11",
+          "valeur": 4549.0
+        },
+        {
+          "mois": "1995-12",
+          "valeur": 4542.0
+        },
+        {
+          "mois": "1996-01",
+          "valeur": 4620.0
+        },
+        {
+          "mois": "1996-02",
+          "valeur": 4078.0
+        },
+        {
+          "mois": "1996-03",
+          "valeur": 4025.0
+        },
+        {
+          "mois": "1996-04",
+          "valeur": 3558.0
+        },
+        {
+          "mois": "1996-05",
+          "valeur": 5046.0
+        },
+        {
+          "mois": "1996-06",
+          "valeur": 4951.0
+        },
+        {
+          "mois": "1996-07",
+          "valeur": 4191.0
+        },
+        {
+          "mois": "1996-08",
+          "valeur": 4521.0
+        },
+        {
+          "mois": "1996-09",
+          "valeur": 4266.0
+        },
+        {
+          "mois": "1996-10",
+          "valeur": 4337.0
+        },
+        {
+          "mois": "1996-11",
+          "valeur": 4663.0
+        },
+        {
+          "mois": "1996-12",
+          "valeur": 5157.0
+        },
+        {
+          "mois": "1997-01",
+          "valeur": 5023.0
+        },
+        {
+          "mois": "1997-02",
+          "valeur": 4127.0
+        },
+        {
+          "mois": "1997-03",
+          "valeur": 4873.0
+        },
+        {
+          "mois": "1997-04",
+          "valeur": 3853.0
+        },
+        {
+          "mois": "1997-05",
+          "valeur": 5135.0
+        },
+        {
+          "mois": "1997-06",
+          "valeur": 4825.0
+        },
+        {
+          "mois": "1997-07",
+          "valeur": 4408.0
+        },
+        {
+          "mois": "1997-08",
+          "valeur": 4575.0
+        },
+        {
+          "mois": "1997-09",
+          "valeur": 4905.0
+        },
+        {
+          "mois": "1997-10",
+          "valeur": 4669.0
+        },
+        {
+          "mois": "1997-11",
+          "valeur": 3738.0
+        },
+        {
+          "mois": "1997-12",
+          "valeur": 4761.0
+        },
+        {
+          "mois": "1998-01",
+          "valeur": 5441.0
+        },
+        {
+          "mois": "1998-02",
+          "valeur": 4642.0
+        },
+        {
+          "mois": "1998-03",
+          "valeur": 4841.0
+        },
+        {
+          "mois": "1998-04",
+          "valeur": 4076.0
+        },
+        {
+          "mois": "1998-05",
+          "valeur": 4863.0
+        },
+        {
+          "mois": "1998-06",
+          "valeur": 4411.0
+        },
+        {
+          "mois": "1998-07",
+          "valeur": 4575.0
+        },
+        {
+          "mois": "1998-08",
+          "valeur": 5040.0
+        },
+        {
+          "mois": "1998-09",
+          "valeur": 4395.0
+        },
+        {
+          "mois": "1998-10",
+          "valeur": 4214.0
+        },
+        {
+          "mois": "1998-11",
+          "valeur": 5129.0
+        },
+        {
+          "mois": "1998-12",
+          "valeur": 4875.0
+        },
+        {
+          "mois": "1999-01",
+          "valeur": 4738.0
+        },
+        {
+          "mois": "1999-02",
+          "valeur": 3715.0
+        },
+        {
+          "mois": "1999-03",
+          "valeur": 4409.0
+        },
+        {
+          "mois": "1999-04",
+          "valeur": 4221.0
+        },
+        {
+          "mois": "1999-05",
+          "valeur": 5102.0
+        },
+        {
+          "mois": "1999-06",
+          "valeur": 4753.0
+        },
+        {
+          "mois": "1999-07",
+          "valeur": 4942.0
+        },
+        {
+          "mois": "1999-08",
+          "valeur": 4762.0
+        },
+        {
+          "mois": "1999-09",
+          "valeur": 5201.0
+        },
+        {
+          "mois": "1999-10",
+          "valeur": 4906.0
+        },
+        {
+          "mois": "1999-11",
+          "valeur": 4775.0
+        },
+        {
+          "mois": "1999-12",
+          "valeur": 5118.0
+        },
+        {
+          "mois": "2000-01",
+          "valeur": 4895.0
+        },
+        {
+          "mois": "2000-02",
+          "valeur": 3498.0
+        },
+        {
+          "mois": "2000-03",
+          "valeur": 4109.0
+        },
+        {
+          "mois": "2000-04",
+          "valeur": 4615.0
+        },
+        {
+          "mois": "2000-05",
+          "valeur": 5003.0
+        },
+        {
+          "mois": "2000-06",
+          "valeur": 4454.0
+        },
+        {
+          "mois": "2000-07",
+          "valeur": 5175.0
+        },
+        {
+          "mois": "2000-08",
+          "valeur": 5122.0
+        },
+        {
+          "mois": "2000-09",
+          "valeur": 5175.0
+        },
+        {
+          "mois": "2000-10",
+          "valeur": 5312.0
+        },
+        {
+          "mois": "2000-11",
+          "valeur": 4746.0
+        },
+        {
+          "mois": "2000-12",
+          "valeur": 5359.0
+        },
+        {
+          "mois": "2001-01",
+          "valeur": 4965.0
+        },
+        {
+          "mois": "2001-02",
+          "valeur": 4367.0
+        },
+        {
+          "mois": "2001-03",
+          "valeur": 4741.0
+        },
+        {
+          "mois": "2001-04",
+          "valeur": 4640.0
+        },
+        {
+          "mois": "2001-05",
+          "valeur": 4711.0
+        },
+        {
+          "mois": "2001-06",
+          "valeur": 5196.0
+        },
+        {
+          "mois": "2001-07",
+          "valeur": 5206.0
+        },
+        {
+          "mois": "2001-08",
+          "valeur": 5201.0
+        },
+        {
+          "mois": "2001-09",
+          "valeur": 4633.0
+        },
+        {
+          "mois": "2001-10",
+          "valeur": 5166.0
+        },
+        {
+          "mois": "2001-11",
+          "valeur": 5286.0
+        },
+        {
+          "mois": "2001-12",
+          "valeur": 4861.0
+        },
+        {
+          "mois": "2002-01",
+          "valeur": 5011.0
+        },
+        {
+          "mois": "2002-02",
+          "valeur": 4569.0
+        },
+        {
+          "mois": "2002-03",
+          "valeur": 5131.0
+        },
+        {
+          "mois": "2002-04",
+          "valeur": 4344.0
+        },
+        {
+          "mois": "2002-05",
+          "valeur": 5219.0
+        },
+        {
+          "mois": "2002-06",
+          "valeur": 4624.0
+        },
+        {
+          "mois": "2002-07",
+          "valeur": 5088.0
+        },
+        {
+          "mois": "2002-08",
+          "valeur": 4868.0
+        },
+        {
+          "mois": "2002-09",
+          "valeur": 5185.0
+        },
+        {
+          "mois": "2002-10",
+          "valeur": 5181.0
+        },
+        {
+          "mois": "2002-11",
+          "valeur": 5374.0
+        },
+        {
+          "mois": "2002-12",
+          "valeur": 5273.0
+        },
+        {
+          "mois": "2003-01",
+          "valeur": 5375.0
+        },
+        {
+          "mois": "2003-02",
+          "valeur": 5270.0
+        },
+        {
+          "mois": "2003-03",
+          "valeur": 5243.0
+        },
+        {
+          "mois": "2003-04",
+          "valeur": 4496.0
+        },
+        {
+          "mois": "2003-05",
+          "valeur": 5308.0
+        },
+        {
+          "mois": "2003-06",
+          "valeur": 5189.0
+        },
+        {
+          "mois": "2003-07",
+          "valeur": 5557.0
+        },
+        {
+          "mois": "2003-08",
+          "valeur": 4849.0
+        },
+        {
+          "mois": "2003-09",
+          "valeur": 5400.0
+        },
+        {
+          "mois": "2003-10",
+          "valeur": 4777.0
+        },
+        {
+          "mois": "2003-11",
+          "valeur": 4991.0
+        },
+        {
+          "mois": "2003-12",
+          "valeur": 5068.0
+        },
+        {
+          "mois": "2004-01",
+          "valeur": 5197.0
+        },
+        {
+          "mois": "2004-02",
+          "valeur": 4723.0
+        },
+        {
+          "mois": "2004-03",
+          "valeur": 3892.0
+        },
+        {
+          "mois": "2004-04",
+          "valeur": 3530.0
+        },
+        {
+          "mois": "2004-05",
+          "valeur": 3555.0
+        },
+        {
+          "mois": "2004-06",
+          "valeur": 4010.0
+        },
+        {
+          "mois": "2004-07",
+          "valeur": 4311.0
+        },
+        {
+          "mois": "2004-08",
+          "valeur": 4315.0
+        },
+        {
+          "mois": "2004-09",
+          "valeur": 5194.0
+        },
+        {
+          "mois": "2004-10",
+          "valeur": 4860.0
+        },
+        {
+          "mois": "2004-11",
+          "valeur": 6157.0
+        },
+        {
+          "mois": "2004-12",
+          "valeur": 5436.0
+        },
+        {
+          "mois": "2005-01",
+          "valeur": 5437.0
+        },
+        {
+          "mois": "2005-02",
+          "valeur": 4680.0
+        },
+        {
+          "mois": "2005-03",
+          "valeur": 5681.0
+        },
+        {
+          "mois": "2005-04",
+          "valeur": 4829.0
+        },
+        {
+          "mois": "2005-05",
+          "valeur": 5192.0
+        },
+        {
+          "mois": "2005-06",
+          "valeur": 5806.0
+        },
+        {
+          "mois": "2005-07",
+          "valeur": 5423.0
+        },
+        {
+          "mois": "2005-08",
+          "valeur": 6032.0
+        },
+        {
+          "mois": "2005-09",
+          "valeur": 4832.0
+        },
+        {
+          "mois": "2005-10",
+          "valeur": 4726.0
+        },
+        {
+          "mois": "2005-11",
+          "valeur": 2082.0
+        },
+        {
+          "mois": "2005-12",
+          "valeur": 4856.0
+        },
+        {
+          "mois": "2006-01",
+          "valeur": 6539.0
+        },
+        {
+          "mois": "2006-02",
+          "valeur": 5638.0
+        },
+        {
+          "mois": "2006-03",
+          "valeur": 4868.0
+        },
+        {
+          "mois": "2006-04",
+          "valeur": 5745.0
+        },
+        {
+          "mois": "2006-05",
+          "valeur": 5615.0
+        },
+        {
+          "mois": "2006-06",
+          "valeur": 5118.0
+        },
+        {
+          "mois": "2006-07",
+          "valeur": 5271.0
+        },
+        {
+          "mois": "2006-08",
+          "valeur": 5031.0
+        },
+        {
+          "mois": "2006-09",
+          "valeur": 5609.0
+        },
+        {
+          "mois": "2006-10",
+          "valeur": 3842.0
+        },
+        {
+          "mois": "2006-11",
+          "valeur": 4492.0
+        },
+        {
+          "mois": "2006-12",
+          "valeur": 4610.0
+        },
+        {
+          "mois": "2007-01",
+          "valeur": 5112.47
+        },
+        {
+          "mois": "2007-02",
+          "valeur": 4552.3
+        },
+        {
+          "mois": "2007-03",
+          "valeur": 4940.06
+        },
+        {
+          "mois": "2007-04",
+          "valeur": 4809.6
+        },
+        {
+          "mois": "2007-05",
+          "valeur": 5417.41
+        },
+        {
+          "mois": "2007-06",
+          "valeur": 5312.27
+        },
+        {
+          "mois": "2007-07",
+          "valeur": 5101.48
+        },
+        {
+          "mois": "2007-08",
+          "valeur": 5199.77
+        },
+        {
+          "mois": "2007-09",
+          "valeur": 4871.73
+        },
+        {
+          "mois": "2007-10",
+          "valeur": 4335.6
+        },
+        {
+          "mois": "2007-11",
+          "valeur": 4824.18
+        },
+        {
+          "mois": "2007-12",
+          "valeur": 5319.42
+        },
+        {
+          "mois": "2008-01",
+          "valeur": 4653.64
+        },
+        {
+          "mois": "2008-02",
+          "valeur": 4342.74
+        },
+        {
+          "mois": "2008-03",
+          "valeur": 4058.21
+        },
+        {
+          "mois": "2008-04",
+          "valeur": 3877.89
+        },
+        {
+          "mois": "2008-05",
+          "valeur": 3878.9
+        },
+        {
+          "mois": "2008-06",
+          "valeur": 3833.59
+        },
+        {
+          "mois": "2008-07",
+          "valeur": 3532.58
+        },
+        {
+          "mois": "2008-08",
+          "valeur": 4101.74
+        },
+        {
+          "mois": "2008-09",
+          "valeur": 3775.38
+        },
+        {
+          "mois": "2008-10",
+          "valeur": 4421.49
+        },
+        {
+          "mois": "2008-11",
+          "valeur": 5033.0
+        },
+        {
+          "mois": "2008-12",
+          "valeur": 5521.9
+        },
+        {
+          "mois": "2009-01",
+          "valeur": 4651.33
+        },
+        {
+          "mois": "2009-02",
+          "valeur": 3924.22
+        },
+        {
+          "mois": "2009-03",
+          "valeur": 4682.42
+        },
+        {
+          "mois": "2009-04",
+          "valeur": 3977.26
+        },
+        {
+          "mois": "2009-05",
+          "valeur": 4748.96
+        },
+        {
+          "mois": "2009-06",
+          "valeur": 4311.9
+        },
+        {
+          "mois": "2009-07",
+          "valeur": 4052.51
+        },
+        {
+          "mois": "2009-08",
+          "valeur": 4417.58
+        },
+        {
+          "mois": "2009-09",
+          "valeur": 3965.4
+        },
+        {
+          "mois": "2009-10",
+          "valeur": 4546.0
+        },
+        {
+          "mois": "2009-11",
+          "valeur": 3671.96
+        },
+        {
+          "mois": "2009-12",
+          "valeur": 5181.98
+        },
+        {
+          "mois": "2010-01",
+          "valeur": 4345.12
+        },
+        {
+          "mois": "2010-02",
+          "valeur": 4405.0
+        },
+        {
+          "mois": "2010-03",
+          "valeur": 4900.0
+        },
+        {
+          "mois": "2010-04",
+          "valeur": 4294.06
+        },
+        {
+          "mois": "2010-05",
+          "valeur": 4626.88
+        },
+        {
+          "mois": "2010-06",
+          "valeur": 4213.28
+        },
+        {
+          "mois": "2010-07",
+          "valeur": 4658.34
+        },
+        {
+          "mois": "2010-08",
+          "valeur": 4235.69
+        },
+        {
+          "mois": "2010-09",
+          "valeur": 4273.59
+        },
+        {
+          "mois": "2010-10",
+          "valeur": 4431.66
+        },
+        {
+          "mois": "2010-11",
+          "valeur": 4785.96
+        },
+        {
+          "mois": "2010-12",
+          "valeur": 4770.89
+        },
+        {
+          "mois": "2011-01",
+          "valeur": 4573.32
+        },
+        {
+          "mois": "2011-02",
+          "valeur": 5429.86
+        },
+        {
+          "mois": "2011-03",
+          "valeur": 4920.52
+        },
+        {
+          "mois": "2011-04",
+          "valeur": 5168.02
+        },
+        {
+          "mois": "2011-05",
+          "valeur": 4112.08
+        },
+        {
+          "mois": "2011-06",
+          "valeur": 5277.24
+        },
+        {
+          "mois": "2011-07",
+          "valeur": 5973.9
+        },
+        {
+          "mois": "2011-08",
+          "valeur": 5295.88
+        },
+        {
+          "mois": "2011-09",
+          "valeur": 4665.45
+        },
+        {
+          "mois": "2011-10",
+          "valeur": 4969.44
+        },
+        {
+          "mois": "2011-11",
+          "valeur": 5525.57
+        },
+        {
+          "mois": "2011-12",
+          "valeur": 6016.09
+        },
+        {
+          "mois": "2012-01",
+          "valeur": 6537.36
+        },
+        {
+          "mois": "2012-02",
+          "valeur": 5837.49
+        },
+        {
+          "mois": "2012-03",
+          "valeur": 5704.55
+        },
+        {
+          "mois": "2012-04",
+          "valeur": 4795.56
+        },
+        {
+          "mois": "2012-05",
+          "valeur": 4761.36
+        },
+        {
+          "mois": "2012-06",
+          "valeur": 4532.74
+        },
+        {
+          "mois": "2012-07",
+          "valeur": 4790.13
+        },
+        {
+          "mois": "2012-08",
+          "valeur": 4939.22
+        },
+        {
+          "mois": "2012-09",
+          "valeur": 4849.32
+        },
+        {
+          "mois": "2012-10",
+          "valeur": 4396.24
+        },
+        {
+          "mois": "2012-11",
+          "valeur": 5143.97
+        },
+        {
+          "mois": "2012-12",
+          "valeur": 5889.96
+        },
+        {
+          "mois": "2013-01",
+          "valeur": 6150.97
+        },
+        {
+          "mois": "2013-02",
+          "valeur": 5570.82
+        },
+        {
+          "mois": "2013-03",
+          "valeur": 6501.05
+        },
+        {
+          "mois": "2013-04",
+          "valeur": 4609.6
+        },
+        {
+          "mois": "2013-05",
+          "valeur": 4091.98
+        },
+        {
+          "mois": "2013-06",
+          "valeur": 7037.12
+        },
+        {
+          "mois": "2013-07",
+          "valeur": 6836.95
+        },
+        {
+          "mois": "2013-08",
+          "valeur": 6545.41
+        },
+        {
+          "mois": "2013-09",
+          "valeur": 6594.88
+        },
+        {
+          "mois": "2013-10",
+          "valeur": 4455.24
+        },
+        {
+          "mois": "2013-11",
+          "valeur": 5688.84
+        },
+        {
+          "mois": "2013-12",
+          "valeur": 5123.21
+        },
+        {
+          "mois": "2014-01",
+          "valeur": 6640.06
+        },
+        {
+          "mois": "2014-02",
+          "valeur": 6198.6
+        },
+        {
+          "mois": "2014-03",
+          "valeur": 7618.43
+        },
+        {
+          "mois": "2014-04",
+          "valeur": 7578.12
+        },
+        {
+          "mois": "2014-05",
+          "valeur": 6275.89
+        },
+        {
+          "mois": "2014-06",
+          "valeur": 5102.12
+        },
+        {
+          "mois": "2014-07",
+          "valeur": 5556.67
+        },
+        {
+          "mois": "2014-08",
+          "valeur": 6790.82
+        },
+        {
+          "mois": "2014-09",
+          "valeur": 7255.45
+        },
+        {
+          "mois": "2014-10",
+          "valeur": 7328.19
+        },
+        {
+          "mois": "2014-11",
+          "valeur": 7863.74
+        },
+        {
+          "mois": "2014-12",
+          "valeur": 8546.4
+        },
+        {
+          "mois": "2015-01",
+          "valeur": 7417.39
+        },
+        {
+          "mois": "2015-02",
+          "valeur": 7081.83
+        },
+        {
+          "mois": "2015-03",
+          "valeur": 7628.37
+        },
+        {
+          "mois": "2015-04",
+          "valeur": 7406.53
+        },
+        {
+          "mois": "2015-05",
+          "valeur": 8618.03
+        },
+        {
+          "mois": "2015-06",
+          "valeur": 6001.08
+        },
+        {
+          "mois": "2015-07",
+          "valeur": 8207.27
+        },
+        {
+          "mois": "2015-08",
+          "valeur": 8473.6
+        },
+        {
+          "mois": "2015-09",
+          "valeur": 7858.5
+        },
+        {
+          "mois": "2015-10",
+          "valeur": 8300.78
+        },
+        {
+          "mois": "2015-11",
+          "valeur": 8317.59
+        },
+        {
+          "mois": "2015-12",
+          "valeur": 8666.02
+        },
+        {
+          "mois": "2016-01",
+          "valeur": 8870.21
+        },
+        {
+          "mois": "2016-02",
+          "valeur": 7841.33
+        },
+        {
+          "mois": "2016-03",
+          "valeur": 8724.66
+        },
+        {
+          "mois": "2016-04",
+          "valeur": 7739.4
+        },
+        {
+          "mois": "2016-05",
+          "valeur": 8708.52
+        },
+        {
+          "mois": "2016-06",
+          "valeur": 7317.11
+        },
+        {
+          "mois": "2016-07",
+          "valeur": 8749.81
+        },
+        {
+          "mois": "2016-08",
+          "valeur": 10738.74
+        },
+        {
+          "mois": "2016-09",
+          "valeur": 10921.58
+        },
+        {
+          "mois": "2016-10",
+          "valeur": 10834.72
+        },
+        {
+          "mois": "2016-11",
+          "valeur": 7321.1
+        },
+        {
+          "mois": "2016-12",
+          "valeur": 9771.16
+        },
+        {
+          "mois": "2017-01",
+          "valeur": 9931.58
+        },
+        {
+          "mois": "2017-02",
+          "valeur": 8632.6
+        },
+        {
+          "mois": "2017-03",
+          "valeur": 8813.89
+        },
+        {
+          "mois": "2017-04",
+          "valeur": 7407.39
+        },
+        {
+          "mois": "2017-05",
+          "valeur": 8507.78
+        },
+        {
+          "mois": "2017-06",
+          "valeur": 9472.73
+        },
+        {
+          "mois": "2017-07",
+          "valeur": 9024.68
+        },
+        {
+          "mois": "2017-08",
+          "valeur": 9065.99
+        },
+        {
+          "mois": "2017-09",
+          "valeur": 9903.42
+        },
+        {
+          "mois": "2017-10",
+          "valeur": 9370.14
+        },
+        {
+          "mois": "2017-11",
+          "valeur": 9949.22
+        },
+        {
+          "mois": "2017-12",
+          "valeur": 10539.32
+        },
+        {
+          "mois": "2018-01",
+          "valeur": 11186.28
+        },
+        {
+          "mois": "2018-02",
+          "valeur": 9453.48
+        },
+        {
+          "mois": "2018-03",
+          "valeur": 9379.26
+        },
+        {
+          "mois": "2018-04",
+          "valeur": 8176.87
+        },
+        {
+          "mois": "2018-05",
+          "valeur": 9812.01
+        },
+        {
+          "mois": "2018-06",
+          "valeur": 9037.47
+        },
+        {
+          "mois": "2018-07",
+          "valeur": 9813.94
+        },
+        {
+          "mois": "2018-08",
+          "valeur": 9251.42
+        },
+        {
+          "mois": "2018-09",
+          "valeur": 9065.97
+        },
+        {
+          "mois": "2018-10",
+          "valeur": 9643.74
+        },
+        {
+          "mois": "2018-11",
+          "valeur": 9132.36
+        },
+        {
+          "mois": "2018-12",
+          "valeur": 10684.37
+        },
+        {
+          "mois": "2019-01",
+          "valeur": 9270.25
+        },
+        {
+          "mois": "2019-02",
+          "valeur": 6631.82
+        },
+        {
+          "mois": "2019-03",
+          "valeur": 6750.69
+        },
+        {
+          "mois": "2019-04",
+          "valeur": 7550.78
+        },
+        {
+          "mois": "2019-05",
+          "valeur": 5940.5
+        },
+        {
+          "mois": "2019-06",
+          "valeur": 8425.09
+        },
+        {
+          "mois": "2019-07",
+          "valeur": 7703.28
+        },
+        {
+          "mois": "2019-08",
+          "valeur": 9225.47
+        },
+        {
+          "mois": "2019-09",
+          "valeur": 7535.18
+        },
+        {
+          "mois": "2019-10",
+          "valeur": 7315.49
+        },
+        {
+          "mois": "2019-11",
+          "valeur": 10013.29
+        },
+        {
+          "mois": "2019-12",
+          "valeur": 8041.78
+        },
+        {
+          "mois": "2020-01",
+          "valeur": 8902.44
+        },
+        {
+          "mois": "2020-02",
+          "valeur": 8762.03
+        },
+        {
+          "mois": "2020-03",
+          "valeur": 7481.48
+        },
+        {
+          "mois": "2020-04",
+          "valeur": 7034.71
+        },
+        {
+          "mois": "2020-05",
+          "valeur": 6956.85
+        },
+        {
+          "mois": "2020-06",
+          "valeur": 7316.03
+        },
+        {
+          "mois": "2020-07",
+          "valeur": 8470.51
+        },
+        {
+          "mois": "2020-08",
+          "valeur": 8258.73
+        },
+        {
+          "mois": "2020-09",
+          "valeur": 7526.76
+        },
+        {
+          "mois": "2020-10",
+          "valeur": 8213.66
+        },
+        {
+          "mois": "2020-11",
+          "valeur": 7094.47
+        },
+        {
+          "mois": "2020-12",
+          "valeur": 4689.95
+        },
+        {
+          "mois": "2021-01",
+          "valeur": 5016.64
+        },
+        {
+          "mois": "2021-02",
+          "valeur": 3655.41
+        },
+        {
+          "mois": "2021-03",
+          "valeur": 4848.1
+        },
+        {
+          "mois": "2021-04",
+          "valeur": 4002.56
+        },
+        {
+          "mois": "2021-05",
+          "valeur": 5635.15
+        },
+        {
+          "mois": "2021-06",
+          "valeur": 6914.51
+        },
+        {
+          "mois": "2021-07",
+          "valeur": 7503.73
+        },
+        {
+          "mois": "2021-08",
+          "valeur": 8055.64
+        },
+        {
+          "mois": "2021-09",
+          "valeur": 7242.53
+        },
+        {
+          "mois": "2021-10",
+          "valeur": 7229.33
+        },
+        {
+          "mois": "2021-11",
+          "valeur": 7000.18
+        },
+        {
+          "mois": "2021-12",
+          "valeur": 6309.42
+        },
+        {
+          "mois": "2022-01",
+          "valeur": 9108.82
+        },
+        {
+          "mois": "2022-02",
+          "valeur": 6608.87
+        },
+        {
+          "mois": "2022-03",
+          "valeur": 8055.66
+        },
+        {
+          "mois": "2022-04",
+          "valeur": 7104.06
+        },
+        {
+          "mois": "2022-05",
+          "valeur": 7295.86
+        },
+        {
+          "mois": "2022-06",
+          "valeur": 9425.27
+        },
+        {
+          "mois": "2022-07",
+          "valeur": 6398.88
+        },
+        {
+          "mois": "2022-08",
+          "valeur": 7961.05
+        },
+        {
+          "mois": "2022-09",
+          "valeur": 6031.86
+        },
+        {
+          "mois": "2022-10",
+          "valeur": 6580.12
+        },
+        {
+          "mois": "2022-11",
+          "valeur": 8055.59
+        },
+        {
+          "mois": "2022-12",
+          "valeur": 9810.55
+        },
+        {
+          "mois": "2023-01",
+          "valeur": 9013.85
+        },
+        {
+          "mois": "2023-02",
+          "valeur": 8466.32
+        },
+        {
+          "mois": "2023-03",
+          "valeur": 7102.05
+        },
+        {
+          "mois": "2023-04",
+          "valeur": 8070.87
+        },
+        {
+          "mois": "2023-05",
+          "valeur": 8935.86
+        },
+        {
+          "mois": "2023-06",
+          "valeur": 9316.7
+        },
+        {
+          "mois": "2023-07",
+          "valeur": 10529.04
+        },
+        {
+          "mois": "2023-08",
+          "valeur": 10005.78
+        },
+        {
+          "mois": "2023-09",
+          "valeur": 8632.27
+        },
+        {
+          "mois": "2023-10",
+          "valeur": 7535.21
+        },
+        {
+          "mois": "2023-11",
+          "valeur": 6911.36
+        },
+        {
+          "mois": "2023-12",
+          "valeur": 9132.85
+        },
+        {
+          "mois": "2024-01",
+          "valeur": 9656.34
+        },
+        {
+          "mois": "2024-02",
+          "valeur": 8273.35
+        },
+        {
+          "mois": "2024-03",
+          "valeur": 6222.43
+        },
+        {
+          "mois": "2024-04",
+          "valeur": 6866.3
+        },
+        {
+          "mois": "2024-05",
+          "valeur": 3844.45
+        },
+        {
+          "mois": "2024-06",
+          "valeur": 2377.87
+        },
+        {
+          "mois": "2024-07",
+          "valeur": 2515.07
+        },
+        {
+          "mois": "2024-08",
+          "valeur": 2732.46
+        },
+        {
+          "mois": "2024-09",
+          "valeur": 2507.73
+        },
+        {
+          "mois": "2024-10",
+          "valeur": 2566.41
+        },
+        {
+          "mois": "2024-11",
+          "valeur": 2525.7
+        },
+        {
+          "mois": "2024-12",
+          "valeur": 3238.7
+        },
+        {
+          "mois": "2025-01",
+          "valeur": 6006.9
+        },
+        {
+          "mois": "2025-02",
+          "valeur": 4577.16
+        },
+        {
+          "mois": "2025-03",
+          "valeur": 5950.95
+        },
+        {
+          "mois": "2025-04",
+          "valeur": 5645.84
+        },
+        {
+          "mois": "2025-05",
+          "valeur": 6154.19
+        },
+        {
+          "mois": "2025-06",
+          "valeur": 5611.95
+        },
+        {
+          "mois": "2025-07",
+          "valeur": 5959.71
+        },
+        {
+          "mois": "2025-08",
+          "valeur": 6529.84
+        },
+        {
+          "mois": "2025-09",
+          "valeur": 6604.59
+        },
+        {
+          "mois": "2025-10",
+          "valeur": 6054.67
+        },
+        {
+          "mois": "2025-11",
+          "valeur": 6731.58
+        },
+        {
+          "mois": "2025-12",
+          "valeur": 6385.69
+        },
+        {
+          "mois": "2026-01",
+          "valeur": 7358.44
+        },
+        {
+          "mois": "2026-02",
+          "valeur": 5671.45
+        },
+        {
+          "mois": "2026-03",
+          "valeur": 5494.18
+        },
+        {
+          "mois": "2026-04",
+          "valeur": 5995.06
+        },
+        {
+          "mois": "2026-05",
+          "valeur": 5206.88
+        },
+        {
+          "mois": "2026-06",
+          "valeur": 5531.82
+        },
+        {
+          "mois": "2026-07",
+          "valeur": 3307.54
+        },
+        {
+          "mois": "2026-08",
+          "valeur": 5418.29
+        }
+      ]
+    },
+    "exportations_minerai": {
+      "label": "Exportations de minerai",
+      "unite": "tonnes de nickel contenu",
+      "source": "ISEE",
+      "frequence": "mensuelle",
+      "historique": [
+        {
+          "annee": 2025,
+          "valeur": 67614,
+          "variation_annuelle_pct": 8.9
+        }
+      ]
+    },
+    "exportations_metallurgiques": {
+      "label": "Exportations métallurgiques",
+      "unite": "tonnes de nickel contenu",
+      "source": "ISEE",
+      "frequence": "mensuelle",
+      "historique": [
+        {
+          "annee": 2025,
+          "valeur": 70680,
+          "variation_annuelle_pct": 25.7
+        }
+      ]
+    }
+  },
+  "prix": {
+    "lme_cash_settlement": {
+      "label": "LME cash settlement",
+      "unite": "USD/tonne",
+      "source": "FRED/IMF — PNICKUSDM",
+      "frequence": "mensuelle",
+      "derniere_valeur": {
+        "date": "2026-07-01",
+        "valeur": 16632.36
+      }
+    },
+    "cours_annuel_lme": {
+      "label": "Cours annuel du nickel au LME",
+      "unite": "USD/lb",
+      "source": "ISEE — coursnickel.xls",
+      "frequence": "annuelle",
+      "historique": [
+        {
+          "annee": 1981,
+          "cours_lme_usd_lb": 2.71,
+          "taux_change_usd_fcfp": 98.35672727272728,
+          "prix_nickel_fcfp_kg": 266.5467309090909,
+          "prix_nickel_milliers_fcfp_t": null
+        },
+        {
+          "annee": 1982,
+          "cours_lme_usd_lb": 2.195,
+          "taux_change_usd_fcfp": 119.4929090909091,
+          "prix_nickel_fcfp_kg": 262.28693545454547,
+          "prix_nickel_milliers_fcfp_t": null
+        },
+        {
+          "annee": 1983,
+          "cours_lme_usd_lb": 2.1216666666666666,
+          "taux_change_usd_fcfp": 136.8,
+          "prix_nickel_fcfp_kg": 290.244,
+          "prix_nickel_milliers_fcfp_t": null
+        },
+        {
+          "annee": 1984,
+          "cours_lme_usd_lb": 2.1491666666666664,
+          "taux_change_usd_fcfp": 158.7,
+          "prix_nickel_fcfp_kg": 341.0727499999999,
+          "prix_nickel_milliers_fcfp_t": null
+        },
+        {
+          "annee": 1985,
+          "cours_lme_usd_lb": 2.220833333333333,
+          "taux_change_usd_fcfp": 163.5,
+          "prix_nickel_fcfp_kg": 363.10625,
+          "prix_nickel_milliers_fcfp_t": null
+        },
+        {
+          "annee": 1986,
+          "cours_lme_usd_lb": 1.7608333333333333,
+          "taux_change_usd_fcfp": 126.0,
+          "prix_nickel_fcfp_kg": 221.86499999999998,
+          "prix_nickel_milliers_fcfp_t": null
+        },
+        {
+          "annee": 1987,
+          "cours_lme_usd_lb": 2.2075,
+          "taux_change_usd_fcfp": 109.3,
+          "prix_nickel_fcfp_kg": 241.27975,
+          "prix_nickel_milliers_fcfp_t": null
+        },
+        {
+          "annee": 1988,
+          "cours_lme_usd_lb": 6.2575,
+          "taux_change_usd_fcfp": 107.97833333333331,
+          "prix_nickel_fcfp_kg": 675.6946916666667,
+          "prix_nickel_milliers_fcfp_t": null
+        },
+        {
+          "annee": 1989,
+          "cours_lme_usd_lb": 6.067499999999999,
+          "taux_change_usd_fcfp": 115.50666666666666,
+          "prix_nickel_fcfp_kg": 701.1150583333333,
+          "prix_nickel_milliers_fcfp_t": null
+        },
+        {
+          "annee": 1990,
+          "cours_lme_usd_lb": 4.029166666666667,
+          "taux_change_usd_fcfp": 98.84,
+          "prix_nickel_fcfp_kg": 397.29985000000005,
+          "prix_nickel_milliers_fcfp_t": null
+        },
+        {
+          "annee": 1991,
+          "cours_lme_usd_lb": 3.695833333333333,
+          "taux_change_usd_fcfp": 102.02,
+          "prix_nickel_fcfp_kg": 377.050025,
+          "prix_nickel_milliers_fcfp_t": null
+        },
+        {
+          "annee": 1992,
+          "cours_lme_usd_lb": 3.173333333333334,
+          "taux_change_usd_fcfp": 96.78,
+          "prix_nickel_fcfp_kg": 307.3088583333333,
+          "prix_nickel_milliers_fcfp_t": null
+        },
+        {
+          "annee": 1993,
+          "cours_lme_usd_lb": 2.4008333333333334,
+          "taux_change_usd_fcfp": 102.72,
+          "prix_nickel_fcfp_kg": 245.84616666666668,
+          "prix_nickel_milliers_fcfp_t": null
+        },
+        {
+          "annee": 1994,
+          "cours_lme_usd_lb": 2.876666666666667,
+          "taux_change_usd_fcfp": 100.95,
+          "prix_nickel_fcfp_kg": 289.3346166666666,
+          "prix_nickel_milliers_fcfp_t": null
+        },
+        {
+          "annee": 1995,
+          "cours_lme_usd_lb": 3.7325,
+          "taux_change_usd_fcfp": 90.76,
+          "prix_nickel_fcfp_kg": 339.1230333333333,
+          "prix_nickel_milliers_fcfp_t": null
+        },
+        {
+          "annee": 1996,
+          "cours_lme_usd_lb": 3.404166666666667,
+          "taux_change_usd_fcfp": 93.0,
+          "prix_nickel_fcfp_kg": 316.44615,
+          "prix_nickel_milliers_fcfp_t": null
+        },
+        {
+          "annee": 1997,
+          "cours_lme_usd_lb": 3.144166666666667,
+          "taux_change_usd_fcfp": 105.87,
+          "prix_nickel_fcfp_kg": 332.4420833333333,
+          "prix_nickel_milliers_fcfp_t": null
+        },
+        {
+          "annee": 1998,
+          "cours_lme_usd_lb": 2.101916666666667,
+          "taux_change_usd_fcfp": 107.26,
+          "prix_nickel_fcfp_kg": 226.3435416666667,
+          "prix_nickel_milliers_fcfp_t": null
+        },
+        {
+          "annee": 1999,
+          "cours_lme_usd_lb": 3.77,
+          "taux_change_usd_fcfp": 117.75,
+          "prix_nickel_fcfp_kg": 443.9175,
+          "prix_nickel_milliers_fcfp_t": null
+        },
+        {
+          "annee": 2000,
+          "cours_lme_usd_lb": 3.175,
+          "taux_change_usd_fcfp": 127.21,
+          "prix_nickel_fcfp_kg": 403.89174999999994,
+          "prix_nickel_milliers_fcfp_t": 1115.9899865958835
+        },
+        {
+          "annee": 2001,
+          "cours_lme_usd_lb": 2.74,
+          "taux_change_usd_fcfp": 135.13,
+          "prix_nickel_fcfp_kg": 370.25620000000004,
+          "prix_nickel_milliers_fcfp_t": 793.1981549498228
+        },
+        {
+          "annee": 2002,
+          "cours_lme_usd_lb": 3.64,
+          "taux_change_usd_fcfp": 112.39,
+          "prix_nickel_fcfp_kg": 409.0996,
+          "prix_nickel_milliers_fcfp_t": 856.3597370177017
+        },
+        {
+          "annee": 2003,
+          "cours_lme_usd_lb": 6.96,
+          "taux_change_usd_fcfp": 94.63,
+          "prix_nickel_fcfp_kg": 658.6247999999999,
+          "prix_nickel_milliers_fcfp_t": 1011.9031842860253
+        },
+        {
+          "annee": 2004,
+          "cours_lme_usd_lb": 6.83,
+          "taux_change_usd_fcfp": 91.1,
+          "prix_nickel_fcfp_kg": 622.213,
+          "prix_nickel_milliers_fcfp_t": 1327.7015798338598
+        },
+        {
+          "annee": 2005,
+          "cours_lme_usd_lb": 6.6,
+          "taux_change_usd_fcfp": 98.49,
+          "prix_nickel_fcfp_kg": 650.0339999999999,
+          "prix_nickel_milliers_fcfp_t": 1418.5827976095995
+        },
+        {
+          "annee": 2006,
+          "cours_lme_usd_lb": 16.7,
+          "taux_change_usd_fcfp": 91.81,
+          "prix_nickel_fcfp_kg": 1533.2269999999999,
+          "prix_nickel_milliers_fcfp_t": 3122.2279052540603
+        },
+        {
+          "annee": 2007,
+          "cours_lme_usd_lb": 12.55972727272727,
+          "taux_change_usd_fcfp": 81.08363636363639,
+          "prix_nickel_fcfp_kg": 1018.3883590082646,
+          "prix_nickel_milliers_fcfp_t": 3263.103185241362
+        },
+        {
+          "annee": 2008,
+          "cours_lme_usd_lb": 5.128809523809524,
+          "taux_change_usd_fcfp": 90.18190476190476,
+          "prix_nickel_fcfp_kg": 462.52581201814064,
+          "prix_nickel_milliers_fcfp_t": 1688.3886895456299
+        },
+        {
+          "annee": 2009,
+          "cours_lme_usd_lb": 6.650528445165945,
+          "taux_change_usd_fcfp": 85.9010450937951,
+          "prix_nickel_fcfp_kg": 535.1759979745,
+          "prix_nickel_milliers_fcfp_t": 1157.8843720397415
+        },
+        {
+          "annee": 2010,
+          "cours_lme_usd_lb": 9.888459224147326,
+          "taux_change_usd_fcfp": 90.13574107994674,
+          "prix_nickel_fcfp_kg": 890.8452882194151,
+          "prix_nickel_milliers_fcfp_t": 1963.9792770141783
+        },
+        {
+          "annee": 2011,
+          "cours_lme_usd_lb": 10.386966115363522,
+          "taux_change_usd_fcfp": 85.78287056947063,
+          "prix_nickel_fcfp_kg": 889.5946342235824,
+          "prix_nickel_milliers_fcfp_t": 1961.2220546737651
+        },
+        {
+          "annee": 2012,
+          "cours_lme_usd_lb": 7.953177146242584,
+          "taux_change_usd_fcfp": 92.88731950828048,
+          "prix_nickel_fcfp_kg": 737.73832774457,
+          "prix_nickel_milliers_fcfp_t": 1626.4359330512223
+        },
+        {
+          "annee": 2013,
+          "cours_lme_usd_lb": 6.809063347023272,
+          "taux_change_usd_fcfp": 89.82914030794194,
+          "prix_nickel_fcfp_kg": 611.9955238421682,
+          "prix_nickel_milliers_fcfp_t": 1349.2202769056073
+        },
+        {
+          "annee": 2014,
+          "cours_lme_usd_lb": 7.649887787011681,
+          "taux_change_usd_fcfp": 89.92557192867314,
+          "prix_nickel_fcfp_kg": 687.3201934268219,
+          "prix_nickel_milliers_fcfp_t": 1515.2828829142093
+        },
+        {
+          "annee": 2015,
+          "cours_lme_usd_lb": 5.366175809457714,
+          "taux_change_usd_fcfp": 107.62988636389042,
+          "prix_nickel_fcfp_kg": 576.5311561835883,
+          "prix_nickel_milliers_fcfp_t": 1271.0346659191266
+        },
+        {
+          "annee": 2016,
+          "cours_lme_usd_lb": 4.351332300829726,
+          "taux_change_usd_fcfp": 107.9028859534745,
+          "prix_nickel_fcfp_kg": 470.03934831459696,
+          "prix_nickel_milliers_fcfp_t": 1036.2602257416286
+        },
+        {
+          "annee": 2017,
+          "cours_lme_usd_lb": 4.715033580529663,
+          "taux_change_usd_fcfp": 105.89947751456197,
+          "prix_nickel_fcfp_kg": 498.1678099927191,
+          "prix_nickel_milliers_fcfp_t": 1098.2729192594206
+        },
+        {
+          "annee": 2018,
+          "cours_lme_usd_lb": 5.947776423484817,
+          "taux_change_usd_fcfp": 101.10086441339632,
+          "prix_nickel_fcfp_kg": 600.5780829051776,
+          "prix_nickel_milliers_fcfp_t": 1324.0491077999118
+        },
+        {
+          "annee": 2019,
+          "cours_lme_usd_lb": 6.2946085669016085,
+          "taux_change_usd_fcfp": 106.59867715123936,
+          "prix_nickel_fcfp_kg": 671.9329149458459,
+          "prix_nickel_milliers_fcfp_t": 1481.3597130148812
+        },
+        {
+          "annee": 2020,
+          "cours_lme_usd_lb": 6.245069320326022,
+          "taux_change_usd_fcfp": 104.68451930975262,
+          "prix_nickel_fcfp_kg": 651.122927881846,
+          "prix_nickel_milliers_fcfp_t": 1435.4815073498783
+        },
+        {
+          "annee": 2021,
+          "cours_lme_usd_lb": 8.370626346164281,
+          "taux_change_usd_fcfp": 100.85085642836583,
+          "prix_nickel_fcfp_kg": 845.1550176673726,
+          "prix_nickel_milliers_fcfp_t": 1863.2493907903415
+        },
+        {
+          "annee": 2022,
+          "cours_lme_usd_lb": 11.799166666666666,
+          "taux_change_usd_fcfp": 114.22,
+          "prix_nickel_fcfp_kg": 1334.1681666666666,
+          "prix_nickel_milliers_fcfp_t": 2941.3397208651536
+        },
+        {
+          "annee": 2023,
+          "cours_lme_usd_lb": 9.752996460184455,
+          "taux_change_usd_fcfp": 110.34990979294139,
+          "prix_nickel_fcfp_kg": 1076.3810530546295,
+          "prix_nickel_milliers_fcfp_t": 2373.0159549873665
+        },
+        {
+          "annee": 2024,
+          "cours_lme_usd_lb": 7.628709796825379,
+          "taux_change_usd_fcfp": 110.30901893390426,
+          "prix_nickel_fcfp_kg": 841.4427965588517,
+          "prix_nickel_milliers_fcfp_t": 1855.0653374813753
+        },
+        {
+          "annee": 2025,
+          "cours_lme_usd_lb": 6.88,
+          "taux_change_usd_fcfp": 105.83,
+          "prix_nickel_fcfp_kg": 728.0,
+          "prix_nickel_milliers_fcfp_t": 1605.2511837485754
+        }
+      ]
+    }
+  },
+  "alertes": {
+    "regles": [
+      {
+        "indicateur": "lme_cash_settlement",
+        "condition": "< 14000",
+        "message": "Prix LME sous le seuil de rentabilité estimé"
+      },
+      {
+        "indicateur": "extraction_minerai",
+        "condition": "variation_annuelle_pct < 0",
+        "message": "Baisse annuelle de l'extraction minière"
+      }
+    ]
+  },
+  "contexte_economique": {
+    "pib_par_habitant": {
+      "valeur": 3533,
+      "unite": "milliers F.CFP",
+      "annee": 2024,
+      "variation_pct": -11.8
+    },
+    "taux_chomage": {
+      "valeur": 10.3,
+      "unite": "%",
+      "annee": 2023,
+      "variation_points": -0.6
+    },
+    "taux_couverture_commerce": {
+      "valeur": 60.3,
+      "unite": "%",
+      "annee": 2025,
+      "variation_points": 5.4
+    },
+    "exportations_totales": {
+      "valeur": 134672,
+      "unite": "millions F.CFP",
+      "annee": 2025,
+      "variation_pct": -2.2
+    },
+    "importations_totales": {
+      "valeur": 223193,
+      "unite": "millions F.CFP",
+      "annee": 2025,
+      "variation_pct": -11.0
+    },
+    "entreprises_actives": {
+      "valeur": 61367,
+      "annee": 2025,
+      "variation_pct": -2.2
+    },
+    "smg_mensuel": {
+      "valeur": 167602,
+      "unite": "F.CFP brut (169h)",
+      "annee": 2026,
+      "variation_pct": 0.6
+    },
+    "source": "ISEE — Chiffres clés 2025-2026"
+  },
+  "tendances_recentes": {
+    "t1_2026": {
+      "exportations_nhc": "Plus que doublé en valeur sur un an",
+      "exportations_ferronickel": "Valeur -16%, volume +9%",
+      "exportations_minerai": "Volume -15%, valeur -27%",
+      "source": "ISEE, note de conjoncture juillet 2026"
+    },
+    "t2_2026": {
+      "production_metallurgique": {
+        "valeur": 16734,
+        "unite": "tonnes Ni contenu",
+        "variation_pct": -3.9
+      },
+      "emploi_secteur": {
+        "valeur": 4600,
+        "pertes_depuis_t1_2024": 1800,
+        "variation_pct": -28.3
+      },
+      "source": "ISEE / La Dépêche, octobre 2026"
+    }
+  },
+  "exportations": {
+    "minerai": {
+      "label": "Exportations de minerai de nickel",
+      "unite": "tonnes humides / tonnes Ni contenu / millions F.CFP",
+      "source": "ISEE — exportations-nickel.xls (Minerai annuel)",
+      "frequence": "annuelle",
+      "historique": [
+        {
+          "annee": 2008,
+          "tonnage_humide": 3045383.0,
+          "nickel_contenu": 3727.4130000000005,
+          "valeur_fab_millions_fcfp": null
+        },
+        {
+          "annee": 2009,
+          "tonnage_humide": 3541579.0,
+          "nickel_contenu": 0.0,
+          "valeur_fab_millions_fcfp": null
+        },
+        {
+          "annee": 2010,
+          "tonnage_humide": 4571556.0,
+          "nickel_contenu": 0.0,
+          "valeur_fab_millions_fcfp": null
+        },
+        {
+          "annee": 2011,
+          "tonnage_humide": 4431226.535,
+          "nickel_contenu": 2007.221598,
+          "valeur_fab_millions_fcfp": null
+        },
+        {
+          "annee": 2012,
+          "tonnage_humide": 4595469.359999999,
+          "nickel_contenu": 950.92,
+          "valeur_fab_millions_fcfp": null
+        },
+        {
+          "annee": 2013,
+          "tonnage_humide": 4458973.5,
+          "nickel_contenu": 0.0,
+          "valeur_fab_millions_fcfp": null
+        },
+        {
+          "annee": 2014,
+          "tonnage_humide": 5441833.0,
+          "nickel_contenu": 0.0,
+          "valeur_fab_millions_fcfp": null
+        },
+        {
+          "annee": 2015,
+          "tonnage_humide": 5520420.0,
+          "nickel_contenu": 0.0,
+          "valeur_fab_millions_fcfp": null
+        },
+        {
+          "annee": 2016,
+          "tonnage_humide": 5821212.0,
+          "nickel_contenu": 8772.531704,
+          "valeur_fab_millions_fcfp": null
+        },
+        {
+          "annee": 2017,
+          "tonnage_humide": 6482155.827500001,
+          "nickel_contenu": 16455.1421597,
+          "valeur_fab_millions_fcfp": null
+        },
+        {
+          "annee": 2018,
+          "tonnage_humide": 6748737.0,
+          "nickel_contenu": 18133.325272100003,
+          "valeur_fab_millions_fcfp": null
+        },
+        {
+          "annee": 2019,
+          "tonnage_humide": 7218341.0,
+          "nickel_contenu": 25567.107999999997,
+          "valeur_fab_millions_fcfp": null
+        },
+        {
+          "annee": 2020,
+          "tonnage_humide": 8101481.0,
+          "nickel_contenu": 41871.355606,
+          "valeur_fab_millions_fcfp": null
+        },
+        {
+          "annee": 2021,
+          "tonnage_humide": 7945237.0,
+          "nickel_contenu": 37190.2442362,
+          "valeur_fab_millions_fcfp": null
+        },
+        {
+          "annee": 2022,
+          "tonnage_humide": 7308887.53,
+          "nickel_contenu": 40865.66,
+          "valeur_fab_millions_fcfp": null
+        },
+        {
+          "annee": 2023,
+          "tonnage_humide": 7787365.8100000005,
+          "nickel_contenu": 49970.626000000004,
+          "valeur_fab_millions_fcfp": null
+        },
+        {
+          "annee": 2024,
+          "tonnage_humide": 4358523.0,
+          "nickel_contenu": 18705.920000000002,
+          "valeur_fab_millions_fcfp": null
+        },
+        {
+          "annee": 2025,
+          "tonnage_humide": 5008369.0,
+          "nickel_contenu": 22325.593126,
+          "valeur_fab_millions_fcfp": null
+        }
+      ]
+    },
+    "metallurgie": {
+      "label": "Exportations métallurgiques",
+      "unite": "tonnes Ni contenu / tonnes brutes / millions F.CFP",
+      "source": "ISEE — exportations-nickel.xls (Métallurgie annuel)",
+      "frequence": "annuelle",
+      "historique": [
+        {
+          "annee": 2008,
+          "tonnage_metal_ni": 52194.859000000004,
+          "tonnage_brut_total": 172409.825,
+          "valeur_fab_millions_fcfp": 81294.436653
+        },
+        {
+          "annee": 2009,
+          "tonnage_metal_ni": 51181.507,
+          "tonnage_brut_total": 171818.05,
+          "valeur_fab_millions_fcfp": 62830.485373999996
+        },
+        {
+          "annee": 2010,
+          "tonnage_metal_ni": 55892.36899999999,
+          "tonnage_brut_total": 198738.473,
+          "valeur_fab_millions_fcfp": 102192.54512000001
+        },
+        {
+          "annee": 2011,
+          "tonnage_metal_ni": 61158.92700000001,
+          "tonnage_brut_total": 235019.21699999998,
+          "valeur_fab_millions_fcfp": 109836.2963
+        },
+        {
+          "annee": 2012,
+          "tonnage_metal_ni": 62151.299000000006,
+          "tonnage_brut_total": 226453.714,
+          "valeur_fab_millions_fcfp": 92558.20202499999
+        },
+        {
+          "annee": 2013,
+          "tonnage_metal_ni": 64802.14,
+          "tonnage_brut_total": 229358.59100000001,
+          "valeur_fab_millions_fcfp": 77747.18410311
+        },
+        {
+          "annee": 2014,
+          "tonnage_metal_ni": 78707.877,
+          "tonnage_brut_total": 313358.943,
+          "valeur_fab_millions_fcfp": 107921.14668579999
+        },
+        {
+          "annee": 2015,
+          "tonnage_metal_ni": 95276.04400000001,
+          "tonnage_brut_total": 346493.70175000007,
+          "valeur_fab_millions_fcfp": 97250.64452530001
+        },
+        {
+          "annee": 2016,
+          "tonnage_metal_ni": 104410.58613999998,
+          "tonnage_brut_total": 346962.69399999996,
+          "valeur_fab_millions_fcfp": 104467.64195415
+        },
+        {
+          "annee": 2017,
+          "tonnage_metal_ni": 109884.70735999999,
+          "tonnage_brut_total": 354906.36984999996,
+          "valeur_fab_millions_fcfp": 116277.96977039
+        },
+        {
+          "annee": 2018,
+          "tonnage_metal_ni": 117053.85899999998,
+          "tonnage_brut_total": 339410.564,
+          "valeur_fab_millions_fcfp": 144197.903872
+        },
+        {
+          "annee": 2019,
+          "tonnage_metal_ni": 92782.15379981001,
+          "tonnage_brut_total": 304299.06799999997,
+          "valeur_fab_millions_fcfp": 127819.866063
+        },
+        {
+          "annee": 2020,
+          "tonnage_metal_ni": 94786.5432569,
+          "tonnage_brut_total": 354241.754,
+          "valeur_fab_millions_fcfp": 120412.21191900001
+        },
+        {
+          "annee": 2021,
+          "tonnage_metal_ni": 68060.2146591,
+          "tonnage_brut_total": 279432.244,
+          "valeur_fab_millions_fcfp": 119165.955733
+        },
+        {
+          "annee": 2022,
+          "tonnage_metal_ni": 92990.98129999998,
+          "tonnage_brut_total": 357331.705,
+          "valeur_fab_millions_fcfp": 211932.58455700002
+        },
+        {
+          "annee": 2023,
+          "tonnage_metal_ni": 105344.91951999998,
+          "tonnage_brut_total": 417078.299,
+          "valeur_fab_millions_fcfp": 172083.01124700002
+        },
+        {
+          "annee": 2024,
+          "tonnage_metal_ni": 56214.15063,
+          "tonnage_brut_total": 256012.96499999997,
+          "valeur_fab_millions_fcfp": 82220.8170597
+        },
+        {
+          "annee": 2025,
+          "tonnage_metal_ni": 70679.81682600001,
+          "tonnage_brut_total": 330078.16748000006,
+          "valeur_fab_millions_fcfp": 91289.623793
+        }
+      ]
+    }
+  },
+  "marche_mondial": {
+    "production_mondiale": {
+      "label": "Production mondiale de nickel",
+      "unite": "tonnes Ni contenu",
+      "source": "BGS/DIMENC — marchemondial.xls",
+      "historique": [
+        {
+          "annee": 1977,
+          "valeur": 715105.0
+        },
+        {
+          "annee": 1978,
+          "valeur": 609449.0
+        },
+        {
+          "annee": 1979,
+          "valeur": 663610.0
+        },
+        {
+          "annee": 1980,
+          "valeur": 737869.0
+        },
+        {
+          "annee": 1981,
+          "valeur": 701142.0
+        },
+        {
+          "annee": 1982,
+          "valeur": 612325.0
+        },
+        {
+          "annee": 1983,
+          "valeur": 673148.0
+        },
+        {
+          "annee": 1984,
+          "valeur": 737593.0
+        },
+        {
+          "annee": 1985,
+          "valeur": 764356.0
+        },
+        {
+          "annee": 1986,
+          "valeur": 751429.0
+        },
+        {
+          "annee": 1987,
+          "valeur": 794380.0
+        },
+        {
+          "annee": 1988,
+          "valeur": 925439.0
+        },
+        {
+          "annee": 1989,
+          "valeur": 939908.0
+        },
+        {
+          "annee": 1990,
+          "valeur": 902907.0
+        },
+        {
+          "annee": 1991,
+          "valeur": 906705.0
+        },
+        {
+          "annee": 1992,
+          "valeur": 881670.0
+        },
+        {
+          "annee": 1993,
+          "valeur": 796904.0
+        },
+        {
+          "annee": 1994,
+          "valeur": 824214.0
+        },
+        {
+          "annee": 1995,
+          "valeur": 915658.0
+        },
+        {
+          "annee": 1996,
+          "valeur": 956161.0
+        },
+        {
+          "annee": 1997,
+          "valeur": 1023817.0
+        },
+        {
+          "annee": 1998,
+          "valeur": 1039910.0
+        },
+        {
+          "annee": 1999,
+          "valeur": 1041160.0
+        },
+        {
+          "annee": 2000,
+          "valeur": 1090115.0
+        },
+        {
+          "annee": 2001,
+          "valeur": 1165253.0
+        },
+        {
+          "annee": 2002,
+          "valeur": 1286025.0
+        },
+        {
+          "annee": 2003,
+          "valeur": 1214982.0
+        },
+        {
+          "annee": 2004,
+          "valeur": 1251633.0
+        },
+        {
+          "annee": 2005,
+          "valeur": 1294981.0
+        },
+        {
+          "annee": 2006,
+          "valeur": 1350849.0
+        },
+        {
+          "annee": 2007,
+          "valeur": 1428111.416
+        },
+        {
+          "annee": 2008,
+          "valeur": 1397163.684
+        },
+        {
+          "annee": 2009,
+          "valeur": 1337889.576
+        },
+        {
+          "annee": 2010,
+          "valeur": 1491107.726
+        },
+        {
+          "annee": 2011,
+          "valeur": 1610173.4445200001
+        },
+        {
+          "annee": 2012,
+          "valeur": 1761941.992
+        },
+        {
+          "annee": 2013,
+          "valeur": 2792042.992
+        },
+        {
+          "annee": 2014,
+          "valeur": 1987089.0
+        },
+        {
+          "annee": 2015,
+          "valeur": 2005597.0
+        },
+        {
+          "annee": 2016,
+          "valeur": 2027435.0
+        },
+        {
+          "annee": 2017,
+          "valeur": 2197813.0
+        },
+        {
+          "annee": 2018,
+          "valeur": 2254346.0
+        },
+        {
+          "annee": 2019,
+          "valeur": 2489220.0
+        },
+        {
+          "annee": 2020,
+          "valeur": 2543422.0
+        },
+        {
+          "annee": 2021,
+          "valeur": 2652044.0
+        },
+        {
+          "annee": 2022,
+          "valeur": 3115668.0
+        },
+        {
+          "annee": 2023,
+          "valeur": 3263495.0
+        },
+        {
+          "annee": 2024,
+          "valeur": 3477446.0
+        }
+      ]
+    },
+    "consommation_mondiale": {
+      "label": "Consommation mondiale de nickel primaire",
+      "unite": "milliers de tonnes",
+      "source": "INSG/DIMENC — marchemondial.xls",
+      "historique": [
+        {
+          "annee": 2015,
+          "consommation_mondiale_milliers_t": 1881.7,
+          "part_europe27_pct": 16.0,
+          "part_chine_pct": 51.961823966065744,
+          "part_japon_pct": 7.502651113467657,
+          "part_etats_unis_pct": 7.0,
+          "part_coree_pct": 4.0
+        },
+        {
+          "annee": 2016,
+          "consommation_mondiale_milliers_t": 2032.6,
+          "part_europe27_pct": 15.7,
+          "part_chine_pct": 54.1,
+          "part_japon_pct": 7.2,
+          "part_etats_unis_pct": 7.2,
+          "part_coree_pct": 4.2
+        },
+        {
+          "annee": 2017,
+          "consommation_mondiale_milliers_t": 2183.5,
+          "part_europe27_pct": 14.6,
+          "part_chine_pct": 53.6,
+          "part_japon_pct": 7.8,
+          "part_etats_unis_pct": 6.5,
+          "part_coree_pct": 4.0
+        },
+        {
+          "annee": 2018,
+          "consommation_mondiale_milliers_t": 2327.3,
+          "part_europe27_pct": 13.7,
+          "part_chine_pct": 51.6,
+          "part_japon_pct": 7.9,
+          "part_etats_unis_pct": 6.0,
+          "part_coree_pct": 3.9
+        },
+        {
+          "annee": 2019,
+          "consommation_mondiale_milliers_t": 2405.1,
+          "part_europe27_pct": 12.6,
+          "part_chine_pct": 55.1,
+          "part_japon_pct": 7.0,
+          "part_etats_unis_pct": 5.5,
+          "part_coree_pct": 3.6
+        },
+        {
+          "annee": 2020,
+          "consommation_mondiale_milliers_t": 2390.6,
+          "part_europe27_pct": 10.7,
+          "part_chine_pct": 59.0,
+          "part_japon_pct": 6.1,
+          "part_etats_unis_pct": 4.7,
+          "part_coree_pct": 3.3
+        },
+        {
+          "annee": 2021,
+          "consommation_mondiale_milliers_t": 2779.6,
+          "part_europe27_pct": 10.2,
+          "part_chine_pct": 55.4,
+          "part_japon_pct": 6.1,
+          "part_etats_unis_pct": 4.1,
+          "part_coree_pct": 3.3
+        },
+        {
+          "annee": 2022,
+          "consommation_mondiale_milliers_t": 2987.1,
+          "part_europe27_pct": 8.9,
+          "part_chine_pct": 59.5,
+          "part_japon_pct": 5.7,
+          "part_etats_unis_pct": 3.8,
+          "part_coree_pct": 2.8
+        },
+        {
+          "annee": 2023,
+          "consommation_mondiale_milliers_t": 3264.5,
+          "part_europe27_pct": 7.7,
+          "part_chine_pct": 64.6,
+          "part_japon_pct": 4.6,
+          "part_etats_unis_pct": 3.5,
+          "part_coree_pct": 2.7
+        },
+        {
+          "annee": 2024,
+          "consommation_mondiale_milliers_t": 3473.3,
+          "part_europe27_pct": 7.3,
+          "part_chine_pct": 64.9,
+          "part_japon_pct": 4.2,
+          "part_etats_unis_pct": 3.3,
+          "part_coree_pct": 2.6
+        },
+        {
+          "annee": 2025,
+          "consommation_mondiale_milliers_t": 3595.5,
+          "part_europe27_pct": 7.0,
+          "part_chine_pct": 65.4,
+          "part_japon_pct": 4.0,
+          "part_etats_unis_pct": 3.4,
+          "part_coree_pct": 2.7
+        }
+      ]
+    }
+  },
+  "poids_economique": {
+    "pib": {
+      "label": "Production et valeur ajoutée du secteur nickel",
+      "unite": "millions F.CFP / % du PIB",
+      "source": "ISEE — poids-nickel.xls (PIB)",
+      "historique": [
+        {
+          "annee": 1998,
+          "production_millions_fcfp": 49830359578.81481,
+          "consommation_intermediaire": 38795704576.0688,
+          "valeur_ajoutee_millions_fcfp": 11034655002.74601,
+          "part_dans_pib_pct": 2.8927209733573456
+        },
+        {
+          "annee": 1999,
+          "production_millions_fcfp": 59283599918.13529,
+          "consommation_intermediaire": 37301175506.62659,
+          "valeur_ajoutee_millions_fcfp": 21982424411.50871,
+          "part_dans_pib_pct": 5.382135371387312
+        },
+        {
+          "annee": 2000,
+          "production_millions_fcfp": 91464346422.07542,
+          "consommation_intermediaire": 53481875954.39585,
+          "valeur_ajoutee_millions_fcfp": 37982470467.679565,
+          "part_dans_pib_pct": 8.595814431417676
+        },
+        {
+          "annee": 2001,
+          "production_millions_fcfp": 70854136667.52171,
+          "consommation_intermediaire": 50414498235.74314,
+          "valeur_ajoutee_millions_fcfp": 20439638431.778572,
+          "part_dans_pib_pct": 4.65189652664866
+        },
+        {
+          "annee": 2002,
+          "production_millions_fcfp": 75988124968.86472,
+          "consommation_intermediaire": 48882307989.5282,
+          "valeur_ajoutee_millions_fcfp": 27105816979.336506,
+          "part_dans_pib_pct": 5.74280246093673
+        },
+        {
+          "annee": 2003,
+          "production_millions_fcfp": 94590991148.64691,
+          "consommation_intermediaire": 53595685726.903755,
+          "valeur_ajoutee_millions_fcfp": 40995305421.74316,
+          "part_dans_pib_pct": 7.905834216906231
+        },
+        {
+          "annee": 2004,
+          "production_millions_fcfp": 117708348486.2029,
+          "consommation_intermediaire": 62372663747.573395,
+          "valeur_ajoutee_millions_fcfp": 55335684738.6295,
+          "part_dans_pib_pct": 9.784784518739924
+        },
+        {
+          "annee": 2005,
+          "production_millions_fcfp": 127808013044.14236,
+          "consommation_intermediaire": 70956236478.62537,
+          "valeur_ajoutee_millions_fcfp": 56851776565.517,
+          "part_dans_pib_pct": 9.500597415564105
+        },
+        {
+          "annee": 2006,
+          "production_millions_fcfp": 162917208214.382,
+          "consommation_intermediaire": 86511305246.1664,
+          "valeur_ajoutee_millions_fcfp": 76405902968.2152,
+          "part_dans_pib_pct": 11.519115050880602
+        },
+        {
+          "annee": 2007,
+          "production_millions_fcfp": 246397050409.12616,
+          "consommation_intermediaire": 117213445348.13853,
+          "valeur_ajoutee_millions_fcfp": 129183605060.98763,
+          "part_dans_pib_pct": 16.821284095278084
+        },
+        {
+          "annee": 2008,
+          "production_millions_fcfp": 137394000000.0,
+          "consommation_intermediaire": 90006000000.0,
+          "valeur_ajoutee_millions_fcfp": 47388000000.0,
+          "part_dans_pib_pct": 6.441095307397761
+        },
+        {
+          "annee": 2009,
+          "production_millions_fcfp": 98326000000.0,
+          "consommation_intermediaire": 61591000000.0,
+          "valeur_ajoutee_millions_fcfp": 36735000000.0,
+          "part_dans_pib_pct": 4.932759512028091
+        },
+        {
+          "annee": 2010,
+          "production_millions_fcfp": 161696000000.0,
+          "consommation_intermediaire": 84831000000.0,
+          "valeur_ajoutee_millions_fcfp": 76865000000.0,
+          "part_dans_pib_pct": 9.118971946096453
+        },
+        {
+          "annee": 2011,
+          "production_millions_fcfp": 174626000000.0,
+          "consommation_intermediaire": 110688000000.0,
+          "valeur_ajoutee_millions_fcfp": 63938000000.0,
+          "part_dans_pib_pct": 7.204890554131335
+        },
+        {
+          "annee": 2012,
+          "production_millions_fcfp": 147921000000.0,
+          "consommation_intermediaire": 110958000000.0,
+          "valeur_ajoutee_millions_fcfp": 36963000000.0,
+          "part_dans_pib_pct": 4.120065184485022
+        },
+        {
+          "annee": 2013,
+          "production_millions_fcfp": 139948000000.0,
+          "consommation_intermediaire": 112721000000.0,
+          "valeur_ajoutee_millions_fcfp": 27227000000.0,
+          "part_dans_pib_pct": 2.98507626323314
+        },
+        {
+          "annee": 2014,
+          "production_millions_fcfp": 188158000000.0,
+          "consommation_intermediaire": 135813000000.0,
+          "valeur_ajoutee_millions_fcfp": 52345000000.0,
+          "part_dans_pib_pct": 5.479516584056067
+        },
+        {
+          "annee": 2016,
+          "production_millions_fcfp": 177168000000.0,
+          "consommation_intermediaire": 144461000000.0,
+          "valeur_ajoutee_millions_fcfp": 32707000000.0,
+          "part_dans_pib_pct": 3.47736686767995
+        },
+        {
+          "annee": 2017,
+          "production_millions_fcfp": 203786000000.0,
+          "consommation_intermediaire": 163839000000.0,
+          "valeur_ajoutee_millions_fcfp": 39947000000.0,
+          "part_dans_pib_pct": 4.12214433645003
+        }
+      ]
+    },
+    "recettes_fiscales_is35": {
+      "label": "Recettes fiscales IS35",
+      "unite": "millions F.CFP",
+      "source": "Compte administratif NC — poids-nickel.xls (IS35)",
+      "historique": [
+        {
+          "annee": 2002,
+          "valeur_millions_fcfp": 568.088625
+        },
+        {
+          "annee": 2003,
+          "valeur_millions_fcfp": 2394.739785
+        },
+        {
+          "annee": 2004,
+          "valeur_millions_fcfp": 8195.671802
+        },
+        {
+          "annee": 2005,
+          "valeur_millions_fcfp": 9656.0
+        },
+        {
+          "annee": 2006,
+          "valeur_millions_fcfp": 8547.0
+        },
+        {
+          "annee": 2007,
+          "valeur_millions_fcfp": 23521.0
+        },
+        {
+          "annee": 2008,
+          "valeur_millions_fcfp": 9964.0
+        },
+        {
+          "annee": 2009,
+          "valeur_millions_fcfp": 1696.0
+        },
+        {
+          "annee": 2010,
+          "valeur_millions_fcfp": 5871.0
+        },
+        {
+          "annee": 2011,
+          "valeur_millions_fcfp": 3505.0
+        },
+        {
+          "annee": 2012,
+          "valeur_millions_fcfp": 4304.0
+        },
+        {
+          "annee": 2013,
+          "valeur_millions_fcfp": 1309.0
+        },
+        {
+          "annee": 2014,
+          "valeur_millions_fcfp": 193.0
+        },
+        {
+          "annee": 2015,
+          "valeur_millions_fcfp": 518.0
+        },
+        {
+          "annee": 2016,
+          "valeur_millions_fcfp": 452.0
+        },
+        {
+          "annee": 2017,
+          "valeur_millions_fcfp": 527.0
+        },
+        {
+          "annee": 2018,
+          "valeur_millions_fcfp": 492.0
+        },
+        {
+          "annee": 2019,
+          "valeur_millions_fcfp": 484.0
+        }
+      ]
+    }
+  }
+}

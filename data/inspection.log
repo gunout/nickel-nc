@@ -1,0 +1,245 @@
+
+======================================================================
+📄 Cours LME — coursnickel.xls
+======================================================================
+
+  📑 Feuille : 'cours mensuel' — 387 lignes × 6 colonnes
+                           0      1                         2                         3                         4                         5
+0                                                                                                                                          
+1           Cours du nickel                                                                                                                
+2                                                                                                                                          
+3   Source : Direction de...                                                                                                               
+4   Données mises à jour ...                                                                                                               
+5                                                                                                                                          
+6          Moyenne mensuelle         Cours du nickel au Lo...  Cours du dollar US (F...  Prix du nickel \n(F.C...  Prix du nickel \n(mil...
+7                       1995  Janv.                      4.35                     96.26                   418.731                923.144588
+8                              Fév.                      3.86                     94.99                  366.6614                808.350676
+9                              Mars                      3.42                     90.61                  309.8862                683.182684
+10                             Avr.                      3.36                     88.15                   296.184                652.974479
+11                              Mai                      3.27                     90.79                  296.8833                654.516173
+12                             Juin                      3.57                     89.39                  319.1223                703.544816
+13                            Juil.                       3.9                     87.87                   342.693                755.509356
+14                             Août                      4.06                     90.39                  366.9834                809.060565
+
+  📑 Feuille : 'cours annuel' — 11 lignes × 46 colonnes
+                           0           1           2         3          4          5         6          7
+0                                                                                                        
+1            Cours du nickel                                                                             
+2                                                                                                        
+3   Source : Direction de...                                                                             
+4   Données mises à jour ...                                                                             
+5           Moyenne annuelle      1981.0      1982.0    1983.0     1984.0     1985.0    1986.0     1987.0
+6                                                                                                        
+7   Cours du nickel au Lo...        2.71       2.195  2.121667   2.149167   2.220833  1.760833     2.2075
+8   Cours du dollar US (F...   98.356727  119.492909     136.8      158.7      163.5     126.0      109.3
+9   Prix du nickel (F.CFP...  266.546731  262.286935   290.244  341.07275  363.10625   221.865  241.27975
+10  Prix du nickel (milli...                                                                             
+
+======================================================================
+📄 Exportations — exportations-nickel.xls
+======================================================================
+
+  📑 Feuille : 'Minerai mensuel' — 37 lignes × 229 colonnes
+                           0       1       2       3       4       5       6       7
+0                                                                                   
+1   Les exportations de m...                                                        
+2                                                                                   
+3   Source : Direction de...                                                        
+4   Données mises à jour ...                                                        
+5                                                                                   
+6         Données mensuelles    2008                                                
+7                               Janv    Fév.    Mars     Avr     Mai    Juin    Juil
+8                                                                                   
+9             Tonnes humides                                                        
+10                 AUSTRALIE  154950   73770   97931       0  162131   56146  107040
+11                     CHINE   72605   72606       0   73958   67951       0       0
+12                     COREE       0       0       0       0       0       0  108454
+13                     JAPON  135720   28444   54685   82141       0   85749   33503
+14     Total tonnes humides   363275  174820  152616  156099  230082  141895  248997
+
+  📑 Feuille : 'Minerai annuel' — 35 lignes × 19 colonnes
+                           0          1          2          3            4           5          6          7
+0                                                                                                           
+1   Les exportations de m...                                                                                
+2                                                                                                           
+3   Source : Direction de...                                                                                
+4   Données mises à jour ...                                                                                
+5              Cumul annuel      2008.0     2009.0     2010.0       2011.0      2012.0     2013.0     2014.0
+6                                                                                                           
+7             Tonnes humides                                                                                
+8                  AUSTRALIE  1555050.0  1532429.0  2299359.0  2165824.085  1805957.36  1583080.0  2015711.0
+9                      CHINE   287120.0        0.0        0.0    139033.15     69407.0        0.0        0.0
+10                     COREE   423504.0  1399641.0  1465031.0    1106181.0   1550217.0  1838703.0  1660583.0
+11                     JAPON   779709.0   609509.0   807166.0    1020188.3   1169888.0  1037190.5  1765539.0
+12      Total tonnes humides  3045383.0  3541579.0  4571556.0  4431226.535  4595469.36  4458973.5  5441833.0
+13                                                                                                          
+14  Tonnes de nickel contenu                                                                                
+
+  📑 Feuille : 'Métallurgie mensuel' — 141 lignes × 229 colonnes
+                           0         1        2         3        4        5        6        7
+0                                                                                            
+1   Les exportations méta...                                                                 
+2                                                                                            
+3   Source : Direction de...                                                                 
+4   Données mises à jour ...                                                                 
+5                                                                                            
+6        Données mensuelles       2008                                                       
+7                                 Janv     Fév.      Mars      Avr      Mai     Juin     Juil
+8               Tonnage brut                                                                 
+9               FERRONICKELS                                                                 
+10                   AFRIQUE         0        0    1138.9        0  2443.82  1224.93  1184.39
+11                  AMERIQUE    605.01   386.19    946.16   574.82   608.92   205.69   626.32
+12                      ASIE  11221.33  6053.67  11173.43  6444.42   6318.2  5814.57  3763.71
+13                    EUROPE   4762.39   4801.8     518.4  4610.25  4871.35  1850.78  3271.57
+14                 PACIFIQUE         0        0         0        0        0        0        0
+
+  📑 Feuille : ' Métallurgie annuel' — 140 lignes × 19 colonnes
+                           0          1         2          3          4         5          6           7
+0                                                                                                       
+1   Les exportations méta...                                                                            
+2                                                                                                       
+3   Source : Direction de...                                                                            
+4   Données mises à jour ...                                                                            
+5                                                                                                       
+6               Cumul annuel     2008.0    2009.0     2010.0     2011.0    2012.0     2013.0      2014.0
+7                                                                                                       
+8               Tonnage brut                                                                            
+9               FERRONICKELS                                                                            
+10                   AFRIQUE    8894.08   6183.61    7402.38    5937.93   9294.98    9584.21     11701.8
+11                  AMERIQUE    7666.45   7229.59   14118.86   13973.18  17910.47    20510.6     22531.9
+12                      ASIE  85774.085  98577.14  110847.86  110108.73  120685.5  101903.25  143656.894
+13                    EUROPE   50667.78  39011.82   45049.49   36116.38  37425.19   41104.91   37043.884
+14                 PACIFIQUE        0.0       0.0        0.0        0.0       0.0        0.0         0.0
+
+======================================================================
+📄 Extraction — extraction-nickel.xls
+======================================================================
+
+  📑 Feuille : 'mensuel' — 16 lignes × 217 colonnes
+                           0            1            2            3            4            5            6            7
+0                                                                                                                      
+1      L'extraction minière                                                                                            
+2                                                                                                                      
+3   Source : Direction de...                                                                                           
+4   Données mises à jour ...                                                                                           
+5        Données mensuelles          2008                                                                              
+6                                    Janv         Fév.         Mars          Avr          Mai         Juin         Juil
+7                 Saprolites                                                                                           
+8             Tonnage Humide    388663.06    322998.01    260625.65    337651.18    481319.14    417076.12    487315.89
+9   Tonnage de nickel con...  6831.700334  5883.750252  4545.302064  6102.968946  8318.732699  7850.781159  8768.218596
+10                 Latérites                                                                                           
+11            Tonnage Humide    121136.52      55169.8     52322.29     53978.48     72240.52       155421    194205.79
+12  Tonnage de nickel con...  1305.040994   623.924506   565.591788   574.047488   867.634259  1744.721306  2120.160246
+13                     TOTAL                                                                                           
+14            Tonnage Humide    509799.58    378167.81    312947.94    391629.66    553559.66    572497.12    681521.68
+
+  📑 Feuille : 'annuel' — 16 lignes × 18 colonnes
+                           0             1             2              3             4               5                6                7
+0                                                                                                                                      
+1      L'extraction minière                                                                                                            
+2                                                                                                                                      
+3   Source : Direction de...                                                                                                           
+4   Données mises à jour ...                                                                                                           
+5   Cumul annuel - 2008 à...        2008.0        2009.0         2010.0        2011.0          2012.0           2013.0           2014.0
+6                                                                                                                                      
+7                 Saprolites                                                                                                           
+8             Tonnage Humide    5017574.77    4421212.19     6277514.57     5838216.8  6394620.769837   7787882.846705   8594428.295839
+9   Tonnage de nickel con...  87985.400672  79124.748272  106595.841297  96939.462303   102389.172176     127451.40705    138328.389955
+10                 Latérites                                                                                                           
+11            Tonnage Humide    1641084.42    1937961.19     2637279.62    3392809.41      3264111.58   4215683.622727   4331443.960909
+12  Tonnage de nickel con...  17897.459723  18796.210394   25519.695065   31173.95619    29303.526373     36954.437053     36845.774552
+13                     TOTAL                                                                                                           
+14            Tonnage Humide    6658659.19    6359173.38     8914794.19    9231026.21  9658732.349837  12003566.469432  12925872.256748
+
+======================================================================
+📄 Marché mondial — marchemondial.xls
+======================================================================
+
+  📑 Feuille : 'minerai' — 60 lignes × 56 colonnes
+                           0      1      2      3      4     5     6     7
+0                                                                         
+1   La production mondial...                                              
+2                                                                         
+3   Source : ERAMET/Stati...                                              
+4   Données mises à jour ...                                              
+5          Données annuelles   1970   1971   1972   1973  1974  1975  1976
+6                                                                         
+7                     Europe  123.6  134.2  136.5  134.7   140     0     0
+8                    Albanie     nd     nd     nd     nd    nd    nd    nd
+9                  Europe 27      0      0      0      0     0     0     0
+10           Allemagne (RDA)     nd     nd     nd     nd    nd    nd    nd
+11  CEI puis Russie uniqu...    110    120    120    115   120    nd    nd
+12                   Espagne      -      -      -      -     -     -     -
+13  Ex-Yougoslavie / Macé...     nd     nd     nd     nd    nd    nd    nd
+14                  Finlande      5    3.5    5.2    5.8     5    nd    nd
+
+  📑 Feuille : 'métallurgie' — 55 lignes × 49 colonnes
+                           0       1       2       3       4       5       6       7
+0                                                                                   
+1   La production mondial...                                                        
+2                                                                                   
+3   Source : British Geol...                                                        
+4   Données mises à jour ...                                                        
+5          Données annuelles    1977    1978    1979    1980    1981    1982    1983
+6                                                                                   
+7                     Europe  245575  235209  237720  258021  266316  247177  276069
+8                   Autriche       -       -       -       -       -       -       -
+9                     Chypre      nd      nd      nd      nd      nd      nd      nd
+10  CEI puis Russie seule...  155000  160000  160000  165000  170000  190000  192000
+11                 Europe 27      nd      nd      nd      nd      nd      nd      nd
+12  Ex-Yougoslavie / Macé...       0       0       0       0       0       0       0
+13                  Finlande    9274    7292   11176   12806   13051   12304   14514
+14                    France   10279    7878    2558    9792   10051    7360    4878
+
+  📑 Feuille : 'consommateurs' — 16 lignes × 12 colonnes
+                           0          1       2       3       4       5       6       7
+0                                                                                      
+1   Consommation mondiale...                                                           
+2                                                                                      
+3   Source : DIMENC (Inte...                                                           
+4   Données mises à jour ...                                                           
+5          Données annuelles     2015.0  2016.0  2017.0  2018.0  2019.0  2020.0  2021.0
+6                                                                                      
+7   Consommation mondiale...     1881.7  2032.6  2183.5  2327.3  2405.1  2390.6  2779.6
+8                                                                                      
+9   Principaux pays conso...      100.0   100.0   100.0   100.0   100.0   100.0   100.0
+10                 Europe 27       16.0    15.7    14.6    13.7    12.6    10.7    10.2
+11                     Chine  51.961824    54.1    53.6    51.6    55.1    59.0    55.4
+12                     Japon   7.502651     7.2     7.8     7.9     7.0     6.1     6.1
+13                Etats-Unis        7.0     7.2     6.5     6.0     5.5     4.7     4.1
+14                     Corée        4.0     4.2     4.0     3.9     3.6     3.3     3.3
+
+======================================================================
+📄 Poids secteur — poids-nickel.xls
+======================================================================
+
+  📑 Feuille : 'PIB' — 15 lignes × 21 colonnes
+                           0                   1                   2                   3                   4                   5                   6                    7
+0                                                                                                                                                                        
+1   Production et valeur ...                                                                                                                                             
+2                                                                                                                                                                        
+3   Source : ISEE, Compte...                                                                                                                                             
+4   Données mises à jour ...                                                                                                                                             
+5                                         1998.0              1999.0              2000.0              2001.0              2002.0              2003.0               2004.0
+6             Production (P)  49830359578.814812  59283599918.135292  91464346422.075424  70854136667.521713  75988124968.864716  94590991148.646912  117708348486.202896
+7   Consommation interméd...  38795704576.068802  37301175506.626587  53481875954.395851  50414498235.743141  48882307989.528198  53595685726.903755   62372663747.573395
+8   Valeur ajoutée** (VA=...   11034655002.74601  21982424411.508709  37982470467.679565  20439638431.778572  27105816979.336506  40995305421.743156   55335684738.629501
+9                                                                                                                                                                        
+10  Part dans le PIB (en ...            2.892721            5.382135            8.595814            4.651897            5.742802            7.905834             9.784785
+11                                                                                                                                                                       
+12  unités : million F.CF...                                                                                                                                             
+13  *extraction + métallu...                                                                                                                                             
+14  **données définitives...                                                                                                                                             
+
+  📑 Feuille : 'IS35' — 10 lignes × 19 colonnes
+                          0           1            2            3       4       5        6       7
+0                                                                                                 
+1  Recettes fiscales lié...                                                                       
+2                                                                                                 
+3  Source : compte admin...                                                                       
+4  Données mises à jour ...                                                                       
+5         Données annuelles      2002.0       2003.0       2004.0  2005.0  2006.0   2007.0  2008.0
+6                    IS 35*  568.088625  2394.739785  8195.671802  9656.0  8547.0  23521.0  9964.0
+7                                                                                                 
+8  unité : millions de F...                                                                       
+9  *Cet impôt sur les bé...                                                                       
